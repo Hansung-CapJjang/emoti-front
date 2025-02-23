@@ -45,20 +45,26 @@ class FirstScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const SecondScreen()),
-        );
-      },
-      child: Scaffold(
-        backgroundColor: const Color(0xFFEFF2DD),
-        body: const Center(
-          child: Text(
-            '반갑습니다.',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+    return Scaffold(
+      backgroundColor: const Color(0xFFEFF2DD),
+      body: const Center(
+        child: Text(
+          '반갑습니다.',
+          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(20),
+        child: ElevatedButton(
+          onPressed: () {
+            navigateWithAnimation(context, const SecondScreen());
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.green,
+            foregroundColor: Colors.white,
+            minimumSize: const Size(double.infinity, 50),
           ),
+          child: const Text('다음'),
         ),
       ),
     );
@@ -71,21 +77,27 @@ class SecondScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const NameInputScreen()),
-        );
-      },
-      child: const Scaffold(
-        backgroundColor: Color(0xFFEFF2DD),
-        body: Center(
-          child: Text(
-            '상담 전,\n사용자 정보를 작성해주세요.',
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+    return Scaffold(
+      backgroundColor: const Color(0xFFEFF2DD),
+      body: const Center(
+        child: Text(
+          '상담 전,\n사용자 정보를 작성해주세요.',
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(20),
+        child: ElevatedButton(
+          onPressed: () {
+            navigateWithAnimation(context, const NameInputScreen());
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.green,
+            foregroundColor: Colors.white,
+            minimumSize: const Size(double.infinity, 50),
           ),
+          child: const Text('다음'),
         ),
       ),
     );
@@ -379,10 +391,10 @@ class _ConcernSelectionScreenState extends State<ConcernSelectionScreen> {
             ElevatedButton(
               onPressed: _selectedConcerns.isNotEmpty
                   ? () {
-                      Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => HomeScreen()),
-        );
+                      // 여기에 다음 화면 연결 가능
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('다음 화면으로 이동')),
+                      );
                     }
                   : null,
               style: ElevatedButton.styleFrom(
