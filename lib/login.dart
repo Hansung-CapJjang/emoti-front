@@ -91,15 +91,15 @@ class LoginScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 GestureDetector(
-                  onTap: () => _showSnackBar(context, "kakao로 로그인하는 중."), // Kakao 로그인 기능 구현 부분   
-                  child: Image.asset('assets/images/kakaotalkLogo.png', width: 50),
-                ),
-                const SizedBox(width: 20),
-                GestureDetector(
                   onTap: () => _showSnackBar(context, "naver로 로그인하는 중."), // Naver 로그인 기능 구현 부분    
                   child: Image.asset('assets/images/naverLogo.png', width: 50),
                 ),
                 const SizedBox(width: 20),
+                GestureDetector(
+                  onTap: () => _showSnackBar(context, "kakao로 로그인하는 중."), // Kakao 로그인 기능 구현 부분   
+                  child: Image.asset('assets/images/kakaotalkLogo.png', width: 50),
+                ),
+                const SizedBox(width: 20),  
                 GestureDetector(
                   onTap: () => _showSnackBar(context, "Google로 로그인하는 중."), // Google 로그인 기능 구현 부분      
                   child: Image.asset('assets/images/googleLogo.png', width: 50),
