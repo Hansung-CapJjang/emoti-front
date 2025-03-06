@@ -470,9 +470,10 @@ class _ConcernSelectionScreenState extends State<ConcernSelectionScreen> {
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
             decoration: BoxDecoration(
-              color: isSelected ? const Color.fromARGB(255, 134, 109, 51) : const Color(0xFFD6D9AC),
+              color: isSelected ? const Color.fromARGB(214, 255, 255, 255) : const Color(0xFFD6D9AC),
+              // color: isSelected ? const Color.fromARGB(255, 134, 109, 51) : const Color(0xFFD6D9AC),
               borderRadius: BorderRadius.circular(10),
-              border: isSelected ? Border.all(color: Colors.white, width: 2) : null,
+              border: isSelected ? Border.all(color: const Color(0xFFD6D9AC), width: 2) : null,
             ),
             child: Text(
               concern,
@@ -480,7 +481,7 @@ class _ConcernSelectionScreenState extends State<ConcernSelectionScreen> {
                 fontFamily: 'DungGeunMo',
                 fontSize: 16,
                 fontWeight: FontWeight.normal,
-                color: isSelected ? Colors.white : Colors.black,
+                color: isSelected ? Colors.black : Colors.black,
               ),
             ),
           ),
