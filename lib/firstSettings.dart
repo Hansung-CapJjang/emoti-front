@@ -202,7 +202,7 @@ class _NameInputScreenState extends State<NameInputScreen> {
               '이름을 입력해주세요.',
               style: TextStyle(
                 fontSize: 22,
-                fontWeight: FontWeight.normal,
+                fontWeight: FontWeight.bold,
                 fontFamily: 'DungGeunMo',
                 color: Colors.black87,
               ),
@@ -222,11 +222,12 @@ class _NameInputScreenState extends State<NameInputScreen> {
               child: SizedBox(
                 width: MediaQuery.of(context).size.width * 0.6, // 입력 필드 가로 크기 조정
                 child: TextField(
-                  style: const TextStyle(fontSize: 16, fontFamily: 'DungGeunMo'),
+                  style: const TextStyle(fontSize: 17, fontFamily: 'DungGeunMo'),
                   textAlign: TextAlign.center,
                   controller: _controller,
                   decoration: InputDecoration(
                     hintText: '이곳에 작성하세요.',
+                    hintStyle: const TextStyle(color: Colors.grey),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                       borderSide: const BorderSide(color: Colors.grey),
@@ -284,7 +285,7 @@ class GenderSelectionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFEFF2DD),
+      backgroundColor: const Color(0xFFE3E7C0), // 배경색
       appBar: AppBar(
         title: const Text('세부 정보', style: TextStyle(fontWeight: FontWeight.normal,
     fontFamily: 'DungGeunMo',
@@ -298,14 +299,14 @@ class GenderSelectionScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ProgressBar(progress: 0.5), // 🔥 Progress Bar (100%)
-            SizedBox(height: 20),
+            SizedBox(height: 30),
             Text(
               '성별을 선택 해주세요.',
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.normal,
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold,
     fontFamily: 'DungGeunMo',
                 color: Colors.black87,),
             ),
-            SizedBox(height: 5),
+            SizedBox(height: 15),
             Text(
               '※ 더 정확한 상담이 가능해져요.',
               style: TextStyle(fontSize: 14, fontWeight: FontWeight.normal,
@@ -313,16 +314,18 @@ class GenderSelectionScreen extends StatelessWidget {
                 color: Colors.black87),
             ),
 
-            Spacer(),
+            Spacer(flex:10),
 
             SizedBox(height: 30),
             GenderButton(label: '남성'),
 
-            SizedBox(height: 10),
+            SizedBox(height: 15),
             GenderButton(label: '여성'),
 
-            SizedBox(height: 10),
+            SizedBox(height: 15),
             GenderButton(label: '기타'),
+
+            Spacer(flex:1),
           ],
         ),
       ),
@@ -400,9 +403,9 @@ class ConcernSelectionScreen extends StatefulWidget {
 
 class _ConcernSelectionScreenState extends State<ConcernSelectionScreen> {
   final List<String> _concerns = [
-    '좁은 인간 관계', '이유 불명 우울함', '연인 관계', '질병', 
-    '가족 관계', '빠지지 않는 살', '친구와의 다툼', '떠오르는 흑역사',
-    '학교 성적', '취업 및 진로', '급격하게 늘어난 잠', '딱히 없음'
+    '좁은 인간 관계', '이유 불명 우울함', '연인 관계', '건강', '가족 관계', '자기개발에 대한 부담',
+    '학교 성적', '빠지지 않는 살', '친구와의 다툼', '떠오르는 흑역사', '미래에 대한 불안',
+    '취업 및 진로', '급격하게 늘어난 잠', '경제적 어려움', '대인 관계', '직장 내 인간 관계', '딱히 없음'
   ];
   final Set<String> _selectedConcerns = {};
 
@@ -417,7 +420,7 @@ class _ConcernSelectionScreenState extends State<ConcernSelectionScreen> {
         if (_selectedConcerns.contains(concern)) {
           _selectedConcerns.remove(concern);
         } else {
-          if (_selectedConcerns.length < 5) {
+          if (_selectedConcerns.length < 3) {
             _selectedConcerns.add(concern);
           }
         }
@@ -428,74 +431,94 @@ class _ConcernSelectionScreenState extends State<ConcernSelectionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFEFF2DD),
+      backgroundColor: const Color(0xFFE3E7C0), // 배경색
       appBar: AppBar(
-        title: const Text('세부 정보'),
+        title: const Text('세부 정보', style: TextStyle(
+    fontFamily: 'DungGeunMo',
+                color: Colors.black87),),
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const ProgressBar(progress: 0.8), // ✅ Progress Bar (100%)
-            const SizedBox(height: 20),
-            const Text(
-              '최근 고민되는 일이 있나요?',
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+  crossAxisAlignment: CrossAxisAlignment.start, // 텍스트는 왼쪽 정렬
+  children: [
+    const ProgressBar(progress: 0.8),
+    const SizedBox(height: 30),
+    const Text(
+      '최근 고민되는 일이 있나요?',
+      style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold,
+      fontFamily: 'DungGeunMo',
+      color: Colors.black87),
+    ),
+    const SizedBox(height: 15),
+    const Text(
+      '※ 사용자에 관한 데이터가 많을수록\n  AI의 상담 수준이 높아져요!\n※ 3개까지 선택할 수 있어요.',
+      style: TextStyle(fontSize: 14, fontWeight: FontWeight.normal,
+      fontFamily: 'DungGeunMo',
+      color: Colors.black87),
+    ),
+    const SizedBox(height: 20),
+    Wrap(
+      spacing: 10,
+      runSpacing: 10,
+      children: _concerns.map((concern) {
+        final isSelected = _selectedConcerns.contains(concern);
+        return GestureDetector(
+          onTap: () => _toggleConcern(concern),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+            decoration: BoxDecoration(
+              color: isSelected ? const Color.fromARGB(255, 134, 109, 51) : const Color(0xFFD6D9AC),
+              borderRadius: BorderRadius.circular(10),
+              border: isSelected ? Border.all(color: Colors.white, width: 2) : null,
             ),
-            const SizedBox(height: 5),
-            const Text(
-              '※ 사용자에 관한 데이터가 많을수록 AI의 상담 수준이 높아져요!',
-              style: TextStyle(fontSize: 14, color: Colors.black54),
-            ),
-            const SizedBox(height: 20),
-            Wrap(
-              spacing: 10,
-              runSpacing: 10,
-              children: _concerns.map((concern) {
-                final isSelected = _selectedConcerns.contains(concern);
-                return GestureDetector(
-                  onTap: () => _toggleConcern(concern),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    decoration: BoxDecoration(
-                      color: isSelected ? Colors.white : Colors.green[200],
-                      borderRadius: BorderRadius.circular(20),
-                      border: isSelected ? Border.all(color: Colors.green, width: 2) : null,
-                    ),
-                    child: Text(
-                      concern,
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: isSelected ? Colors.green[800] : Colors.black,
-                      ),
-                    ),
-                  ),
-                );
-              }).toList(),
-            ),
-            const Spacer(),
-            ElevatedButton(
-              onPressed: _selectedConcerns.isNotEmpty
-                  ? () {
-                      // 여기에 다음 화면 연결 가능
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('다음 화면으로 이동')),
-                      );
-                    }
-                  : null,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
-                foregroundColor: Colors.white,
-                minimumSize: const Size(double.infinity, 50),
+            child: Text(
+              concern,
+              style: TextStyle(
+                fontFamily: 'DungGeunMo',
+                fontSize: 16,
+                fontWeight: FontWeight.normal,
+                color: isSelected ? Colors.white : Colors.black,
               ),
-              child: const Text('다음'),
             ),
-          ],
+          ),
+        );
+      }).toList(),
+    ),
+    const Spacer(flex: 10),
+    Align(
+      alignment: Alignment.center, // 버튼만 가운데 정렬
+      child: SizedBox(
+        width: 180, // 버튼 크기
+        height: 50,
+        child: ElevatedButton(
+          onPressed: _selectedConcerns.isNotEmpty
+              ? () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('다음 화면으로 이동')),
+                  );
+                }
+              : null,
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color(0xFF5A5F3C),
+            foregroundColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+          child: const Text(
+            '다음',
+            style: TextStyle(fontSize: 16, fontFamily: 'DungGeunMo'),
+          ),
         ),
+      ),
+    ),
+    const Spacer(flex: 6),
+  ],
+),
+
       ),
     );
   }
@@ -511,16 +534,22 @@ class GenderButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
+        // 성별 선택되면 정보 저장
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('$label 선택됨')),
         );
-        // 고민 선택 화면으로 이동 🚀
-        navigateWithAnimation(context, const ConcernSelectionScreen()); // 애니메이션 적용 🚀
+        // 고민 선택 화면으로 이동
+        navigateWithAnimation(context, const ConcernSelectionScreen()); // 애니메이션 적용
       },
       style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.green[400],
+        backgroundColor: const Color.fromARGB(255, 167, 177, 115), // 버튼 색상 (올리브색)
         foregroundColor: Colors.white,
+        textStyle: const TextStyle(fontSize: 17, fontWeight: FontWeight.normal,
+    fontFamily: 'DungGeunMo',),
         minimumSize: const Size(double.infinity, 50),
+        shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12), // 둥근 버튼
+                      ),
       ),
       child: Text(label),
     );
