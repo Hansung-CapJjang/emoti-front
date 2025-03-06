@@ -40,69 +40,64 @@ class LoginScreen extends StatelessWidget {
           children: [
             const Spacer(),
             const Text(
-              'emoti',
+              '마음을 위로하는 AI 상담 어플',
               style: TextStyle(
-                fontSize: 70,
-                fontWeight: FontWeight.bold,
-                // fontFamily: 'Times New Roman',
+                fontSize: 20,
+                fontWeight: FontWeight.normal,
+    fontFamily: 'DungGeunMo',
+                color: Colors.black87,
               ),
             ),
-            const SizedBox(height: 20),
-            CircleAvatar(
-              radius: 60,
-              backgroundColor: Colors.green[300],
-              child: Stack(
-                children: [
-                  Positioned(
-                    left: 20,
-                    top: 30,
-                    child: EyeWidget(),
-                  ),
-                  Positioned(
-                    right: 20,
-                    top: 30,
-                    child: EyeWidget(),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 40),
-            const Row(
-  children: [
-    Expanded(child: Divider(color: Colors.green, thickness: 1)),
-    Padding(
-      padding: EdgeInsets.symmetric(horizontal: 10),
-      child: Text(
-  '간편 로그인',
+            // const SizedBox(height: 2),
+            const Text(
+  'emoti',
   style: TextStyle(
-    fontFamily: 'Apple SD Gothic Neo', //
-    fontSize: 16,
-    color: Colors.black54,
+    fontSize: 80,
+    fontWeight: FontWeight.bold,
+    fontFamily: 'Times New Roman',
+    color: Colors.black87,
   ),
 ),
 
-    ),
-    Expanded(child: Divider(color: Colors.green, thickness: 1)),
-  ],
-),
 
-            const SizedBox(height: 20),
+            // const SizedBox(height: 10),
+            Image.asset('assets/images/character_1.png', width: 230),
+            const SizedBox(height: 40),
+            const Row(
+  children: [
+                Expanded(child: Divider(color: Colors.grey, thickness: 2, indent: 20, endIndent: 10)),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  child: Text(
+                    '간편 로그인',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.normal,
+    fontFamily: 'DungGeunMo',
+                      color: Colors.black54,
+                    ),
+                  ),
+                ),
+                Expanded(child: Divider(color: Colors.grey, thickness: 2, indent: 10, endIndent: 20)),
+              ],
+            ),
+            const SizedBox(height: 40),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+              children: [ 
                 GestureDetector(
                   onTap: () => _showSnackBar(context, "naver로 로그인하는 중."), // Naver 로그인 기능 구현 부분    
-                  child: Image.asset('assets/images/naverLogo.png', width: 50),
+                  child: Image.asset('assets/images/naverLogo.png', width: 60),
                 ),
                 const SizedBox(width: 20),
                 GestureDetector(
                   onTap: () => _showSnackBar(context, "kakao로 로그인하는 중."), // Kakao 로그인 기능 구현 부분   
-                  child: Image.asset('assets/images/kakaotalkLogo.png', width: 50),
+                  child: Image.asset('assets/images/kakaotalkLogo.png', width: 60),
                 ),
                 const SizedBox(width: 20),  
                 GestureDetector(
                   onTap: () => _showSnackBar(context, "Google로 로그인하는 중."), // Google 로그인 기능 구현 부분      
-                  child: Image.asset('assets/images/googleLogo.png', width: 50),
+                  child: Image.asset('assets/images/googleLogo.png', width: 60),
                 ),
               ],
             ),

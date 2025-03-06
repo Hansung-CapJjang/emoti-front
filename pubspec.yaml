@@ -76,6 +76,8 @@ flutter:
     - assets/images/googleLogo.png
     - assets/images/kakaotalkLogo.png
     - assets/images/naverLogo.png
+    - assets/images/demo_baebse.png
+    - assets/images/character_1.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
@@ -88,6 +90,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
+  fonts:
+    - family: DungGeunMo
+      fonts:
+        - asset: assets/fonts/DungGeunMo.otf
   # fonts:
   #   - family: Schyler
   #     fonts:

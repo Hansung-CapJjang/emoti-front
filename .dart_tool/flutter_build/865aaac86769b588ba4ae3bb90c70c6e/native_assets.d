@@ -1,0 +1,1 @@
+ /Users/jeongseyeon/Documents/A/front_1/emoti-front/.dart_tool/flutter_build/865aaac86769b588ba4ae3bb90c70c6e/native_assets.yaml: 

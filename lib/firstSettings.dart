@@ -46,26 +46,46 @@ class FirstScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFEFF2DD),
-      body: const Center(
-        child: Text(
-          '반갑습니다.',
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-        ),
-      ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(20),
-        child: ElevatedButton(
-          onPressed: () {
-            navigateWithAnimation(context, const SecondScreen());
-          },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.green,
-            foregroundColor: Colors.white,
-            minimumSize: const Size(double.infinity, 50),
+      backgroundColor: const Color(0xFFE3E7C0), // 배경색
+      body: Column(
+        children: [
+          const SizedBox(height: 130), // 글씨 중앙 정렬
+          const Expanded(
+            child: Center(
+              child: Text(
+                '반갑습니다.',
+                style: TextStyle(
+                  fontSize: 27,
+                  fontFamily: 'DungGeunMo',
+                  color: Color(0xFF5A5F3C), // 글씨 색상
+                ),
+              ),
+            ),
           ),
-          child: const Text('다음'),
-        ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 120), // 버튼을 더 위로 이동
+            child: SizedBox(
+              width: 180, // 버튼 크기
+              height: 50,
+              child: ElevatedButton(
+                onPressed: () {
+                  navigateWithAnimation(context, const SecondScreen());
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF5A5F3C), // 버튼 색상
+                  foregroundColor: Colors.white, // 글자색
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12), // 둥근 버튼
+                  ),
+                ),
+                child: const Text(
+                  '다음',
+                  style: TextStyle(fontSize: 16, fontFamily: 'DungGeunMo'),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -78,27 +98,47 @@ class SecondScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFEFF2DD),
-      body: const Center(
-        child: Text(
-          '상담 전,\n사용자 정보를 작성해주세요.',
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-      ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(20),
-        child: ElevatedButton(
-          onPressed: () {
-            navigateWithAnimation(context, const NameInputScreen());
-          },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.green,
-            foregroundColor: Colors.white,
-            minimumSize: const Size(double.infinity, 50),
+      backgroundColor: const Color(0xFFE3E7C0), // 배경색
+      body: Column(
+        children: [
+          const SizedBox(height: 130), // 글씨 중앙 정렬
+          const Expanded(
+            child: Center(
+              child: Text(
+                '상담 전,\n사용자님의 정보를\n입력해주세요.',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 25,
+                  fontFamily: 'DungGeunMo',
+                  color: Color(0xFF5A5F3C), // 글씨 색상
+                ),
+              ),
+            ),
           ),
-          child: const Text('다음'),
-        ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 120), // 버튼을 더 위로 이동
+            child: SizedBox(
+              width: 180, // 버튼 크기
+              height: 50,
+              child: ElevatedButton(
+                onPressed: () {
+                  navigateWithAnimation(context, const NameInputScreen());
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF5A5F3C), // 버튼 색상
+                  foregroundColor: Colors.white, // 글자색
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12), // 둥근 버튼
+                  ),
+                ),
+                child: const Text(
+                  '다음',
+                  style: TextStyle(fontSize: 16, fontFamily: 'DungGeunMo'),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -138,9 +178,16 @@ class _NameInputScreenState extends State<NameInputScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFEFF2DD),
+      backgroundColor: const Color(0xFFE3E7C0), // 배경색
       appBar: AppBar(
-        title: const Text('이름 정보'),
+        title: const Text(
+          '이름 정보',
+          style: TextStyle(
+            fontWeight: FontWeight.normal,
+            fontFamily: 'DungGeunMo',
+            color: Colors.black87,
+          ),
+        ),
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
@@ -149,42 +196,78 @@ class _NameInputScreenState extends State<NameInputScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const ProgressBar(progress: 0.25), // 🔥 Progress Bar (50%)
-            const SizedBox(height: 20),
+            const ProgressBar(progress: 0.25), // 🔥 Progress Bar (25%)
+            const SizedBox(height: 30),
             const Text(
               '이름을 입력해주세요.',
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.normal,
+                fontFamily: 'DungGeunMo',
+                color: Colors.black87,
+              ),
             ),
-            const SizedBox(height: 5),
+            const SizedBox(height: 15),
             const Text(
               '※ 5글자 이내로 작성하세요.',
-              style: TextStyle(fontSize: 14, color: Colors.black54),
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.normal,
+                fontFamily: 'DungGeunMo',
+                color: Colors.black87,
+              ),
             ),
-            const SizedBox(height: 20),
-            TextField(
-              controller: _controller,
-              decoration: InputDecoration(
-                hintText: '이 곳에 작성하세요.',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
+            const SizedBox(height: 100), // 입력 필드 아래로 이동
+            Center(
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width * 0.6, // 입력 필드 가로 크기 조정
+                child: TextField(
+                  style: const TextStyle(fontSize: 16, fontFamily: 'DungGeunMo'),
+                  textAlign: TextAlign.center,
+                  controller: _controller,
+                  decoration: InputDecoration(
+                    hintText: '이곳에 작성하세요.',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(color: Colors.grey),
+                    ),
+                    filled: true,
+                    fillColor: Colors.white,
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(color: Color(0xFF5A5F3C), width: 2), // 초록색 테두리
+                    ),
+                  ),
                 ),
-                filled: true,
-                fillColor: Colors.white,
               ),
             ),
             const Spacer(),
-            ElevatedButton(
-              onPressed: _isButtonEnabled
-      ? () {
-          navigateWithAnimation(context, const GenderSelectionScreen()); // 애니메이션 적용 🚀
-        }
-      : null,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
-                foregroundColor: Colors.white,
-                minimumSize: const Size(double.infinity, 50),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 100), // 버튼을 더 위로 이동
+              child: Center(
+                child: SizedBox(
+                  width: 180, // 버튼 크기 조정
+                  height: 50,
+                  child: ElevatedButton(
+                    onPressed: _isButtonEnabled
+                        ? () {
+                            navigateWithAnimation(context, const GenderSelectionScreen());
+                          }
+                        : null,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF5A5F3C), // 버튼 색상 (올리브색)
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12), // 둥근 버튼
+                      ),
+                    ),
+                    child: const Text(
+                      '다음',
+                      style: TextStyle(fontSize: 16, fontFamily: 'DungGeunMo'),
+                    ),
+                  ),
+                ),
               ),
-              child: const Text('다음'),
             ),
           ],
         ),
@@ -192,6 +275,7 @@ class _NameInputScreenState extends State<NameInputScreen> {
     );
   }
 }
+
 
 // 4️⃣ 네 번째 화면 (성별 선택)
 class GenderSelectionScreen extends StatelessWidget {
@@ -202,7 +286,9 @@ class GenderSelectionScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xFFEFF2DD),
       appBar: AppBar(
-        title: const Text('세부 정보'),
+        title: const Text('세부 정보', style: TextStyle(fontWeight: FontWeight.normal,
+    fontFamily: 'DungGeunMo',
+                color: Colors.black87,),),
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
@@ -215,12 +301,16 @@ class GenderSelectionScreen extends StatelessWidget {
             SizedBox(height: 20),
             Text(
               '성별을 선택 해주세요.',
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.normal,
+    fontFamily: 'DungGeunMo',
+                color: Colors.black87,),
             ),
             SizedBox(height: 5),
             Text(
               '※ 더 정확한 상담이 가능해져요.',
-              style: TextStyle(fontSize: 14, color: Colors.black54),
+              style: TextStyle(fontSize: 14, fontWeight: FontWeight.normal,
+    fontFamily: 'DungGeunMo',
+                color: Colors.black87),
             ),
 
             Spacer(),
@@ -290,8 +380,8 @@ class _ProgressBarState extends State<ProgressBar> with SingleTickerProviderStat
           return LinearProgressIndicator(
             value: _animation.value,
             minHeight: 8,
-            backgroundColor: Colors.grey[300],
-            valueColor: const AlwaysStoppedAnimation<Color>(Colors.green),
+            backgroundColor: const Color.fromARGB(255, 116, 123, 77), // 버튼 색상
+            valueColor: const AlwaysStoppedAnimation<Color>(Colors.white),
           );
         },
       ),
