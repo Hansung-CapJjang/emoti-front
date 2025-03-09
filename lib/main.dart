@@ -1,4 +1,5 @@
 import 'login.dart';
+import 'mainScreen.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_localizations/flutter_localizations.dart';
 // import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
@@ -17,14 +18,27 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'AI심리상담가',
+    return MaterialApp(
+      title: 'Emoti',
       debugShowCheckedModeBanner: false, // 디버그 띠 비활성화
-      locale: Locale('ko'), // 한국어로 기본 설정
+
+      theme: ThemeData(
+        fontFamily: 'DungGeunMo',
+        scaffoldBackgroundColor: const Color(0xFFEEEEEE),
+        textTheme: const TextTheme(
+          bodyLarge: TextStyle(color: Color(0XFF776767)),
+          bodyMedium: TextStyle(color: Color(0XFF776767)),
+          headlineLarge: TextStyle(color: Color(0XFF776767)),
+        ),
+      ),
+
+      locale: const Locale('ko'), // 한국어로 기본 설정
       supportedLocales: const [
         Locale('ko'), // 한국어 지원
         Locale('en'), // 영어 지원 (필요시 추가)
       ],
+
+      home: isLoggedIn ? MainScreen() : LoginScreen(), // 자동 로그인 구현
     );
   }
 }
