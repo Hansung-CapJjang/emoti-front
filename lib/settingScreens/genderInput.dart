@@ -1,16 +1,52 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/animation.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'firstIntro.dart';
 import 'concernInput.dart';
 
 class GenderInputScreen extends StatefulWidget {
-  const GenderInputScreen({super.key});
+
+  final String name; // nameInput.dart 에서 이름 받아옴
+  const GenderInputScreen({super.key, required this.name});
 
   @override
   _GenderInputScreenState createState() => _GenderInputScreenState();
 }
 
 class _GenderInputScreenState extends State<GenderInputScreen> {
+
+// 성별 정보 저장하고 고민 세부 사항 설정 페이지로 이동
+void _selectGenderAndProceed(String gender) async {
+    await _sendDataToServer(widget.name, gender); // 서버로 이름 + 성별 저장
+    // ConcernInputScreen으로 이동할 때 name과 gender 함께 전달
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ConcernInputScreen(name: widget.name, gender: gender),
+      ),
+    );
+  }
+
+  Future<void> _sendDataToServer(String name, String gender) async {
+    const String apiUrl = ''; // 
+
+    try {
+      final response = await http.post(
+        Uri.parse(apiUrl),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({"name": name, "gender": gender}), // 🔹 JSON으로 전송
+      );
+
+      if (response.statusCode == 200) {
+        print("사용자 정보 저장 완료!");
+      } else {
+        print("서버 오류: ${response.statusCode}, ${response.body}");
+      }
+    } catch (e) {
+      print("네트워크 오류: $e");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,11 +95,11 @@ class _GenderInputScreenState extends State<GenderInputScreen> {
 
             //
             const SizedBox(height: 30),
-            GenderButton(label: '남성', onTap: () => _goToNextScreen(context)),
+            GenderButton(label: '남성', onTap: () => _selectGenderAndProceed('남성')),
             const SizedBox(height: 15),
-            GenderButton(label: '여성', onTap: () => _goToNextScreen(context)),
+            GenderButton(label: '여성', onTap: () => _selectGenderAndProceed('여성')),
             const SizedBox(height: 15),
-            GenderButton(label: '기타', onTap: () => _goToNextScreen(context)),
+            GenderButton(label: '기타', onTap: () => _selectGenderAndProceed('기타')),
 
             const Spacer(flex: 1),
           ],
@@ -72,12 +108,12 @@ class _GenderInputScreenState extends State<GenderInputScreen> {
     );
   }
 
-  void _goToNextScreen(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const ConcernInputScreen()),
-    );
-  }
+  // void _goToNextScreen(BuildContext context) {
+  //   Navigator.push(
+  //     context,
+  //     MaterialPageRoute(builder: (context) => const ConcernInputScreen()),
+  //   );
+  // }
 }
 
 // 

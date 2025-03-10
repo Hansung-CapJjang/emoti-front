@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/animation.dart';
+import 'dart:convert'; // JSON 양식 변환을 위한 임포트
+import 'package:http/http.dart' as http; // http package
 import 'firstIntro.dart';
 import 'genderInput.dart';
 
@@ -12,11 +14,33 @@ class NameInputScreen extends StatefulWidget {
 
 class _NameInputScreenState extends State<NameInputScreen>
     with SingleTickerProviderStateMixin {
+
   final TextEditingController _controller = TextEditingController();
   bool _isButtonEnabled = false;
   bool _showWarning = false;
   late AnimationController _animationController;
   late Animation<double> _shakeAnimation;
+
+  // 서버로 이름 전송
+  Future<void> _sendNameToServer(String name) async {
+    const String apiUrl = ''; // Spring Boot 서버 주소
+
+    try {
+      final response = await http.post(
+        Uri.parse(apiUrl),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({"name": name}), // JSON 변환
+      );
+
+      if (response.statusCode == 200) {
+        print("이름이 성공적으로 저장되었습니다!");
+      } else {
+        print("서버 오류 발생: ${response.body}");
+      }
+    } catch (e) {
+      print("네트워크 오류: $e");
+    }
+  }
 
   @override
   void initState() {
@@ -175,7 +199,11 @@ const SizedBox(height: 20),
                   child: ElevatedButton(
                     onPressed: _isButtonEnabled
                         ? () {
-                            navigateWithAnimation(context, const GenderInputScreen());
+                          String name = _controller.text.trim();
+                    _sendNameToServer(name); // 서버로 이름 데이터 전송
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => GenderInputScreen(name: _controller.text.trim()),
+                    ),
+  );
                           }
                         : null,
                     style: ElevatedButton.styleFrom(

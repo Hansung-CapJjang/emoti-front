@@ -3,6 +3,8 @@ import 'home.dart';
 import 'chattingSetting.dart';
 import 'profile.dart';
 
+// 앱 내 공통 하단 아이콘바 구현 
+
 class MainScreen extends StatefulWidget {
 
   @override
@@ -32,15 +34,15 @@ class _MainScreenState extends State<MainScreen> {
           });
         },
         items: const [
-    BottomNavigationBarItem(icon: Icon(Icons.home), label: '홈'),
-    BottomNavigationBarItem(icon: Icon(Icons.question_answer), label: '상담'),
-    BottomNavigationBarItem(icon: Icon(Icons.person), label: '내 정보'),
+    BottomNavigationBarItem(icon: Icon(Icons.home, size: 30,), label: '홈'),
+    BottomNavigationBarItem(icon: Icon(Icons.question_answer, size: 30,), label: '상담'),
+    BottomNavigationBarItem(icon: Icon(Icons.person, size: 30,), label: '내 정보'),
   ],
-  backgroundColor: Color(0xFFEEEEEE),
-  selectedItemColor: Colors.grey,
-  unselectedItemColor: Colors.black,
-  showSelectedLabels: false, // 선택된 아이템의 라벨 숨기기
-  showUnselectedLabels: false, // 선택되지 않은 아이템의 라벨 숨기기
+  backgroundColor: const Color(0xFFDDE5B6),
+  selectedItemColor: const Color.fromARGB(255, 30, 30, 30),
+  unselectedItemColor: const Color.fromARGB(255, 157, 157, 157),
+  showSelectedLabels: false, // 선택된 아이콘 라벨 숨기기
+  showUnselectedLabels: false, // 선택되지 않은 아이콘 라벨 숨기기
       ),
     );
   }
