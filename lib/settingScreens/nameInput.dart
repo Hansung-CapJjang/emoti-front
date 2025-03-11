@@ -139,6 +139,7 @@ const SizedBox(height: 20),
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width * 0.6,
                       child: TextField(
+                        autofocus: true,
                         style:
                             const TextStyle(fontSize: 17, fontFamily: 'DungGeunMo'),
                         textAlign: TextAlign.center,
