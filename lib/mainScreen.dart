@@ -3,17 +3,21 @@ import 'home.dart';
 import 'chattingSetting.dart';
 import 'profile.dart';
 
-// 앱 내 공통 하단 아이콘바 구현 
-
+// 앱 내 공통 하단 아이콘바 구현
 class MainScreen extends StatefulWidget {
-
   @override
   _MainScreenState createState() => _MainScreenState();
 }
 
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
-  
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,22 +31,40 @@ class _MainScreenState extends State<MainScreen> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
+        backgroundColor: const Color(0xFFDCE6B7),
+        selectedItemColor: Colors.white,
+        unselectedItemColor: const Color(0xFF474C34),
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
         currentIndex: _currentIndex,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        items: const [
-    BottomNavigationBarItem(icon: Icon(Icons.home, size: 30,), label: '홈'),
-    BottomNavigationBarItem(icon: Icon(Icons.question_answer, size: 30,), label: '상담'),
-    BottomNavigationBarItem(icon: Icon(Icons.person, size: 30,), label: '내 정보'),
-  ],
-  backgroundColor: const Color(0xFFDDE5B6),
-  selectedItemColor: const Color.fromARGB(255, 30, 30, 30),
-  unselectedItemColor: const Color.fromARGB(255, 157, 157, 157),
-  showSelectedLabels: false, // 선택된 아이콘 라벨 숨기기
-  showUnselectedLabels: false, // 선택되지 않은 아이콘 라벨 숨기기
+        onTap: _onItemTapped,
+        items: [
+          BottomNavigationBarItem(
+            icon: ImageIcon(
+              AssetImage('assets/images/homeicon.png'),
+              size: 40,
+              color: _currentIndex == 0 ? const Color(0xFF474C34) : Colors.grey,
+            ),
+            label: '홈',
+          ),
+          BottomNavigationBarItem(
+            icon: ImageIcon(
+              AssetImage('assets/images/messageicon.png'),
+              size: 40,
+              color: _currentIndex == 1 ? const Color(0xFF474C34) : Colors.grey,
+            ),
+            label: '상담',
+          ),
+          BottomNavigationBarItem(
+            icon: ImageIcon(
+              AssetImage('assets/images/usericon.png'),
+              size: 40,
+              color: _currentIndex == 2 ? const Color(0xFF474C34) : Colors.grey,
+            ),
+            label: '프로필',
+          ),
+        ],
+
       ),
     );
   }

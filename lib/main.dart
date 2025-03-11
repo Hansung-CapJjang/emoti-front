@@ -9,6 +9,15 @@ import 'package:shared_preferences/shared_preferences.dart'; // Provider 임포�
 // 로그인 기능 구현하면 
 // 첫 로그인 시 로그인 화면, 로그인 되어 있다면 홈화면으로 바로 넘어가게 하기 위한 파일
 // 아직 구현 안됐으므로 각 파일 별로 직접 실행해보기
+void main() {
+  runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
+    theme: ThemeData(
+      fontFamily: 'DungGeunMo', // 기본 폰트 설정
+    ),
+    home: MyApp(isLoggedIn: false),
+  ));
+}
 
 class MyApp extends StatelessWidget {
   
