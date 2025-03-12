@@ -374,6 +374,12 @@
       "languageVersion": "3.2"
     },
     {
+      "name": "pedantic",
+      "rootUri": "file:///Users/jeongseyeon/.pub-cache/hosted/pub.dev/pedantic-1.11.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "petitparser",
       "rootUri": "file:///Users/jeongseyeon/.pub-cache/hosted/pub.dev/petitparser-6.0.2",
       "packageUri": "lib/",
@@ -462,6 +468,18 @@
       "rootUri": "file:///Users/jeongseyeon/.pub-cache/hosted/pub.dev/source_span-1.10.0",
       "packageUri": "lib/",
       "languageVersion": "2.18"
+    },
+    {
+      "name": "speech_to_text",
+      "rootUri": "file:///Users/jeongseyeon/.pub-cache/hosted/pub.dev/speech_to_text-7.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
+      "name": "speech_to_text_platform_interface",
+      "rootUri": "file:///Users/jeongseyeon/.pub-cache/hosted/pub.dev/speech_to_text_platform_interface-2.3.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
     },
     {
       "name": "stack_trace",
@@ -638,7 +656,7 @@
       "languageVersion": "3.5"
     }
   ],
-  "generated": "2025-03-11T09:59:59.633733Z",
+  "generated": "2025-03-12T17:52:27.979603Z",
   "generator": "pub",
   "generatorVersion": "3.5.4",
   "flutterRoot": "file:///Users/jeongseyeon/Downloads/flutter",

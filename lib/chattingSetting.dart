@@ -34,13 +34,14 @@ class _ChattingSettingScreenState extends State<ChattingSettingScreen> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 195, 211, 114),
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: const Text(
           '상담 방식 선택',
           style: TextStyle(
             fontFamily: 'DungGeunMo',
-            fontWeight: FontWeight.bold,
+            // ontWeight: FontWeight.bold,
             color: Colors.black,
           ),
         ),
@@ -60,7 +61,7 @@ class _ChattingSettingScreenState extends State<ChattingSettingScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Divider(color: Colors.black45, thickness: 0.5),
+            const Divider(color: Color.fromARGB(130, 65, 80, 62), thickness: 1),
             const SizedBox(height: 30),
             const Text(
               '※ 님이 선호하는 상담사 유형을\n  직접 선택하여 상담 받을 수 있어요.',
@@ -107,9 +108,9 @@ class _ChattingSettingScreenState extends State<ChattingSettingScreen> {
                       ),
                     );
                   } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('문자 상담은 아직 구현되지 않았습니다.')),
-                    );
+                    // ScaffoldMessenger.of(context).showSnackBar(
+                    //   const SnackBar(content: Text('문자 상담은 아직 구현되지 않았습니다.')),
+                    // );
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -159,16 +160,16 @@ class _ChattingSettingScreenState extends State<ChattingSettingScreen> {
       },
       child: Container(
         decoration: BoxDecoration(
-          color: isSelected ? Colors.white : Colors.grey[300],
+          color: isSelected ? const Color.fromARGB(255, 242, 251, 195) : const Color.fromARGB(255, 217, 225, 176),
           border: Border.all(
-            color: isSelected ? Colors.black : Colors.transparent,
+            color: isSelected ? const Color.fromARGB(255, 60, 60, 60) : const Color.fromARGB(255, 60, 60, 60),
             width: isSelected ? 2 : 0,
           ),
           borderRadius: BorderRadius.circular(10),
           boxShadow: const [
             BoxShadow(
               color: Colors.black26,
-              offset: Offset(2, 2),
+              offset: Offset(0, 3),
               blurRadius: 4,
             )
           ],
@@ -190,57 +191,64 @@ class _ChattingSettingScreenState extends State<ChattingSettingScreen> {
   }
 
   /// 서랍 (Drawer) UI
-  Widget _buildDrawer() {
-    return Drawer(
-      width: MediaQuery.of(context).size.width * 0.8,
+Widget _buildDrawer() {
+  return Drawer(
+    width: MediaQuery.of(context).size.width * 0.8,
+    child: Container(
+      color: const Color(0xFFEFEFCC), // 배경색 조정
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          DrawerHeader(
-            decoration: BoxDecoration(color: Colors.grey[300]),
-            child: const Center(
-              child: Text(
-                '메뉴',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-            ),
-          ),
-          ListTile(
-            leading: const Icon(Icons.home),
-            title: const Text('홈'),
-            onTap: () {},
-          ),
-          ListTile(
-            leading: const Icon(Icons.question_answer),
-            title: const Text('상담'),
-            onTap: () {},
-          ),
-          ListTile(
-            leading: const Icon(Icons.person),
-            title: const Text('프로필'),
-            onTap: () {},
-          ),
-          const Spacer(),
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.black,
-                foregroundColor: Colors.white,
-                minimumSize: const Size(double.infinity, 50),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+          const SizedBox(height: 80),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
+              children: [
+                Icon(Icons.arrow_back, size: 30),
+                SizedBox(width: 10),
+                Text(
+                  '채팅 기록',
+                  style: TextStyle(fontFamily: 'DungGeunMo', fontSize: 20,),
                 ),
-              ),
-              child: const Text('닫기'),
+              ],
             ),
           ),
-          const SizedBox(height: 20),
+          Expanded(
+            child: ListView(
+              children: [
+                _buildChatRecord('2월 10일', '🔥'),
+                _buildChatRecord('2월 8일', '⭐'),
+                _buildChatRecord('2월 5일', '💧'),
+              ],
+            ),
+          ),
         ],
       ),
-    );
-  }
+    ),
+  );
+}
+
+/// 채팅 이전 기록 항목 위젯
+Widget _buildChatRecord(String date, String badge) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          date,
+          style: const TextStyle(fontFamily: 'DungGeunMo', fontSize: 18,),
+        ),
+        // const SizedBox(height: 5),
+        Row(
+          children: [
+            // const Text('도장 ', style: TextStyle(fontFamily: 'DungGeunMo', fontSize: 14)),
+            Text(badge, style: const TextStyle(fontFamily: 'DungGeunMo', fontSize: 18)),
+          ],
+        ),
+        const Divider(thickness: 1, color: Colors.black26),
+      ],
+    ),
+  );
+}
 }

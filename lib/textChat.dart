@@ -48,7 +48,7 @@ class _TextChatScreenState extends State<TextChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 218, 237, 127),
+      backgroundColor: const Color.fromARGB(255, 195, 211, 114),
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
@@ -60,8 +60,8 @@ class _TextChatScreenState extends State<TextChatScreen> {
                 text: '(${widget.counselorType}) ',
                 style: const TextStyle(
                   fontFamily: 'DungGeunMo',
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                  // fontWeight: FontWeight.bold,
                   color: Colors.black,
                 ),
               ),
@@ -69,15 +69,15 @@ class _TextChatScreenState extends State<TextChatScreen> {
                 text: '상담 중',
                 style: TextStyle(
                   fontFamily: 'DungGeunMo',
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                  // fontWeight: FontWeight.bold,
                   color: Colors.blue,
                 ),
               ),
             ],
           ),
         ),
-        centerTitle: false,
+        centerTitle: true,
       ),
       body: Column(
         children: [
@@ -130,7 +130,7 @@ class _TextChatScreenState extends State<TextChatScreen> {
         margin: const EdgeInsets.symmetric(vertical: 6),
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: isUser ? Colors.lightBlueAccent : Colors.white,
+          color: isUser ? const Color.fromARGB(255, 109, 131, 2) : Colors.white,
           borderRadius: BorderRadius.only(
             topLeft: const Radius.circular(12),
             topRight: const Radius.circular(12),
@@ -148,7 +148,7 @@ class _TextChatScreenState extends State<TextChatScreen> {
               message,
               style: TextStyle(
                 fontFamily: 'DungGeunMo',
-                fontSize: 14,
+                fontSize: 15,
                 color: isUser ? Colors.white : Colors.black,
               ),
             ),
@@ -157,7 +157,7 @@ class _TextChatScreenState extends State<TextChatScreen> {
               alignment: Alignment.bottomRight,
               child: Text(
                 _getCurrentTime(),
-                style: const TextStyle(fontSize: 10, color: Colors.black54),
+                style: const TextStyle(fontSize: 10, color: Color.fromARGB(255, 0, 0, 0)),
               ),
             ),
           ],
@@ -189,6 +189,7 @@ class _TextChatScreenState extends State<TextChatScreen> {
                     border: Border.all(color: Colors.black45),
                   ),
                   child: TextField(
+                    style: TextStyle(fontFamily: 'DungGeunMo',),
                     controller: _textController,
                     decoration: const InputDecoration(
                       border: InputBorder.none,
@@ -221,26 +222,53 @@ class _TextChatScreenState extends State<TextChatScreen> {
         ),
         const SizedBox(height: 10),
         Container(
-          width: double.infinity,
-          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          child: ElevatedButton(
-            onPressed: () {
-              // 상담 끝내기 기능
-              Navigator.pop(context);
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF6C7448),
-              foregroundColor: Colors.white,
-              padding: const EdgeInsets.symmetric(vertical: 14),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            ),
-            child: const Text(
-              '상담 끝내기',
-              style: TextStyle(fontFamily: 'DungGeunMo', fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-          ),
-        ),
+  width: double.infinity,
+  margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+  child: ElevatedButton(
+    onPressed: () {
+      _showEndDialog(context);
+    },
+    style: ElevatedButton.styleFrom(
+      backgroundColor: const Color(0xFF6C7448),
+      foregroundColor: Colors.white,
+      padding: const EdgeInsets.symmetric(vertical: 14),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+    ),
+    child: const Text(
+      '상담 끝내기',
+      style: TextStyle(fontFamily: 'DungGeunMo', fontSize: 16, fontWeight: FontWeight.bold),
+    ),
+  ),
+),
       ],
     );
   }
+}
+
+/// 상담 종료 다이얼로그
+void _showEndDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text("상담을 종료하시겠습니까?", style: TextStyle(fontFamily: 'DungGeunMo', fontSize: 18),),
+        // content: const Text("상담을 종료하시겠습니까?"),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context); // 다이얼로그 닫기
+            },
+            child: const Text("아니오", style: TextStyle(fontFamily: 'DungGeunMo',),),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context); // 다이얼로그 닫기
+              Navigator.pop(context); // 서랍 닫기 (상담 종료 처리)
+            },
+            child: const Text("예", style: TextStyle(fontFamily: 'DungGeunMo',),),
+          ),
+        ],
+      );
+    },
+  );
 }

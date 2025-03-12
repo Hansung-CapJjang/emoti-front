@@ -230,6 +230,10 @@ path_provider_windows
 3.2
 file:///Users/jeongseyeon/.pub-cache/hosted/pub.dev/path_provider_windows-2.3.0/
 file:///Users/jeongseyeon/.pub-cache/hosted/pub.dev/path_provider_windows-2.3.0/lib/
+pedantic
+2.12
+file:///Users/jeongseyeon/.pub-cache/hosted/pub.dev/pedantic-1.11.1/
+file:///Users/jeongseyeon/.pub-cache/hosted/pub.dev/pedantic-1.11.1/lib/
 petitparser
 3.2
 file:///Users/jeongseyeon/.pub-cache/hosted/pub.dev/petitparser-6.0.2/
@@ -286,6 +290,14 @@ source_span
 2.18
 file:///Users/jeongseyeon/.pub-cache/hosted/pub.dev/source_span-1.10.0/
 file:///Users/jeongseyeon/.pub-cache/hosted/pub.dev/source_span-1.10.0/lib/
+speech_to_text
+3.3
+file:///Users/jeongseyeon/.pub-cache/hosted/pub.dev/speech_to_text-7.0.0/
+file:///Users/jeongseyeon/.pub-cache/hosted/pub.dev/speech_to_text-7.0.0/lib/
+speech_to_text_platform_interface
+3.0
+file:///Users/jeongseyeon/.pub-cache/hosted/pub.dev/speech_to_text_platform_interface-2.3.0/
+file:///Users/jeongseyeon/.pub-cache/hosted/pub.dev/speech_to_text_platform_interface-2.3.0/lib/
 stack_trace
 2.18
 file:///Users/jeongseyeon/.pub-cache/hosted/pub.dev/stack_trace-1.11.1/
