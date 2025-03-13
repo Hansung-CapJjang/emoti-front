@@ -16,13 +16,21 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  bool isOn = false; // 알람 설정 상태
+  bool isExpanded = false; // 고민 사항 확장 여부
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFDDE5B6), // ����
+      backgroundColor: const Color(0xFFDDE5B6),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -38,70 +46,54 @@ class ProfileScreen extends StatelessWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.question_mark, color: Colors.black54),
-            onPressed: () {
-
-
-            },
+            onPressed: () {},
           ),
         ],
       ),
       body: Column(
         children: [
-          const SizedBox(height: 20),
-          
-          //
-          Center(
-            child: Column(
+          const SizedBox(height: 40), // 간격 추가
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
               children: [
-                Stack(
-                  alignment: Alignment.bottomCenter,
-                  children: [
-                    CircleAvatar(
-                      radius: 50,
-                      backgroundColor: Colors.brown[200], 
-                      child: const Icon(Icons.remove_red_eye, size: 40, color: Colors.black),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 8),
-                      height: 5,
-                      width: 40,
-                      decoration: BoxDecoration(
-                        color: Colors.black26,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    )
-                  ],
+                Image.asset(
+                  'assets/images/character_1.png',
+                  width: 100, // 기존 CircleAvatar 반지름 * 2
+                  height: 100,
+                  fit: BoxFit.cover,
                 ),
-                const SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                const SizedBox(width: 10),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Row(
+                      children: [
+                        const Text(
+                          'nickname',
+                          style: TextStyle(
+                            fontFamily: 'DungGeunMo',
+                            fontSize: 40,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(width: 5),
+                        IconButton(
+                          icon: const Icon(Icons.edit, size: 18, color: Colors.black54),
+                          onPressed: () {},
+                        )
+                      ],
+                    ),
                     const Text(
-                      'EGG',
-                      style: TextStyle(
-                        fontFamily: 'DungGeunMo',
-                        fontSize: 40,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      '도장판 5/10',
+                      style: TextStyle(fontFamily: 'DungGeunMo', fontSize: 14, color: Colors.black54),
                     ),
-                    const SizedBox(width: 5),
-                    IconButton(
-                      icon: const Icon(Icons.edit, size: 18, color: Colors.black54),
-                      onPressed: () {},
-                    )
                   ],
-                ),
-                const Text(
-                  '도장판 5/10',
-                  style: TextStyle(fontFamily: 'DungGeunMo', fontSize: 14, color: Colors.black54),
-                ),
+                )
               ],
             ),
           ),
-
-          const SizedBox(height: 20),
-
-          // progress bar
+          const SizedBox(height: 50), // 간격 추가
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 40),
             child: Column(
@@ -115,7 +107,7 @@ class ProfileScreen extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: LinearProgressIndicator(
-                    value: 0.6, // 60% 
+                    value: 0.6,
                     minHeight: 8,
                     backgroundColor: Colors.black12,
                     color: Colors.green[500],
@@ -124,16 +116,13 @@ class ProfileScreen extends StatelessWidget {
               ],
             ),
           ),
-
           const SizedBox(height: 20),
-          
-          // 메뉴 선택란
           Expanded(
-            
             child: ListView(
               children: [
-                _buildMenuItem(Icons.keyboard_arrow_right, '고민 사항'),
-                _buildToggleMenuItem('알람 설정', true),
+                _buildExpandableMenuItem(),
+                if (isExpanded) _buildSelectedConcerns(),
+                _buildToggleMenuItem('알람 설정'),
                 _buildMenuItem(Icons.logout, '로그아웃'),
                 _buildDisabledMenuItem('회원 탈퇴'),
               ],
@@ -141,49 +130,98 @@ class ProfileScreen extends StatelessWidget {
           ),
         ],
       ),
-
-      // 하단 아이콘 바 - mainScreen.dart 이동
-
-      // bottomNavigationBar: BottomNavigationBar(
-      //   backgroundColor: const Color(0xFFDDE5B6),
-      //   selectedItemColor: Colors.black,
-      //   unselectedItemColor: Colors.black54,
-      //   showSelectedLabels: false,
-      //   showUnselectedLabels: false,
-      //   currentIndex: 2, 
-      //   onTap: (index) {},
-      //   items: const [
-      //     BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Ȩ'),
-      //     BottomNavigationBarItem(icon: Icon(Icons.question_answer), label: '���'),
-      //     BottomNavigationBarItem(icon: Icon(Icons.person), label: '������'),
-      //   ],
-      // ),
     );
   }
 
-  // 고민 사항 & 로그아웃
+  Widget _buildExpandableMenuItem() {
+    return ListTile(
+      contentPadding: const EdgeInsets.only(left: 40, right: 20),
+      leading: Icon(
+        isExpanded ? Icons.keyboard_arrow_down : Icons.keyboard_arrow_right,
+        color: Colors.black54,
+      ),
+      title: Row(
+        children: [
+          const Text('고민 사항', style: TextStyle(fontFamily: 'DungGeunMo', fontSize: 16)),
+          if (isExpanded) ...[
+            const SizedBox(width: 5),
+            IconButton(
+              icon: const Icon(Icons.edit, size: 18, color: Colors.black54),
+              onPressed: () {},
+            ),
+          ],
+        ],
+      ),
+      onTap: () {
+        setState(() {
+          isExpanded = !isExpanded;
+        });
+      },
+    );
+  }
+
+  Widget _buildSelectedConcerns() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Wrap(
+        spacing: 10,
+        runSpacing: 10,
+        children: [
+          _buildConcernChip('좁은 인간 관계'),
+          _buildConcernChip('친구'),
+          _buildConcernChip('학교 성적'),
+          _buildConcernChip('취업 및 진로'),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildConcernChip(String label) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      decoration: BoxDecoration(
+        color: Colors.black26,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Text(
+        label,
+        style: const TextStyle(fontFamily: 'DungGeunMo', fontSize: 14, color: Colors.black),
+      ),
+    );
+  }
+
   Widget _buildMenuItem(IconData icon, String title) {
     return ListTile(
+      contentPadding: const EdgeInsets.only(left: 40, right: 20),
       leading: Icon(icon, color: Colors.black54),
       title: Text(title, style: const TextStyle(fontFamily: 'DungGeunMo', fontSize: 16)),
       onTap: () {},
     );
   }
 
-  // 알람 설정 토글 버튼
-  Widget _buildToggleMenuItem(String title, bool isOn) {
+  Widget _buildToggleMenuItem(String title) {
     return ListTile(
+      contentPadding: const EdgeInsets.only(left: 40, right: 40),
       title: Text(title, style: const TextStyle(fontFamily: 'DungGeunMo', fontSize: 16)),
       trailing: Switch(
         value: isOn,
-        onChanged: (value) {},
+        onChanged: (value) {
+          setState(() {
+            isOn = value;
+          });
+        },
+        activeColor: const Color(0xFF5A6140),
+        activeTrackColor: const Color(0xFF959D75),
+        inactiveThumbColor: const Color(0xFFDCE6B7),
+        inactiveTrackColor: const Color(0xFF959D75),
+        trackOutlineColor: WidgetStateProperty.all(Colors.transparent),
       ),
     );
   }
 
-  // 회원 탈퇴 버튼
   Widget _buildDisabledMenuItem(String title) {
     return ListTile(
+      contentPadding: const EdgeInsets.only(left: 40, right: 20),
       title: Text(
         title,
         style: const TextStyle(fontFamily: 'DungGeunMo', fontSize: 16, color: Colors.black38),

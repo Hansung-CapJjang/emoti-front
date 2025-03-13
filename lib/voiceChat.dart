@@ -50,19 +50,22 @@ class _VoiceChatScreenState extends State<VoiceChatScreen> {
 
   /// 음성 인식 시작
   void _startListening() async {
-    bool available = await _speech.initialize();
-    if (available) {
-      setState(() {
-        isListening = true;
-        recognizedText = "";
-      });
-      _speech.listen(onResult: (result) {
+  bool available = await _speech.initialize();
+  if (available) {
+    setState(() {
+      isListening = true;
+      recognizedText = "";
+    });
+    _speech.listen(
+      onResult: (result) {
         setState(() {
           recognizedText = result.recognizedWords;
         });
-      });
-    }
+      },
+      localeId: "ko_KR", // 한국어 설정 추가
+    );
   }
+}
 
   /// 음성 인식 중지
   void _stopListening() {
@@ -169,27 +172,33 @@ class _VoiceChatScreenState extends State<VoiceChatScreen> {
           ),
           const SizedBox(height: 80),
           GestureDetector(
-            onTapDown: (_) => _startListening(),
-            onTapUp: (_) => _stopListening(),
-            child: Column(
-              children: [
-                Icon(
-                  Icons.mic,
-                  size: 60,
-                  color: isListening ? Colors.red : Colors.black45,
-                ),
-                const SizedBox(height: 10),
-                const Text(
-                  '마이크를 누른 상태로 말하세요.',
-                  style: TextStyle(
-                    fontFamily: 'DungGeunMo',
-                    fontSize: 14,
-                    color: Colors.black54,
-                  ),
-                ),
-              ],
-            ),
-          ),
+  onTap: () {
+    if (isListening) {
+      _stopListening();
+    } else {
+      _startListening();
+    }
+  },
+  child: Column(
+    children: [
+      Icon(
+        Icons.mic,
+        size: 60,
+        color: isListening ? Colors.red : Colors.black45,
+      ),
+      const SizedBox(height: 10),
+      Text(
+        isListening ? '음성 인식 중...' : '마이크를 누르면 시작됩니다.',
+        style: const TextStyle(
+          fontFamily: 'DungGeunMo',
+          fontSize: 14,
+          color: Colors.black54,
+        ),
+      ),
+    ],
+  ),
+),
+
           const SizedBox(height: 50),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),

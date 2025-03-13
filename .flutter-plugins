@@ -2,12 +2,17 @@
 flutter_local_notifications=/Users/jeongseyeon/.pub-cache/hosted/pub.dev/flutter_local_notifications-18.0.1/
 flutter_local_notifications_linux=/Users/jeongseyeon/.pub-cache/hosted/pub.dev/flutter_local_notifications_linux-5.0.0/
 flutter_localization=/Users/jeongseyeon/.pub-cache/hosted/pub.dev/flutter_localization-0.2.3/
+image_gallery_saver=/Users/jeongseyeon/.pub-cache/hosted/pub.dev/image_gallery_saver-2.0.3/
 kakao_flutter_sdk_common=/Users/jeongseyeon/.pub-cache/hosted/pub.dev/kakao_flutter_sdk_common-1.9.6/
 path_provider=/Users/jeongseyeon/.pub-cache/hosted/pub.dev/path_provider-2.1.5/
 path_provider_android=/Users/jeongseyeon/.pub-cache/hosted/pub.dev/path_provider_android-2.2.15/
 path_provider_foundation=/Users/jeongseyeon/.pub-cache/hosted/pub.dev/path_provider_foundation-2.4.1/
 path_provider_linux=/Users/jeongseyeon/.pub-cache/hosted/pub.dev/path_provider_linux-2.2.1/
 path_provider_windows=/Users/jeongseyeon/.pub-cache/hosted/pub.dev/path_provider_windows-2.3.0/
+permission_handler=/Users/jeongseyeon/.pub-cache/hosted/pub.dev/permission_handler-10.4.5/
+permission_handler_android=/Users/jeongseyeon/.pub-cache/hosted/pub.dev/permission_handler_android-10.3.6/
+permission_handler_apple=/Users/jeongseyeon/.pub-cache/hosted/pub.dev/permission_handler_apple-9.1.4/
+permission_handler_windows=/Users/jeongseyeon/.pub-cache/hosted/pub.dev/permission_handler_windows-0.1.3/
 shared_preferences=/Users/jeongseyeon/.pub-cache/hosted/pub.dev/shared_preferences-2.5.2/
 shared_preferences_android=/Users/jeongseyeon/.pub-cache/hosted/pub.dev/shared_preferences_android-2.4.5/
 shared_preferences_foundation=/Users/jeongseyeon/.pub-cache/hosted/pub.dev/shared_preferences_foundation-2.5.4/

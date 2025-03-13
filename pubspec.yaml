@@ -30,6 +30,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  image_gallery_saver: ^2.0.3
+  permission_handler: ^10.2.0
   provider: ^6.0.3
   url_launcher: ^6.0.20
   kakao_flutter_sdk: ^1.8.0
