@@ -64,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
+              const Text(
                 '도장판을 완성하면\n버튼이 활성화 돼요!',
                 textAlign: TextAlign.center,
                 style: const TextStyle(
@@ -74,10 +74,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               const SizedBox(height: 8),
-              Text(
+              const Text(
                 '도장판을 완성할 때마다\n캐릭터가 성장한답니다',
                 textAlign: TextAlign.center,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 16,
                   fontFamily: 'DungGeunMo',
                 ),

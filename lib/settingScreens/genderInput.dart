@@ -51,7 +51,7 @@ void _selectGenderAndProceed(String gender) async {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFE3E7C0), // ����
+      backgroundColor: const Color(0xFFE3E7C0), 
       appBar: AppBar(
         title: const Text(
           '세부 정보',

@@ -32,7 +32,7 @@ class _ChattingSettingScreenState extends State<ChattingSettingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 195, 211, 114),
+      backgroundColor: const Color(0xFFDCE6B7),
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
@@ -160,7 +160,7 @@ class _ChattingSettingScreenState extends State<ChattingSettingScreen> {
       },
       child: Container(
         decoration: BoxDecoration(
-          color: isSelected ? const Color.fromARGB(255, 242, 251, 195) : const Color.fromARGB(255, 217, 225, 176),
+          color: isSelected ? const Color.fromARGB(255, 247, 253, 217) : const Color.fromARGB(255, 217, 225, 176),
           border: Border.all(
             color: isSelected ? const Color.fromARGB(255, 60, 60, 60) : const Color.fromARGB(255, 60, 60, 60),
             width: isSelected ? 2 : 0,

@@ -48,7 +48,7 @@ class _TextChatScreenState extends State<TextChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 195, 211, 114),
+      backgroundColor: const Color(0xFFDCE6B7),
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,

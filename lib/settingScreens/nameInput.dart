@@ -94,137 +94,142 @@ class _NameInputScreenState extends State<NameInputScreen>
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 30),
-            const Text(
-              '이름을 입력해주세요.',
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'DungGeunMo',
-                color: Colors.black87,
-              ),
-            ),
-            const SizedBox(height: 15),
-            const Text(
-              '※ 5글자 이내로 작성하세요.',
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.normal,
-                fontFamily: 'DungGeunMo',
-                color: Colors.black87,
-              ),
-            ),
-            const SizedBox(height: 40),
-Center(
-  child: Image.asset(
-    'assets/images/character_1.png',
-    width: 230,
-  ),
-),
-const SizedBox(height: 20),
+      body: SingleChildScrollView(
+  child: Padding(
+    padding: const EdgeInsets.all(20),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 30),
+        const Text(
+          '이름을 입력해주세요.',
+          style: TextStyle(
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'DungGeunMo',
+            color: Colors.black87,
+          ),
+        ),
+        const SizedBox(height: 15),
+        const Text(
+          '※ 5글자 이내로 작성하세요.',
+          style: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.normal,
+            fontFamily: 'DungGeunMo',
+            color: Colors.black87,
+          ),
+        ),
+        const SizedBox(height: 40),
 
+        Center(
+          child: Image.asset(
+            'assets/images/character_1.png',
+            width: 230,
+          ),
+        ),
+        const SizedBox(height: 20),
 
-            ///
-            AnimatedBuilder(
-              animation: _shakeAnimation,
-              builder: (context, child) {
-                return Transform.translate(
-                  offset: Offset(_showWarning ? _shakeAnimation.value : 0, 0),
-                  child: Center(
-                    child: SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.6,
-                      child: TextField(
-                        autofocus: true,
-                        style:
-                            const TextStyle(fontSize: 17, fontFamily: 'DungGeunMo'),
-                        textAlign: TextAlign.center,
-                        controller: _controller,
-                        decoration: InputDecoration(
-                          hintText: '이곳에 작성하세요.',
-                          hintStyle: const TextStyle(color: Colors.grey),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
-                              color: _showWarning ? Colors.red : Colors.grey,
-                            ),
-                          ),
-                          filled: true,
-                          fillColor: Colors.white,
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
-                              color: _showWarning ? Colors.red : const Color(0xFF5A5F3C),
-                              width: 2,
-                            ),
-                          ),
+        /// 이름 입력 필드
+        AnimatedBuilder(
+          animation: _shakeAnimation,
+          builder: (context, child) {
+            return Transform.translate(
+              offset: Offset(_showWarning ? _shakeAnimation.value : 0, 0),
+              child: Center(
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.6,
+                  child: TextField(
+                    autofocus: true,
+                    style: const TextStyle(fontSize: 17, fontFamily: 'DungGeunMo'),
+                    textAlign: TextAlign.center,
+                    controller: _controller,
+                    decoration: InputDecoration(
+                      hintText: '이곳에 작성하세요.',
+                      hintStyle: const TextStyle(color: Colors.grey),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(
+                          color: _showWarning ? Colors.red : Colors.grey,
+                        ),
+                      ),
+                      filled: true,
+                      fillColor: Colors.white,
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(
+                          color: _showWarning ? Colors.red : const Color(0xFF5A5F3C),
+                          width: 2,
                         ),
                       ),
                     ),
                   ),
-                );
-              },
-            ),
-
-            //
-            AnimatedOpacity(
-              opacity: _showWarning ? 1.0 : 0.0,
-              duration: const Duration(milliseconds: 300),
-              child: const Padding(
-                padding: EdgeInsets.only(top: 8),
-                child: Center(
-                  child: Text(
-                    '5글자 이내로 작성할 수 있어요!',
-                    style: TextStyle(
-                      color: Colors.red,
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'DungGeunMo',
-                    ),
-                  ),
                 ),
               ),
-            ),
-
-            const Spacer(),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 100),
-              child: Center(
-                child: SizedBox(
-                  width: 180,
-                  height: 50,
-                  child: ElevatedButton(
-                    onPressed: _isButtonEnabled
-                        ? () {
-                          String name = _controller.text.trim();
-                    _sendNameToServer(name); // 서버로 이름 데이터 전송
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => GenderInputScreen(name: _controller.text.trim()),
-                    ),
-  );
-                          }
-                        : null,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF5A5F3C),
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    child: const Text(
-                      '다음',
-                      style: TextStyle(fontSize: 16, fontFamily: 'DungGeunMo'),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
+            );
+          },
         ),
-      ),
+
+        /// 경고 메시지
+        AnimatedOpacity(
+          opacity: _showWarning ? 1.0 : 0.0,
+          duration: const Duration(milliseconds: 300),
+          child: const Padding(
+            padding: EdgeInsets.only(top: 8),
+            child: Center(
+              child: Text(
+                '5글자 이내로 작성할 수 있어요!',
+                style: TextStyle(
+                  color: Colors.red,
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'DungGeunMo',
+                ),
+              ),
+            ),
+          ),
+        ),
+
+        const SizedBox(height: 50), // 키보드로 가려지는 것 방지
+
+        /// 다음 버튼
+        Center(
+          child: SizedBox(
+            width: 180,
+            height: 50,
+            child: ElevatedButton(
+              onPressed: _isButtonEnabled
+                  ? () {
+                      String name = _controller.text.trim();
+                      _sendNameToServer(name);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => GenderInputScreen(name: _controller.text.trim()),
+                        ),
+                      );
+                    }
+                  : null,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF5A5F3C),
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              child: const Text(
+                '다음',
+                style: TextStyle(fontSize: 16, fontFamily: 'DungGeunMo'),
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 20), // 추가 여백
+      ],
+    ),
+  ),
+),
+
     );
   }
 }
