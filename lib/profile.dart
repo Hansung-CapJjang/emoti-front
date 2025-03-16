@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/login.dart';
-import 'package:flutter_application_1/settingScreens/concernInput.dart';
-import 'package:flutter_application_1/settingScreens/nameInput.dart';
+import 'package:flutter_application_1/setting_screen/concern_input.dart';
+import 'package:flutter_application_1/setting_screen/name_input.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_application_1/user_provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -33,7 +35,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   // 더미 도장 데이터 (날짜, 도장 유형)
   final List<Map<String, dynamic>> stampData = [
     {'date': '3/14', 'stamp': '⭐️'},
-    {'date': '3/15', 'stamp': '도장 없음'},
+    {'date': '3/15', 'stamp': 'x'},
     {'date': '3/16', 'stamp': '🌱'},
     {'date': '3/17', 'stamp': '🔥'},
     {'date': '3/18', 'stamp': '🌱'},
@@ -82,12 +84,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   children: [
                     Row(
                       children: [
-                        const Text(
-                          '세린tv',
-                          style: TextStyle(
+                        Text(
+                          Provider.of<UserProvider>(context).nickname,
+                          style: const TextStyle(
                             fontFamily: 'DungGeunMo',
                             fontSize: 35,
                             fontWeight: FontWeight.normal,
+                            color: Color.fromARGB(255, 63, 71, 31),
                           ),
                         ),
                         const SizedBox(width: 5),
@@ -97,7 +100,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const NameInputScreen(isEdit: true,), // 추후 여기도 화면간 nickname을 받아올 수 있게 해 수정까지 완료해야할듯
+                                builder: (context) => const NameInputScreen(isEdit: true,),
                               ),
                             );
                           },
@@ -121,33 +124,42 @@ class _ProfileScreenState extends State<ProfileScreen> {
               children: [
                 const Text(
                   'Lv.1                             60%',
-                  style: TextStyle(fontFamily: 'DungGeunMo', fontSize: 17, fontWeight: FontWeight.normal),
+                  style: TextStyle(fontFamily: 'DungGeunMo', fontSize: 17, fontWeight: FontWeight.normal, color: Color.fromARGB(255, 87, 99, 43),),
                 ),
                 const SizedBox(height: 5),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: LinearProgressIndicator(
+                  child: const LinearProgressIndicator(
                     value: 0.6,
                     minHeight: 15,
-                    backgroundColor: Colors.black12,
-                    color: const Color.fromARGB(255, 121, 138, 61),
+                    backgroundColor: Color.fromARGB(136, 119, 137, 60),
+                    color: Color.fromARGB(255, 66, 75, 34),
                   ),
                 ),
               ],
             ),
           ),
-          const SizedBox(height: 30),
+          const SizedBox(height: 20),
 
           // 날짜별 도작 리스트 추가
           _buildStampScroll(),
 
-          const Divider(indent: 20, endIndent: 20, thickness: 2, color: Color.fromARGB(100, 121, 138, 61),),
+          const SizedBox(height: 10),
 
+          const Divider(indent: 30, endIndent: 30, thickness: 2, color: Color.fromARGB(100, 121, 138, 61),),
+
+          // const SizedBox(height: 20),
           Expanded(
             child: ListView(
               children: [
                 _buildExpandableMenuItem(),
+                
                 if (isExpanded) _buildSelectedConcerns(),
+
+                const SizedBox(height: 20),
+
+          const Divider(indent: 30, endIndent: 30, thickness: 2, color: Color.fromARGB(100, 121, 138, 61),),
+
                 if (isOn) _buildToggleMenuItem('알람 설정', Icons.notifications_active) else _buildToggleMenuItem('알람 설정', Icons.notifications_off),
                 _buildLogoutItem(Icons.logout, '로그아웃'),
                 _buildDeleteItem('회원 탈퇴'),
@@ -179,11 +191,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const ConcernInputScreen(
-                      name: "닉네임", // 수정을 통해 화면간 정보 넘겨받기 필요
-                      gender: "unknown", // 수정을 통해 화면간 정보 넘겨받기 필요
-                      isEdit: true,
-                    ),
+                    builder: (context) => const ConcernInputScreen(isEdit: true),
                   ),
                 );
               },
@@ -225,8 +233,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   end: Alignment.centerRight,
                   colors: [
                     Color(0xFFDDE5B6),
-                    Colors.white.withOpacity(0),
-                    Colors.white.withOpacity(0),
+                    Color(0xFFDDE5B6).withOpacity(0),
+                    Color(0xFFDDE5B6).withOpacity(0),
                     Color(0xFFDDE5B6),
                   ],
                   stops: [0.0, 0.2, 0.8, 1.0],
@@ -240,14 +248,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
   );
 }
 
-
   // 개별 도장 아이템
   Widget _buildStampItem(String date, String stamp) {
     return Container(
       width: 100,
       margin: const EdgeInsets.symmetric(horizontal: 5),
       decoration: BoxDecoration(
-        color: Color.fromARGB(255, 250, 253, 232),
+        color: Color.fromARGB(255, 246, 250, 222),
         borderRadius: BorderRadius.circular(10),
         boxShadow: const [
           BoxShadow(
@@ -273,15 +280,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
 
   Widget _buildSelectedConcerns() {
+    final concerns = Provider.of<UserProvider>(context).concerns; // concerns 리스트 가져오기
+    
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 70),
       child: Wrap(
         spacing: 10,
         runSpacing: 10,
         children: [
-          _buildConcernChip('좁은 인간 관계'),
-          _buildConcernChip('친구'),
-          _buildConcernChip('학교 성적'),
+         ...concerns.map((concern) => _buildConcernChip(concern)), // 리스트에 있는 값만 Chip으로 생성
         ],
       ),
     );
