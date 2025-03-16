@@ -23,7 +23,7 @@ void _selectGenderAndProceed(String gender) async {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ConcernInputScreen(name: widget.name, gender: gender),
+        builder: (context) => ConcernInputScreen(name: widget.name, gender: gender, isEdit: false),
       ),
     );
   }
@@ -69,8 +69,7 @@ void _selectGenderAndProceed(String gender) async {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            /// ? ProgressBar�� ���ǵǾ� �ִ��� Ȯ�� �� ���
-            ProgressBar(progress: 0.5), // ? Progress Bar (50%)
+            ProgressBar(progress: 0.5), // Progress Bar (50%)
             const SizedBox(height: 30),
             const Text(
               '성별을 선택 해주세요.',

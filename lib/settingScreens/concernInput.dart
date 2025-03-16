@@ -7,11 +7,11 @@ import 'package:flutter_application_1/mainScreen.dart';
 import 'package:flutter_application_1/home.dart';
 
 class ConcernInputScreen extends StatefulWidget {
-
   final String name;
   final String gender;
+  final bool isEdit;
 
-  const ConcernInputScreen({super.key, required this.name, required this.gender});
+  const ConcernInputScreen({super.key, required this.name, required this.gender, required this.isEdit});
 
   @override
   _ConcernInputScreenState createState() => _ConcernInputScreenState();
@@ -100,10 +100,15 @@ class _ConcernInputScreenState extends State<ConcernInputScreen> with SingleTick
   void _onNextPressed() {
     if (_selectedConcerns.isNotEmpty) {
       _saveUserData();
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => MainScreen()),
-      );
+      if (widget.isEdit) {
+        Navigator.pop(context);
+      }
+      else {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => MainScreen()),
+        );
+      }
     }
   }
 
@@ -193,9 +198,9 @@ class _ConcernInputScreenState extends State<ConcernInputScreen> with SingleTick
               borderRadius: BorderRadius.circular(12),
             ),
           ),
-          child: const Text(
-            '다음',
-            style: TextStyle(fontSize: 16, fontFamily: 'DungGeunMo'),
+          child: Text(
+            widget.isEdit ? '완료' : '다음',
+            style: const TextStyle(fontSize: 16, fontFamily: 'DungGeunMo'),
           ),
         ),
       ),
