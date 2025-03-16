@@ -1,6 +1,6 @@
 import 'login.dart';
 import 'mainScreen.dart';
-import 'package:your_project_name/stampBoard.dart';
+import 'StampBoard.dart';
 import 'package:flutter/material.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:provider/provider.dart';

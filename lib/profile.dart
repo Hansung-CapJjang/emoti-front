@@ -30,6 +30,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool isOn = false; // 알람 설정 상태
   bool isExpanded = false; // 고민 사항 확장 여부
 
+  // 더미 도장 데이터 (날짜, 도장 유형)
+  final List<Map<String, dynamic>> stampData = [
+    {'date': '3/14', 'stamp': '⭐️'},
+    {'date': '3/15', 'stamp': '도장 없음'},
+    {'date': '3/16', 'stamp': '🌱'},
+    {'date': '3/17', 'stamp': '🔥'},
+    {'date': '3/18', 'stamp': '🌱'},
+    {'date': '3/19', 'stamp': '?'},
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,15 +65,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
       body: Column(
         children: [
-          const SizedBox(height: 40), // 간격 추가
+          const SizedBox(height: 20), // 간격 추가
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Row(
               children: [
                 Image.asset(
                   'assets/images/character_1.png',
-                  width: 100, // 기존 CircleAvatar 반지름 * 2
-                  height: 100,
+                  width: 120, // 기존 CircleAvatar 반지름 * 2
+                  height: 120,
                   fit: BoxFit.cover,
                 ),
                 const SizedBox(width: 10),
@@ -73,11 +83,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Row(
                       children: [
                         const Text(
-                          'nickname',
+                          '세린tv',
                           style: TextStyle(
                             fontFamily: 'DungGeunMo',
-                            fontSize: 40,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 35,
+                            fontWeight: FontWeight.normal,
                           ),
                         ),
                         const SizedBox(width: 5),
@@ -103,30 +113,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ],
             ),
           ),
-          const SizedBox(height: 50), // 간격 추가
+          const SizedBox(height: 10), // 간격 추가
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 40),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
-                  'Lv.1   60%',
-                  style: TextStyle(fontFamily: 'DungGeunMo', fontSize: 14, fontWeight: FontWeight.bold),
+                  'Lv.1                             60%',
+                  style: TextStyle(fontFamily: 'DungGeunMo', fontSize: 17, fontWeight: FontWeight.normal),
                 ),
                 const SizedBox(height: 5),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: LinearProgressIndicator(
                     value: 0.6,
-                    minHeight: 8,
+                    minHeight: 15,
                     backgroundColor: Colors.black12,
-                    color: Colors.green[500],
+                    color: const Color.fromARGB(255, 121, 138, 61),
                   ),
                 ),
               ],
             ),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 30),
+
+          // 날짜별 도작 리스트 추가
+          _buildStampScroll(),
+
+          const Divider(indent: 20, endIndent: 20, thickness: 2, color: Color.fromARGB(100, 121, 138, 61),),
+
           Expanded(
             child: ListView(
               children: [
@@ -138,8 +154,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ],
             ),
           ),
+          
         ],
       ),
+      
     );
   }
 
@@ -161,8 +179,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ConcernInputScreen(
-                      name: "nickname", // 수정을 통해 화면간 정보 넘겨받기 필요
+                    builder: (context) => const ConcernInputScreen(
+                      name: "닉네임", // 수정을 통해 화면간 정보 넘겨받기 필요
                       gender: "unknown", // 수정을 통해 화면간 정보 넘겨받기 필요
                       isEdit: true,
                     ),
@@ -180,6 +198,79 @@ class _ProfileScreenState extends State<ProfileScreen> {
       },
     );
   }
+
+  // 날짜별 도장 가로 스크롤
+  Widget _buildStampScroll() {
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 20),
+    child: Stack(
+      children: [
+        SizedBox(
+          height: 70,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            itemCount: stampData.length,
+            itemBuilder: (context, index) {
+              return _buildStampItem(stampData[index]['date'], stampData[index]['stamp']);
+            },
+          ),
+        ),
+        Positioned.fill(
+          child: IgnorePointer(
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                  colors: [
+                    Color(0xFFDDE5B6),
+                    Colors.white.withOpacity(0),
+                    Colors.white.withOpacity(0),
+                    Color(0xFFDDE5B6),
+                  ],
+                  stops: [0.0, 0.2, 0.8, 1.0],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+
+  // 개별 도장 아이템
+  Widget _buildStampItem(String date, String stamp) {
+    return Container(
+      width: 100,
+      margin: const EdgeInsets.symmetric(horizontal: 5),
+      decoration: BoxDecoration(
+        color: Color.fromARGB(255, 250, 253, 232),
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.black26,
+            blurRadius: 4,
+            offset: Offset(2, 2),
+            
+          ),
+          
+        ],
+      ),
+      
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(date, style: const TextStyle(fontFamily: "DungGeunMo", fontSize: 18, fontWeight: FontWeight.normal, color: Color.fromARGB(255, 73, 76, 57),)),
+          Text(stamp, style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 73, 76, 57),)),
+        ],
+      ),
+    );
+    
+  }
+
 
   Widget _buildSelectedConcerns() {
     return Padding(
@@ -241,7 +332,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           isOn = value;
         });
       },
-      activeColor: const Color(0xFF5A6140),
+      activeColor:  Color.fromARGB(255, 71, 75, 51),
       activeTrackColor: const Color(0xFF959D75),
       inactiveThumbColor: const Color(0xFFDCE6B7),
       inactiveTrackColor: const Color(0xFF959D75),
