@@ -5,7 +5,7 @@ import 'package:path_provider/path_provider.dart';
 import 'dart:math';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'StampBoard.dart';
+// import 'StampBoard.dart';
 
 // 📌 이미지를 갤러리에 저장하는 함수
 Future<void> _saveImageToGallery() async {
