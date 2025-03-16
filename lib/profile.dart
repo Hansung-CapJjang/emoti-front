@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/login.dart';
+import 'package:flutter_application_1/settingScreens/concernInput.dart';
+import 'package:flutter_application_1/settingScreens/nameInput.dart';
 
 void main() {
   runApp(const MyApp());
@@ -80,7 +83,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         const SizedBox(width: 5),
                         IconButton(
                           icon: const Icon(Icons.edit, size: 18, color: Colors.black54),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const NameInputScreen(isEdit: true,), // 추후 여기도 화면간 nickname을 받아올 수 있게 해 수정까지 완료해야할듯
+                              ),
+                            );
+                          },
                         )
                       ],
                     ),
@@ -122,9 +132,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               children: [
                 _buildExpandableMenuItem(),
                 if (isExpanded) _buildSelectedConcerns(),
-                _buildToggleMenuItem('알람 설정'),
-                _buildMenuItem(Icons.logout, '로그아웃'),
-                _buildDisabledMenuItem('회원 탈퇴'),
+                if (isOn) _buildToggleMenuItem('알람 설정', Icons.notifications_active) else _buildToggleMenuItem('알람 설정', Icons.notifications_off),
+                _buildLogoutItem(Icons.logout, '로그아웃'),
+                _buildDeleteItem('회원 탈퇴'),
               ],
             ),
           ),
@@ -147,7 +157,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
             const SizedBox(width: 5),
             IconButton(
               icon: const Icon(Icons.edit, size: 18, color: Colors.black54),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ConcernInputScreen(
+                      name: "nickname", // 수정을 통해 화면간 정보 넘겨받기 필요
+                      gender: "unknown", // 수정을 통해 화면간 정보 넘겨받기 필요
+                      isEdit: true,
+                    ),
+                  ),
+                );
+              },
             ),
           ],
         ],
@@ -162,7 +183,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget _buildSelectedConcerns() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 70),
       child: Wrap(
         spacing: 10,
         runSpacing: 10,
@@ -170,7 +191,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           _buildConcernChip('좁은 인간 관계'),
           _buildConcernChip('친구'),
           _buildConcernChip('학교 성적'),
-          _buildConcernChip('취업 및 진로'),
         ],
       ),
     );
@@ -190,42 +210,83 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildMenuItem(IconData icon, String title) {
+  Widget _buildLogoutItem(IconData icon, String title) {
     return ListTile(
       contentPadding: const EdgeInsets.only(left: 40, right: 20),
       leading: Icon(icon, color: Colors.black54),
       title: Text(title, style: const TextStyle(fontFamily: 'DungGeunMo', fontSize: 16)),
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => LoginScreen(),
+                  ),
+                );
+      },
     );
   }
 
-  Widget _buildToggleMenuItem(String title) {
-    return ListTile(
-      contentPadding: const EdgeInsets.only(left: 40, right: 40),
-      title: Text(title, style: const TextStyle(fontFamily: 'DungGeunMo', fontSize: 16)),
-      trailing: Switch(
-        value: isOn,
-        onChanged: (value) {
-          setState(() {
-            isOn = value;
-          });
-        },
-        activeColor: const Color(0xFF5A6140),
-        activeTrackColor: const Color(0xFF959D75),
-        inactiveThumbColor: const Color(0xFFDCE6B7),
-        inactiveTrackColor: const Color(0xFF959D75),
-        trackOutlineColor: WidgetStateProperty.all(Colors.transparent),
-      ),
-    );
-  }
+  Widget _buildToggleMenuItem(String title, IconData icon) {
+  return ListTile(
+    contentPadding: const EdgeInsets.only(left: 40, right: 40),
+    leading: Icon(icon, color: Colors.black54), // 알림 아이콘 추가
+    title: Text(
+      title, 
+      style: const TextStyle(fontFamily: 'DungGeunMo', fontSize: 16),
+    ),
+    trailing: Switch(
+      value: isOn,
+      onChanged: (value) {
+        setState(() {
+          isOn = value;
+        });
+      },
+      activeColor: const Color(0xFF5A6140),
+      activeTrackColor: const Color(0xFF959D75),
+      inactiveThumbColor: const Color(0xFFDCE6B7),
+      inactiveTrackColor: const Color(0xFF959D75),
+      trackOutlineColor: WidgetStateProperty.all(Colors.transparent),
+    ),
+  );
+}
 
-  Widget _buildDisabledMenuItem(String title) {
+
+  Widget _buildDeleteItem(String title) {
     return ListTile(
       contentPadding: const EdgeInsets.only(left: 40, right: 20),
-      title: Text(
-        title,
-        style: const TextStyle(fontFamily: 'DungGeunMo', fontSize: 16, color: Colors.black38),
-      ),
+      title: Text(title, style: const TextStyle(fontFamily: 'DungGeunMo', fontSize: 16, color: Colors.grey)),
+      onTap: () {
+        _showConfirmDialog(context);
+      },
+    );
+  }
+
+  void _showConfirmDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('정말 탈퇴하시겠습니까?', style: TextStyle(fontFamily: 'DungGeunMo', fontSize: 16)),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('아니오', style: TextStyle(fontFamily: 'DungGeunMo', fontSize: 13, color: Colors.grey)),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginScreen()),
+                );
+              },
+              child: const Text('예', style: TextStyle(fontFamily: 'DungGeunMo', fontSize: 13, color: Colors.grey)),
+            ),
+          ],
+        );
+      },
     );
   }
 }

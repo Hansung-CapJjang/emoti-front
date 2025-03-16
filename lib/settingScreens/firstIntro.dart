@@ -122,7 +122,7 @@ class SecondScreen extends StatelessWidget {
               height: 50,
               child: ElevatedButton(
                 onPressed: () {
-                  navigateWithAnimation(context, const NameInputScreen());
+                  navigateWithAnimation(context, const NameInputScreen(isEdit: false));
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF5A5F3C), // ��ư ����

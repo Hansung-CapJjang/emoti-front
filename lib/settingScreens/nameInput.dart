@@ -6,7 +6,9 @@ import 'firstIntro.dart';
 import 'genderInput.dart';
 
 class NameInputScreen extends StatefulWidget {
-  const NameInputScreen({super.key});
+  final bool isEdit;
+
+  const NameInputScreen({super.key, required this.isEdit});
 
   @override
   _NameInputScreenState createState() => _NameInputScreenState();
@@ -202,12 +204,15 @@ class _NameInputScreenState extends State<NameInputScreen>
                   ? () {
                       String name = _controller.text.trim();
                       _sendNameToServer(name);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => GenderInputScreen(name: _controller.text.trim()),
-                        ),
-                      );
+                      if (widget.isEdit) {
+                        Navigator.pop(context);
+                      }
+                      else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => GenderInputScreen(name: _controller.text.trim())));
+                      }
                     }
                   : null,
               style: ElevatedButton.styleFrom(
@@ -217,9 +222,9 @@ class _NameInputScreenState extends State<NameInputScreen>
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
-              child: const Text(
-                '다음',
-                style: TextStyle(fontSize: 16, fontFamily: 'DungGeunMo'),
+              child: Text(
+                widget.isEdit ? '완료' : '다음',
+                style: const TextStyle(fontSize: 16, fontFamily: 'DungGeunMo'),
               ),
             ),
           ),
