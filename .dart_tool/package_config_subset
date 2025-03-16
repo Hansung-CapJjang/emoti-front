@@ -106,6 +106,10 @@ flutter_svg
 3.4
 file:///Users/jeongseyeon/.pub-cache/hosted/pub.dev/flutter_svg-2.0.17/
 file:///Users/jeongseyeon/.pub-cache/hosted/pub.dev/flutter_svg-2.0.17/lib/
+flutter_tts
+3.4
+file:///Users/jeongseyeon/.pub-cache/hosted/pub.dev/flutter_tts-4.2.2/
+file:///Users/jeongseyeon/.pub-cache/hosted/pub.dev/flutter_tts-4.2.2/lib/
 http
 3.4
 file:///Users/jeongseyeon/.pub-cache/hosted/pub.dev/http-1.3.0/
@@ -436,8 +440,8 @@ file:///Users/jeongseyeon/.pub-cache/hosted/pub.dev/yaml-3.1.3/
 file:///Users/jeongseyeon/.pub-cache/hosted/pub.dev/yaml-3.1.3/lib/
 flutter_application_1
 3.5
-file:///Users/jeongseyeon/Documents/A/front_1/emoti-front/
-file:///Users/jeongseyeon/Documents/A/front_1/emoti-front/lib/
+file:///Users/jeongseyeon/Downloads/emoti-front-voice-chat/
+file:///Users/jeongseyeon/Downloads/emoti-front-voice-chat/lib/
 sky_engine
 3.2
 file:///Users/jeongseyeon/Downloads/flutter/bin/cache/pkg/sky_engine/

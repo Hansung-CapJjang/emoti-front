@@ -5,45 +5,66 @@ import 'package:path_provider/path_provider.dart';
 import 'dart:math';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'StampBoard.dart';
+// import 'StampBoard.dart';
 
 // 📌 이미지를 갤러리에 저장하는 함수
 Future<void> _saveImageToGallery() async {
   try {
-    // 1️⃣ 권한 요청 (Android 13 이상에서는 필수)
-    if (await Permission.storage.request().isDenied) {
-      print("❌ 저장 권한이 거부됨");
-      return;
+    // 🔹 권한 요청 (Android 13 이상 및 iOS 대응)
+    if (Platform.isAndroid) {
+      if (await Permission.storage.request().isDenied ||
+          await Permission.photos.request().isDenied) {
+        print("❌ 저장 권한이 거부됨");
+        return;
+      }
+    } else if (Platform.isIOS) {
+      if (await Permission.photos.request().isDenied) {
+        print("❌ iOS 갤러리 저장 권한이 거부됨");
+        return;
+      }
     }
-    // 2️⃣ assets에서 이미지 로드
+
+    // 🔹 assets에서 이미지 로드
     final ByteData data = await rootBundle.load('assets/images/demo_baebse.png');
     final Uint8List bytes = data.buffer.asUint8List();
 
-    // 3️⃣ 파일을 임시 디렉토리에 저장
+    // 🔹 파일을 임시 디렉토리에 저장
     final Directory tempDir = await getTemporaryDirectory();
     final String filePath = '${tempDir.path}/demo_baebse.png';
     final File imageFile = File(filePath);
     await imageFile.writeAsBytes(bytes);
 
-    // 4️⃣ 갤러리에 저장
+    // 🔹 갤러리에 저장 (Android & iOS 대응)
     final result = await ImageGallerySaver.saveFile(filePath);
-    print("✅ Image saved to gallery: $result");
+    if (result['isSuccess'] == true) {
+      print("✅ Image saved to gallery: $result");
+    } else {
+      print("❌ Image save failed: $result");
+    }
   } catch (e) {
     print("❌ Error saving image: $e");
   }
 }
 
-//////
+// 📌 Vector 이미지 다운로드 함수 (수정된 버전)
 Future<void> _downloadImage() async {
-  final ByteData data = await rootBundle.load('assets/images/Vector.png');
-  final Uint8List bytes = data.buffer.asUint8List();
+  try {
+    // 🔹 assets에서 이미지 로드
+    final ByteData data = await rootBundle.load('assets/images/Vector.png');
+    final Uint8List bytes = data.buffer.asUint8List();
 
-  final Directory directory = await getApplicationDocumentsDirectory();
-  final File imageFile = File('${directory.path}/Vector.png');
-  await imageFile.writeAsBytes(bytes);
+    // 🔹 앱 내 저장소에 저장
+    final Directory directory = await getApplicationDocumentsDirectory();
+    final String filePath = '${directory.path}/Vector.png';
+    final File imageFile = File(filePath);
+    await imageFile.writeAsBytes(bytes);
 
-  print("Image saved at: ${imageFile.path}");
+    print("✅ Image saved at: ${imageFile.path}");
+  } catch (e) {
+    print("❌ Error downloading image: $e");
+  }
 }
+
 
 void main() {
   runApp(const MaterialApp(
@@ -76,16 +97,17 @@ class _HomeScreenState extends State<HomeScreen> {
   // 랜덤 문구를 저장할 변수
   late String randomSpeechText;
 
-  void _showPopupDialog(BuildContext context) {
-  print("🔹 Popup function called!"); // 디버깅용 로그 추가
 
+
+void _showPopupDialog(BuildContext context) {
   showDialog(
     context: context,
-    barrierDismissible: true, // 팝업 바깥 클릭하면 닫힘
+    barrierDismissible: true, // 팝업 바깥 클릭 시 닫기
     builder: (BuildContext dialogContext) {
-      return Dialog(
+      return AlertDialog(
         backgroundColor: Colors.transparent, // 배경 투명 처리
-        child: Container(
+        contentPadding: EdgeInsets.zero, // 기본 패딩 제거
+        content: Container(
           width: MediaQuery.of(context).size.width * 0.8, // 팝업 크기 조정
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
@@ -116,10 +138,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               const SizedBox(height: 12),
               ElevatedButton(
-                onPressed: () {
-                  print("🔹 Popup closed!"); // 팝업 닫힘 확인 로그
-                  Navigator.of(dialogContext).pop(); // 팝업 닫기
-                },
+                onPressed: () => Navigator.of(dialogContext).pop(), // 팝업 닫기
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF798063), // 배경색
                   foregroundColor: Colors.white, // 글씨색
@@ -140,6 +159,7 @@ class _HomeScreenState extends State<HomeScreen> {
     },
   );
 }
+
 
   @override
   void initState() {
@@ -374,27 +394,25 @@ class _HomeScreenState extends State<HomeScreen> {
   ),
 ),
 
-Align(
-  alignment: Alignment.center,
-  child: Transform.translate(
-    offset: const Offset(120, -130), // 원하는 만큼 오른쪽으로 이동
-    child: GestureDetector(
-      onTap: () {
-        print("🔹 Vector image tapped! Saving demo_baebse.png to gallery...");
-        _saveImageToGallery(); // 갤러리 저장 함수 호출
-      },
-      child: Image.asset(
-        'assets/images/Vector.png', // Vector 이미지 경로
-        width: 100, // 원하는 크기로 설정
-      ),
+Transform.translate(
+  offset: const Offset(120, -130), // 원하는 만큼 오른쪽으로 이동
+  child: GestureDetector(
+    onTap: () {
+      print("🔹 Vector image tapped! Downloading image...");
+      _downloadImage(); // ✅ 이미지 다운로드 실행
+    },
+    child: Image.asset(
+      'assets/images/Vector.png', // Vector 이미지 경로
+      width: 100, // 원하는 크기로 설정
     ),
   ),
 ),
 
+
     // 🔹 캐릭터 아래 여백 (버튼과 겹치지 않도록 조정 가능)
    Center(
   child: Transform.translate(
-    offset: const Offset(0, -60), // 원하는 만큼 위로 올리기
+    offset: const Offset(0, -120), // 원하는 만큼 위로 올리기
     child: ElevatedButton(
       onPressed: () {
         // 도장판 제출 버튼 클릭 시 동작
@@ -419,26 +437,25 @@ Align(
 ),
 
     // 🔹 아이콘 위치 조정 가능
-   Align(
-  alignment: Alignment.center,
-  child: Transform.translate(
-    offset: const Offset(120, -180), // 원하는 만큼 위로 올리기
-    child: GestureDetector(
-      onTap: () {
-        print("🔹 Information icon tapped!"); // 아이콘 클릭 확인
-        _showPopupDialog(context);
-      },
-      child: Container(
-        margin: const EdgeInsets.only(top: 10), // 여백 조정
-        child: Image.asset(
-          'assets/images/informationicon.png',
-          width: 30,
-          height: 30,
-        ),
+   Transform.translate(
+  offset: const Offset(120, -165), // 기존 위치값 유지 (오른쪽 120, 위로 180)
+  child: GestureDetector(
+    onTap: () {
+      print("🔹 Information icon tapped!"); // 터미널 로그 확인용
+      _showPopupDialog(context); // 팝업 호출
+    },
+    child: Container(
+      color: Colors.transparent, // 터치 영역 확보
+      child: Image.asset(
+        'assets/images/informationicon.png',
+        width: 30,
+        height: 30,
       ),
     ),
   ),
 ),
+
+
   ],
 ),
             const SizedBox(height: 30), // 버튼 아래 간격 추가

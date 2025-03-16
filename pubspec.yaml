@@ -38,6 +38,7 @@ dependencies:
   flutter_launcher_icons: ^0.14.1
   flutter_svg: 
   speech_to_text:
+  flutter_tts:
   
   flutter_localization: ^0.2.2
   http: ^1.2.2

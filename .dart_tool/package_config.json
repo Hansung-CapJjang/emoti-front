@@ -182,6 +182,12 @@
       "languageVersion": "3.3"
     },
     {
+      "name": "flutter_tts",
+      "rootUri": "file:///Users/jeongseyeon/.pub-cache/hosted/pub.dev/flutter_tts-4.2.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.4"
+    },
+    {
       "name": "flutter_web_plugins",
       "rootUri": "file:///Users/jeongseyeon/Downloads/flutter/packages/flutter_web_plugins",
       "packageUri": "lib/",
@@ -692,7 +698,7 @@
       "languageVersion": "3.5"
     }
   ],
-  "generated": "2025-03-13T06:19:52.965422Z",
+  "generated": "2025-03-16T03:41:51.946826Z",
   "generator": "pub",
   "generatorVersion": "3.5.4",
   "flutterRoot": "file:///Users/jeongseyeon/Downloads/flutter",

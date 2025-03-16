@@ -18,7 +18,7 @@
 		</data>
 		<key>Assets.car</key>
 		<data>
-		KRHFGaihknano1+YVu1p3csVfPc=
+		sQaEmKSlBHw5im1C1FnjWlRRjkY=
 		</data>
 		<key>Base.lproj/LaunchScreen.storyboardc/01J-lp-oVM-view-Ze5-6b-2t3.nib</key>
 		<data>
@@ -46,7 +46,7 @@
 		</data>
 		<key>Frameworks/App.framework/App</key>
 		<data>
-		G6VVWXWsdITt9w5SbI1I4xblKOs=
+		vhG4P5uAYXX3kRRaOp8IjfR3He4=
 		</data>
 		<key>Frameworks/App.framework/Info.plist</key>
 		<data>
@@ -54,7 +54,7 @@
 		</data>
 		<key>Frameworks/App.framework/_CodeSignature/CodeResources</key>
 		<data>
-		BXVtY3dUsytWpcViHfeLnVZkMeI=
+		YkuwcHDDcKTitBxLns3W89UB1Hw=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.bin</key>
 		<data>
@@ -70,7 +70,11 @@
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/NOTICES.Z</key>
 		<data>
-		svUA43G1dHtfjtyNl4AdS8YSY2s=
+		m56DeWK4lDY/UM9Zgh2b3VhknCU=
+		</data>
+		<key>Frameworks/App.framework/flutter_assets/NativeAssetsManifest.json</key>
+		<data>
+		re4p7E8rPLLsN+wzaPN/+AVpXTY=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/assets/fonts/DungGeunMo.otf</key>
 		<data>
@@ -126,11 +130,11 @@
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/isolate_snapshot_data</key>
 		<data>
-		cwnrd7SVzU/+IluNxTgC2ALcd2w=
+		J3OKveu3/udFiB8O6yi68rDVWOY=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/kernel_blob.bin</key>
 		<data>
-		bXT1zhtl+tUZJPva/X7iF0KXwDs=
+		+GAvvaa0AtMoHNtlaPZvkv8jZ10=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
 		<data>
@@ -142,11 +146,11 @@
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/vm_snapshot_data</key>
 		<data>
-		ituzZzkouVPX475mGIvTzzeOnk8=
+		6f33nJbLQOxwLNQ7Pq7TZR9ENuo=
 		</data>
 		<key>Frameworks/Flutter.framework/Flutter</key>
 		<data>
-		ZkzdQy4cLmApkckZwUHf5oNDPdY=
+		3vEe/Wpf4E+loYVBWYrVTzoFM+I=
 		</data>
 		<key>Frameworks/Flutter.framework/Headers/Flutter.h</key>
 		<data>
@@ -182,11 +186,15 @@
 		</data>
 		<key>Frameworks/Flutter.framework/Headers/FlutterEngineGroup.h</key>
 		<data>
-		D7zmZX01a5aYqFKalkcNejJ9toU=
+		bkw+DmHReHDg1PPcvmSjuLZrheA=
 		</data>
 		<key>Frameworks/Flutter.framework/Headers/FlutterHeadlessDartRunner.h</key>
 		<data>
 		UqnnVWwQEYYX56eu7lt6dpR3LIc=
+		</data>
+		<key>Frameworks/Flutter.framework/Headers/FlutterHourFormat.h</key>
+		<data>
+		VjAwScWkWWSrDeetip3K4yhuwDU=
 		</data>
 		<key>Frameworks/Flutter.framework/Headers/FlutterMacros.h</key>
 		<data>
@@ -210,11 +218,11 @@
 		</data>
 		<key>Frameworks/Flutter.framework/Headers/FlutterViewController.h</key>
 		<data>
-		n0oqDKaGwBHcAUY4+7F+z78onKc=
+		LDr6kSVbUfyQFAxLwCACF5S2VEA=
 		</data>
 		<key>Frameworks/Flutter.framework/Info.plist</key>
 		<data>
-		8gjKEdbQY0Mieo2CUA+YGKmghkY=
+		+8GUTjT65EWKWGCvzzqxpU7xZPE=
 		</data>
 		<key>Frameworks/Flutter.framework/Modules/module.modulemap</key>
 		<data>
@@ -226,7 +234,7 @@
 		</data>
 		<key>Frameworks/Flutter.framework/_CodeSignature/CodeResources</key>
 		<data>
-		oBMFHW8uxs2THr0UeBoLaPVJK/M=
+		/h16tUmYkItwIKOuPLUhjeZQLOc=
 		</data>
 		<key>Frameworks/Flutter.framework/icudtl.dat</key>
 		<data>
@@ -234,31 +242,31 @@
 		</data>
 		<key>Frameworks/Try.framework/Info.plist</key>
 		<data>
-		fKszs4xR8ATYcbQ/nWgqkOTfraY=
+		umXMk2bYaPVPeUau7Ql+uHt8B5c=
 		</data>
 		<key>Frameworks/Try.framework/Try</key>
 		<data>
-		I3hmddJnNi22WxIxD/XPpBEWdAE=
+		ZCHCA9m+r58BgDqv+cCtfgUiT38=
 		</data>
 		<key>Frameworks/Try.framework/_CodeSignature/CodeResources</key>
 		<data>
-		2axhmvdqM19Wc7rZSyoso7IXj74=
+		FLsmveGeRPeOnk6hKANQ5a/u/uo=
 		</data>
 		<key>Frameworks/flutter_local_notifications.framework/Info.plist</key>
 		<data>
-		uMlDYFoRxJLk+jcqSxftA2MSjD0=
+		2V4jXUA27ojcraySP57Zqk44Ycc=
 		</data>
 		<key>Frameworks/flutter_local_notifications.framework/_CodeSignature/CodeResources</key>
 		<data>
-		IBdJ72bTHaqrfLvb+4FC7pHvCPg=
+		N69MbEoZUr7hngU52avpU5Wr5QI=
 		</data>
 		<key>Frameworks/flutter_local_notifications.framework/flutter_local_notifications</key>
 		<data>
-		uky298Y6VMn/6PSBkVIKiXvf7/I=
+		rT7fpnSkxRewzDUD7S1z3tEz358=
 		</data>
 		<key>Frameworks/flutter_local_notifications.framework/flutter_local_notifications_privacy.bundle/Info.plist</key>
 		<data>
-		AniGkaikrk2Uiff0XjZGp9T46DI=
+		SzcLuD1/N8xwxxg28EXzzo14cS0=
 		</data>
 		<key>Frameworks/flutter_local_notifications.framework/flutter_local_notifications_privacy.bundle/PrivacyInfo.xcprivacy</key>
 		<data>
@@ -266,43 +274,43 @@
 		</data>
 		<key>Frameworks/flutter_localization.framework/Info.plist</key>
 		<data>
-		kYRtgS0K3dROitafxfkDbFt8Ptg=
+		twPl5fM7gkygELcAKmEKSQRmz5M=
 		</data>
 		<key>Frameworks/flutter_localization.framework/_CodeSignature/CodeResources</key>
 		<data>
-		TTUt2xZaE4KiO7nhPNuBpPxK3YI=
+		HZsyMB2r9Id+W6EcawI5IGrR3As=
 		</data>
 		<key>Frameworks/flutter_localization.framework/flutter_localization</key>
 		<data>
-		2w/rQeM1DCjCXxbtFJ8/ejIFw8E=
+		8A2e+SQcwCDeJdYdW5ZVHUSAJNY=
 		</data>
 		<key>Frameworks/image_gallery_saver.framework/Info.plist</key>
 		<data>
-		Ojjk8pmeHj4z0xgCsqHsK8+Cuvc=
+		kFOK6Q90b4yvfoxIWaUaGkLDntU=
 		</data>
 		<key>Frameworks/image_gallery_saver.framework/_CodeSignature/CodeResources</key>
 		<data>
-		b37uNAwG9W0/Z/PveRkUWJtSw3E=
+		r8tv4oQ8s4MVtcUfQicknz/MH9Q=
 		</data>
 		<key>Frameworks/image_gallery_saver.framework/image_gallery_saver</key>
 		<data>
-		PEUY1agjlknSSwfvERU5IUBC91g=
+		k/6hj9IVSSwllEAhDZex1B5jujc=
 		</data>
 		<key>Frameworks/kakao_flutter_sdk_common.framework/Info.plist</key>
 		<data>
-		F0PBpV8abfoogEzGGMJOjA+wo9k=
+		XlPhY6oHRdliEgTgsV5Q0PJ4x5U=
 		</data>
 		<key>Frameworks/kakao_flutter_sdk_common.framework/_CodeSignature/CodeResources</key>
 		<data>
-		A3UIStZ9Ryxuxbe6mjE85ZGfsgk=
+		i6RClcpLXQoNPqx9ETiIhU8Ed7E=
 		</data>
 		<key>Frameworks/kakao_flutter_sdk_common.framework/kakao_flutter_sdk_common</key>
 		<data>
-		uicfTCsp5jGLTt2FvlTXQqOsl0w=
+		2FEQWaiNKe0Oc45It9fL12Bvsa0=
 		</data>
 		<key>Frameworks/kakao_flutter_sdk_common.framework/kakao_flutter_sdk_common_privacy.bundle/Info.plist</key>
 		<data>
-		+r8Nl5WvwqhvVGaMi77vicR15PA=
+		4EMvNAHJ34G5ZlHHC+loK8uLOf8=
 		</data>
 		<key>Frameworks/kakao_flutter_sdk_common.framework/kakao_flutter_sdk_common_privacy.bundle/PrivacyInfo.xcprivacy</key>
 		<data>
@@ -310,19 +318,19 @@
 		</data>
 		<key>Frameworks/path_provider_foundation.framework/Info.plist</key>
 		<data>
-		YVQgfnuxyY63sm3f/YOtf3V0+fc=
+		TxbWKCjBx1/4t78kMs+obtqQDig=
 		</data>
 		<key>Frameworks/path_provider_foundation.framework/_CodeSignature/CodeResources</key>
 		<data>
-		+wgWPjPhnnPXlc6msXUyi6A+Zms=
+		XeU8yXhcsYL38blljpEnBRFLt+Y=
 		</data>
 		<key>Frameworks/path_provider_foundation.framework/path_provider_foundation</key>
 		<data>
-		KoZSAC4WKcrLbMMX5sx6nBcLtYo=
+		378XLRLdPVDNGPtrPVrnZBBTm+4=
 		</data>
 		<key>Frameworks/path_provider_foundation.framework/path_provider_foundation_privacy.bundle/Info.plist</key>
 		<data>
-		0XEa+bBlbmJa0+au7iMDOH6km8E=
+		gCW3fx524KDLkEFqQlrpV51O1ms=
 		</data>
 		<key>Frameworks/path_provider_foundation.framework/path_provider_foundation_privacy.bundle/PrivacyInfo.xcprivacy</key>
 		<data>
@@ -330,19 +338,19 @@
 		</data>
 		<key>Frameworks/shared_preferences_foundation.framework/Info.plist</key>
 		<data>
-		roircaUIPOOhvfxc80+JhTuXxhE=
+		PPtwEHV80IwXtdoUrJT1PKSTeOs=
 		</data>
 		<key>Frameworks/shared_preferences_foundation.framework/_CodeSignature/CodeResources</key>
 		<data>
-		0b8L8D83uuNo6joSKKMcu/GGN2w=
+		IG4WYO0jjGM2H4iCL9v4WDWKkv8=
 		</data>
 		<key>Frameworks/shared_preferences_foundation.framework/shared_preferences_foundation</key>
 		<data>
-		VUtQQiyd6LCTYK0aymff9Z62nHQ=
+		QpEbUuxQ020NWEZGynKFPGDzEag=
 		</data>
 		<key>Frameworks/shared_preferences_foundation.framework/shared_preferences_foundation_privacy.bundle/Info.plist</key>
 		<data>
-		7OzJ1OgvDIQrjqE2+iRpavNDZr0=
+		xDtzwqNr95qFwFiBgfW7E2pfloI=
 		</data>
 		<key>Frameworks/shared_preferences_foundation.framework/shared_preferences_foundation_privacy.bundle/PrivacyInfo.xcprivacy</key>
 		<data>
@@ -350,31 +358,31 @@
 		</data>
 		<key>Frameworks/speech_to_text.framework/Info.plist</key>
 		<data>
-		r10rLJlfQ2LDCwgjuQiUdyuKUpY=
+		znDWqw1VpVfR/V2WSs1aFJsZ6wI=
 		</data>
 		<key>Frameworks/speech_to_text.framework/_CodeSignature/CodeResources</key>
 		<data>
-		XCaGuZXs7CmNYZYCUU5rSafj0UU=
+		hcdRI42sXXDcWrSugqRVAR78zU8=
 		</data>
 		<key>Frameworks/speech_to_text.framework/speech_to_text</key>
 		<data>
-		6X0pFFvU4DGnR39cDHf0Y7ef3EM=
+		5U6N4FWXylW6zt4MIuiF8pKPofA=
 		</data>
 		<key>Frameworks/url_launcher_ios.framework/Info.plist</key>
 		<data>
-		mSL9MafrwD9Obm4TEtvU0W+VHoA=
+		mpjRXFDZ0SBZ6wMi5rTOV12i6sM=
 		</data>
 		<key>Frameworks/url_launcher_ios.framework/_CodeSignature/CodeResources</key>
 		<data>
-		Q2OuRKkdalR+1Yl0oBOwM5RVaPE=
+		jWGpOAd0uh/4bi2l/LRI8DmE3zE=
 		</data>
 		<key>Frameworks/url_launcher_ios.framework/url_launcher_ios</key>
 		<data>
-		HXCgHVyaao9fDJJf+vE2pai/3hs=
+		qVR8WKEcNkglqtD0fU9fT/P6Ljo=
 		</data>
 		<key>Frameworks/url_launcher_ios.framework/url_launcher_ios_privacy.bundle/Info.plist</key>
 		<data>
-		6m6Cmr5Jtdu3IY2hh0zsSdVxHw0=
+		muZrVIs2wR5oe6hJaT8jiO1mvj8=
 		</data>
 		<key>Frameworks/url_launcher_ios.framework/url_launcher_ios_privacy.bundle/PrivacyInfo.xcprivacy</key>
 		<data>
@@ -382,19 +390,19 @@
 		</data>
 		<key>Frameworks/webview_flutter_wkwebview.framework/Info.plist</key>
 		<data>
-		PoDag6OicL00eB3CgvJnZHVxiXs=
+		osZytDxjIkrDNUPHxJ2zDgZlEWI=
 		</data>
 		<key>Frameworks/webview_flutter_wkwebview.framework/_CodeSignature/CodeResources</key>
 		<data>
-		PIUET+LJMyb6+FWCJvG+rnsw1Fw=
+		pnju1UbKGR+T8FQLnYWyW3YfLWE=
 		</data>
 		<key>Frameworks/webview_flutter_wkwebview.framework/webview_flutter_wkwebview</key>
 		<data>
-		QPY5JjIMwuRzstx5kJlskk5yhL4=
+		J5b1tNSDJb357iDgnInluhVcXgQ=
 		</data>
 		<key>Frameworks/webview_flutter_wkwebview.framework/webview_flutter_wkwebview_privacy.bundle/Info.plist</key>
 		<data>
-		8KrYf3PbdfmoUMoufqplv3u9Wis=
+		pmw97OEZ91sy/dRWF8H8PI0KwVM=
 		</data>
 		<key>Frameworks/webview_flutter_wkwebview.framework/webview_flutter_wkwebview_privacy.bundle/PrivacyInfo.xcprivacy</key>
 		<data>
@@ -402,7 +410,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		qdcp2o2BoQc4aUG7fpFDfzVuyCU=
+		MVv3IUiUSwulcXL2wTr/du6tmyg=
 		</data>
 		<key>PkgInfo</key>
 		<data>
@@ -410,15 +418,15 @@
 		</data>
 		<key>Runner.debug.dylib</key>
 		<data>
-		WeL7etvTsNRR/uxN5yjZRvEwsxo=
+		K8llyx/yhYq6uMeO2fTM57D3zVg=
 		</data>
 		<key>__preview.dylib</key>
 		<data>
-		b9CZKGhxxGrLYcnQqRSGWvKx3ts=
+		MBeAbJV8mRlMfw1cAhrhOuBg034=
 		</data>
 		<key>embedded.mobileprovision</key>
 		<data>
-		lotwehZEqztLCxnmvNVnnQqgE8I=
+		M97h4nIB8N/sObZLkazPQNr+W54=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -448,7 +456,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			pKlIqNedgi4a/FQb/OammIPSrGDOGWypJ5rh5oMn/GA=
+			pJVe8EqKfk3AAlbnhVMJ+5VCJb6tGKHcmnkNBKflC1I=
 			</data>
 		</dict>
 		<key>Base.lproj/LaunchScreen.storyboardc/01J-lp-oVM-view-Ze5-6b-2t3.nib</key>
@@ -497,7 +505,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			srcBHgNFVp1apcCDiWvehCWPqIwdWENmP0rwZwaiq7w=
+			Xs8zGmu9yV2iSxcDVpSdXAlolPrm3BgDSeRu8Vr7pjY=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/Info.plist</key>
@@ -511,7 +519,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			SCFNvz6EnBqhtBSTa2r2+3CInc5l2Ltlg87AN4a427k=
+			oAWBcXVWjDrLRS7N7RHCKxL1+Ar3C8P4iJN3Dv4uQR8=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.bin</key>
@@ -539,7 +547,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			fi1iBESdZl01I8n2gX/9VvmACZvWYpY7cRZAbA5TSow=
+			xzE2A8+God6kJ4fzSDR0ZSEK11JnmUpqfCKqrC8rF4M=
+			</data>
+		</dict>
+		<key>Frameworks/App.framework/flutter_assets/NativeAssetsManifest.json</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			lUijHkoEgTXB2U+Rkyi/tirix7s8q5ZVfHlB2ql3dss=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/assets/fonts/DungGeunMo.otf</key>
@@ -637,14 +652,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			QogPK7LScf8HpyrdsTpkL8WOPl9NnQTGL1N2R05tsZE=
+			ykVvWbyyNFkOsE/pzKdeOTPYsF+loL8qrTBq1TF84es=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/kernel_blob.bin</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			imxSPrR8PLzsLxk+rFPK8ZmfVNXl3ShMLxuPw5vyFt0=
+			e0xajCwUk/JuUo9eLisAwocGk+gN8ck2nP/q0PJ027k=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
@@ -665,14 +680,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			L8Ll/5LQYd/uiFbt7jD8B17se0Auql4jpiImNFSyl6A=
+			EkAQI7At/OAUaTSQUy3t6/4PpHWrvbPs+YdJHmzJ978=
 			</data>
 		</dict>
 		<key>Frameworks/Flutter.framework/Flutter</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Ln7rp1AL0N9gYv6xtsmo9T1HIoG2HmI9XF/zvA/xL6o=
+			C0YaH3zX+VC3KJuUzeYixLAZ9w5/koQKBRD3NeRFfYk=
 			</data>
 		</dict>
 		<key>Frameworks/Flutter.framework/Headers/Flutter.h</key>
@@ -735,7 +750,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			OW47bgphAFby1w8jlGCDvYQnMT3W1UAKiw5oFHtY788=
+			SqzvIxqBXEJ3U9LJ32hCEXsrH2P16gumQ+gQx6Pdlf4=
 			</data>
 		</dict>
 		<key>Frameworks/Flutter.framework/Headers/FlutterHeadlessDartRunner.h</key>
@@ -743,6 +758,13 @@
 			<key>hash2</key>
 			<data>
 			nmZjZpvFCXrygf4U9aPkNi8VcI7cL5AtA+CY5uUWIL0=
+			</data>
+		</dict>
+		<key>Frameworks/Flutter.framework/Headers/FlutterHourFormat.h</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			Q4SLFSghL/5EFJPyLg7PNi9J/xpkVVfzro0VQiQHtrY=
 			</data>
 		</dict>
 		<key>Frameworks/Flutter.framework/Headers/FlutterMacros.h</key>
@@ -784,14 +806,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			phm49xhui2KkRomlqtmASHuU7lmd/s3qNCQpYxC0IMc=
+			yEgZTlCNrK/A/QBjEwNGB6ffC+A9gorPvnNgSbYuQ7Y=
 			</data>
 		</dict>
 		<key>Frameworks/Flutter.framework/Info.plist</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			JVgUZBePjvjdlfHLc1BcOGG5neC9TnmhNdThJES/t+8=
+			qvdqOJyjv94imOYTWNDnDQE5YS+PsQoEVDZ/eyOLBsM=
 			</data>
 		</dict>
 		<key>Frameworks/Flutter.framework/Modules/module.modulemap</key>
@@ -812,7 +834,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			FfbjRWbAhBcOtgBvL1zhQ1+eTRM4ZYBM6SjkmwWQMvA=
+			Qs/vkLJuQ29Pp1KIPbf42CmNEU97zcwikXe/XR2CXRY=
 			</data>
 		</dict>
 		<key>Frameworks/Flutter.framework/icudtl.dat</key>
@@ -826,49 +848,49 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			Gwl7/nmaiTgibulwm/fUiDG5Vkt+6X1qYJhlzDBXUkk=
+			KXVm/9cHOnqlpHOogXuMcs5cJHCGM+kRw9PwAv32eJI=
 			</data>
 		</dict>
 		<key>Frameworks/Try.framework/Try</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			KA2FGFZ83E3RgTEAZQEjQRWHcZNlVnw6sUopxsiod+c=
+			SbVqebTfjc/ifT2m+k5/WE0wytOl7Z591yvlpEuwPVk=
 			</data>
 		</dict>
 		<key>Frameworks/Try.framework/_CodeSignature/CodeResources</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			gevc3Fi1MMkF28ClgPQ2ZbATiEQsfnkbUpSrOASrRWI=
+			zT9nAhRvoZ8BXP0xCmP/qMtr8q5DF9Cu69ILxRn4+SU=
 			</data>
 		</dict>
 		<key>Frameworks/flutter_local_notifications.framework/Info.plist</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			g8o+65LMjIEbXF2KRbm8m7krx6F7/jAub/6sZzBPgoo=
+			tg9KDBwioRVHwdKciejIkkG+P4/THI7tQUAjEvzh2N0=
 			</data>
 		</dict>
 		<key>Frameworks/flutter_local_notifications.framework/_CodeSignature/CodeResources</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			rP7Ma+1pfpX3L8ERiDwmuppBmvJsbmdg0wP3AHAXDvU=
+			qJxO6l+tSKr6rUBorydJUfXcgVr15+uWpue49wTBiv8=
 			</data>
 		</dict>
 		<key>Frameworks/flutter_local_notifications.framework/flutter_local_notifications</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			O0yalEt2VbCRd012kh+jnoP997rLf67LanxOZktHqLo=
+			G2FKY4oTbprSi8/u8eqe26ajSeFymY9r4dlHVzaDQ0o=
 			</data>
 		</dict>
 		<key>Frameworks/flutter_local_notifications.framework/flutter_local_notifications_privacy.bundle/Info.plist</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			BquLgzLTVdTmvLCN/tMf/qpWrzimmBlDBOZwnSIW/d8=
+			+q9CMN1MbiTF+KKnTR8vMSczjW8JB+OXBC31b2pTHUg=
 			</data>
 		</dict>
 		<key>Frameworks/flutter_local_notifications.framework/flutter_local_notifications_privacy.bundle/PrivacyInfo.xcprivacy</key>
@@ -882,70 +904,70 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			CXTJJk0+f0AKWSJZBWVxRA+GhgZ462/ZQoEyFyTYUDo=
+			xIEn6yo9OZi0lXosXS8sswik4a1KpUZLWKO+sNKVtwg=
 			</data>
 		</dict>
 		<key>Frameworks/flutter_localization.framework/_CodeSignature/CodeResources</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			9xIH1nIpBaHCG3x6BG5+mQNjwNiuh1ivR4P1wtukSVc=
+			LBGXoYjteo0Nzg0kAzslsam7qOmD7XTZemd7dv6iS+8=
 			</data>
 		</dict>
 		<key>Frameworks/flutter_localization.framework/flutter_localization</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			0eLqtuzwIsFELl0QsS9pn7RVPRZx1u1YEJJKQ4rhyKk=
+			aapZAiD6E/xmpFUobYDJIBZXGQ56MD0wXF2GT/0g3WY=
 			</data>
 		</dict>
 		<key>Frameworks/image_gallery_saver.framework/Info.plist</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			zu0/rsz+fAHQD79kVQAgTRLzW9gfRxvDIB2XHNFjzgM=
+			RKRfVfZFSBb4EPJuJwyaa2yeRc92VO698DEnuEmMmVM=
 			</data>
 		</dict>
 		<key>Frameworks/image_gallery_saver.framework/_CodeSignature/CodeResources</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			M3X1Qc8auTpY5EENIxxi47Fc5UXxapVWjbAclgTdxhY=
+			Q5vAvGOXNW6Jnb7QyIkNcJo0T1Rg6Nm2ZCfSD47BPRc=
 			</data>
 		</dict>
 		<key>Frameworks/image_gallery_saver.framework/image_gallery_saver</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			6rFzvmmbIOMYoLelAasgIiegz9n/ordeyMVChenVtNw=
+			+1E46h4mkf7WYnb1YWuhM61AtLsxtX3g2aPYrRgNmpA=
 			</data>
 		</dict>
 		<key>Frameworks/kakao_flutter_sdk_common.framework/Info.plist</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			j0Y0oT8j/mV5rWQMsmn/KemJRuRBWl3DWpJy5D35PCI=
+			VzizOqt82Mm7kFTO5XtX2D5rVS2ZnRolaAkNFRSaVL4=
 			</data>
 		</dict>
 		<key>Frameworks/kakao_flutter_sdk_common.framework/_CodeSignature/CodeResources</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			A0SbheGdGTUpVpZTiEOw0wrjTay20UALTwKHoEi2pOI=
+			s+Et5GdkWmDxinSrnIkTuFNBBKdfw8OFd9kf9AFHxGM=
 			</data>
 		</dict>
 		<key>Frameworks/kakao_flutter_sdk_common.framework/kakao_flutter_sdk_common</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ObsMr1fCBJHPMk0JLNj4kcAUYVOKfeeJZBKMqlQnxTg=
+			JAwut0ieeuzsQC0r20AdZnp9Ak2dpBzr015UUt4XXHw=
 			</data>
 		</dict>
 		<key>Frameworks/kakao_flutter_sdk_common.framework/kakao_flutter_sdk_common_privacy.bundle/Info.plist</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			1if3UmKpgcajzY+XXXn/9fp/GxORu5tfCJXMKMzOnOU=
+			Cz31SjBAQAiAXzy2/RnppVEKKTr0VylS9ykQyqu98d4=
 			</data>
 		</dict>
 		<key>Frameworks/kakao_flutter_sdk_common.framework/kakao_flutter_sdk_common_privacy.bundle/PrivacyInfo.xcprivacy</key>
@@ -959,28 +981,28 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			27Yqu//ea1v4PtB1Mpzeou45j1rkRcvoqp58EQthj9A=
+			uOmpJ1cs/RQf5HURASAEBldn11k/hRVMy+Tppp0c/00=
 			</data>
 		</dict>
 		<key>Frameworks/path_provider_foundation.framework/_CodeSignature/CodeResources</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			zZxux8hi81RhWLBXeJG97dvfodSsMciQe8VCGyUGzEE=
+			QKqa5SG+lLZQss2h01lfHXGeA3jQzUJm0YTSKEL+MKQ=
 			</data>
 		</dict>
 		<key>Frameworks/path_provider_foundation.framework/path_provider_foundation</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			2ECn0t14PzFuojGMTsoZErjt6HrrbX9NuwhLLjRzuMY=
+			/eNkAesM7nyx28eukK1fe4tIyIRSh3sJGLwdkQx155g=
 			</data>
 		</dict>
 		<key>Frameworks/path_provider_foundation.framework/path_provider_foundation_privacy.bundle/Info.plist</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			4Z5xn0DPAIekKndXd6OGPhgZK3kH+AMSjut3ykd6vnY=
+			prvxc5wSQLZuNRHvw8o6Pp5Gr8/Eb/an58vwtrRyEbM=
 			</data>
 		</dict>
 		<key>Frameworks/path_provider_foundation.framework/path_provider_foundation_privacy.bundle/PrivacyInfo.xcprivacy</key>
@@ -994,28 +1016,28 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			J7AhcaDe/lBF7r75bbXz7Achnt8hq1uFyiIe+h3hZvI=
+			iURzaG1MXBSTh+PMDp2h0vOcXHGACVpHbgVxZEoJAO4=
 			</data>
 		</dict>
 		<key>Frameworks/shared_preferences_foundation.framework/_CodeSignature/CodeResources</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			c5y2jRsnTuEFMd0kAyATY4YIUTZk6p2EUbG2Mr+/b2I=
+			+dxy/lwmtXVzFh4zl24N1hAd9GUKw7wmE6gVBj6A/Gk=
 			</data>
 		</dict>
 		<key>Frameworks/shared_preferences_foundation.framework/shared_preferences_foundation</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ON6XX/tt0Nlg5zwcWxa05qmY4+5eCmQ4agJEE3wylFE=
+			+TxO2Amba2Lmf7uS3IqK/6WvcYDP1WTgw+fNKS59o7g=
 			</data>
 		</dict>
 		<key>Frameworks/shared_preferences_foundation.framework/shared_preferences_foundation_privacy.bundle/Info.plist</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			pOUXky89GRaQXD7LOGT3YDgCENXVAvolAUfQRSl0eGk=
+			Iv3dc8Q8OX31lv6wiqEQrByhKnRaKeX6OPuGfHpnlvs=
 			</data>
 		</dict>
 		<key>Frameworks/shared_preferences_foundation.framework/shared_preferences_foundation_privacy.bundle/PrivacyInfo.xcprivacy</key>
@@ -1029,49 +1051,49 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			2xZRHNME0w5iHueJkd3RMqApKkw7oeX0iyoD9qWvDKA=
+			F6e45cSXeUXbsU07EiB0Xdgbi/S/m5SniwKLAZxSkgQ=
 			</data>
 		</dict>
 		<key>Frameworks/speech_to_text.framework/_CodeSignature/CodeResources</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ycR8sswD5AXhq1nOpG0VnAooz77BwtNa2AqfSz+DWZ8=
+			Ce6TIhOwhMTflPy+Db5uHoSlbQF5qrDl2hAZ1wOKW0s=
 			</data>
 		</dict>
 		<key>Frameworks/speech_to_text.framework/speech_to_text</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Bb2FHbr8DJOuQRh4BSXUqeJM7cvgc86gcxcPFv6Gn8A=
+			6dolBAmx9Eml+/SBRmr4XgZ8WUvQPfF+RZw5PXE9Dko=
 			</data>
 		</dict>
 		<key>Frameworks/url_launcher_ios.framework/Info.plist</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			UuZUodzbbWYi8BukUsXjqm1SZzYECHgEQOPpt/aj0Yo=
+			SIjeguQISg/oduGwtzW+P/JneaaYQMOGxtlUhnDsv2w=
 			</data>
 		</dict>
 		<key>Frameworks/url_launcher_ios.framework/_CodeSignature/CodeResources</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			MNdo2eqW0ZrBJlON58jxGxtDyP0zFbH5H6T0ltVwKH0=
+			W/mEy+/X3cQ0Kjxhul6WFFxqzGuhhh3fIJwdAruPoLs=
 			</data>
 		</dict>
 		<key>Frameworks/url_launcher_ios.framework/url_launcher_ios</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			K/jPVADQGvNBJ2YUF1mj/4CdyIAjQeFAKHjeJ0nR87Q=
+			ZDyFu81zY/ByF79etWBEPv/enciwyQoc3AWywGtijJU=
 			</data>
 		</dict>
 		<key>Frameworks/url_launcher_ios.framework/url_launcher_ios_privacy.bundle/Info.plist</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			72+X+W7Jnlj9YG7MOLkwXe6ZtcO5BCBqSufRYgHL6do=
+			ItbdurkvJ8bHK/Fzpe9958a3oHkJXTu781gQO5gxFzE=
 			</data>
 		</dict>
 		<key>Frameworks/url_launcher_ios.framework/url_launcher_ios_privacy.bundle/PrivacyInfo.xcprivacy</key>
@@ -1085,28 +1107,28 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			4zDwF9WMBp+op6LtMtErMkod2wxCZEHyrZAZu+7EvFU=
+			+n5qOTnWG75t2OsiJb0nvafOkgIhFB/O4ICls+dBELA=
 			</data>
 		</dict>
 		<key>Frameworks/webview_flutter_wkwebview.framework/_CodeSignature/CodeResources</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			jOO0WosYsepHkDcDPVlgwkz9PRsGbpmvKCguwmcn4DI=
+			iEFP/RslmCXGHeMNzG2QnYxZziGmU7PjwsVqyLqZ4dg=
 			</data>
 		</dict>
 		<key>Frameworks/webview_flutter_wkwebview.framework/webview_flutter_wkwebview</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			R9xZLW94i2/DQlxc4pQyjrRvF0a7Y64/Lm6H+E7Hn3Q=
+			Ys89VGaMVA1BfWvtjfqQCjzQqZskfxkTsS7m9JpvQcM=
 			</data>
 		</dict>
 		<key>Frameworks/webview_flutter_wkwebview.framework/webview_flutter_wkwebview_privacy.bundle/Info.plist</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			CD1gQ0ovGUs+pgvO4BCm8nn0HfOY+EdQC1UyCTeKSlI=
+			lmU40Atb7AR/0FOytlm859TaerHpcsFMAbKxKFEQi1w=
 			</data>
 		</dict>
 		<key>Frameworks/webview_flutter_wkwebview.framework/webview_flutter_wkwebview_privacy.bundle/PrivacyInfo.xcprivacy</key>
@@ -1120,21 +1142,21 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			y75qBY3Tz5tq/XpA66NL0mQoy/UKECId64S+OORgFaI=
+			IcsFEtHbkDngfPqrwyNjY7k/J9VX7unRgTB8/awSIb4=
 			</data>
 		</dict>
 		<key>__preview.dylib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			SU34dzCuOKZfIaWPBVssfreUeqkZI0DbKIpZAy8m/GM=
+			xvFcseNbGKHNGN24Zxem7XGhBjmQ+M1BDJujrReIshg=
 			</data>
 		</dict>
 		<key>embedded.mobileprovision</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			exL+x8YMhdPcT2hO1vLVPlvtM8S49eUzBefycRbKQ3w=
+			pVPrx1lV6N5EqWisPL6sAdLtOM444Gaqf8QLkH607ow=
 			</data>
 		</dict>
 	</dict>
