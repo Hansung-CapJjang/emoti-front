@@ -1,26 +1,16 @@
 import 'login.dart';
 import 'mainScreen.dart';
+import 'package:your_project_name/stampBoard.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart'; // Provider 임포트
 
-// 로그인 기능 구현하면 
-// 첫 로그인 시 로그인 화면, 로그인 되어 있다면 홈화면으로 바로 넘어가게 하기 위한 파일
-// 아직 구현 안됐으므로 각 파일 별로 직접 실행해보기
 void main() {
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    theme: ThemeData(
-      fontFamily: 'DungGeunMo', // 기본 폰트 설정
-    ),
-    home: MyApp(isLoggedIn: false),
-  ));
+  runApp(MyApp(isLoggedIn: false));
 }
 
 class MyApp extends StatelessWidget {
-  
   final bool isLoggedIn;
 
   const MyApp({super.key, required this.isLoggedIn});
@@ -47,7 +37,15 @@ class MyApp extends StatelessWidget {
         Locale('en'), // 영어 지원 (필요시 추가)
       ],
 
-      home: isLoggedIn ? MainScreen() : LoginScreen(), // 자동 로그인 구현
+      // ✅ 기본 화면 설정 (로그인 여부에 따라 변경)
+      initialRoute: isLoggedIn ? '/main' : '/login',
+
+      // ✅ `routes` 설정 (화면 이동 가능하도록 설정)
+      routes: {
+        '/main': (context) => MainScreen(),
+        '/login': (context) => LoginScreen(),
+        '/stampBoard': (context) => StampBoard(), // ✅ StampBoard 추가
+      },
     );
   }
 }

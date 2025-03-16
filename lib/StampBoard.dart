@@ -1,294 +1,356 @@
 import 'package:flutter/material.dart';
 
-class StampBoardPage extends StatelessWidget {
-  const StampBoardPage({super.key});
+class StampBoard extends StatefulWidget {
+  const StampBoard({super.key});
+
+  @override
+  _StampBoardState createState() => _StampBoardState();
+}
+
+class _StampBoardState extends State<StampBoard> {
+  bool isPetSelected = false; // ÎèÑÏû•ÌåêÏù¥ ÏÑ†ÌÉùÎêòÏóàÏùÑ Îïå ÏÉÅÌÉú
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFDCE6B7),
-      appBar: _buildAppBar(context),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          children: [
-            const SizedBox(height: 20),
-            _buildChallengeTitle(),
-            const SizedBox(height: 20),
-            _buildStampBoard(),
-            const SizedBox(height: 15),
-            _buildStampCollectionInfo(context),
-            const SizedBox(height: 20),
-            _buildMyStamps(),
-          ],
+  backgroundColor: const Color(0xFFDCE6B7),
+  appBar: AppBar(
+    automaticallyImplyLeading: false,
+    backgroundColor: Colors.transparent,
+    elevation: 0,
+    toolbarHeight: 100,
+    title: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            isPetSelected = true;
+                          });
+                          Navigator.pop(context); // Îí§Î°ú Í∞ÄÍ∏∞
+                        },
+                        child: Column(
+                          children: [
+                            Text(
+                              'Ìé´',
+                              style: TextStyle(
+                                fontSize: 28,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'DungGeunMo',
+                                color: isPetSelected
+                                    ? const Color(0xFF414728)
+                                    : const Color.fromRGBO(78, 87, 44, 0.25),
+                              ),
+                            ),
+                            if (isPetSelected)
+                              Container(
+                                margin: const EdgeInsets.only(top: 4),
+                                height: 6,
+                                width: 40,
+                                color: const Color.fromRGBO(5, 5, 2, 0.35),
+                              ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: 25),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            isPetSelected = false;
+                          });
+                        },
+                        child: Container(
+                          color: Colors.transparent,
+                          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                          child: Column(
+                            children: [
+                              Text(
+                                'ÎèÑÏû•Ìåê',
+                                style: TextStyle(
+                                  fontSize: 28,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'DungGeunMo',
+                                  color: !isPetSelected
+                                      ? const Color(0xFF414728)
+                                      : const Color.fromRGBO(78, 87, 44, 0.25),
+                                ),
+                              ),
+                              if (!isPetSelected)
+                                Container(
+                                  margin: const EdgeInsets.only(top: 4),
+                                  height: 6,
+                                  width: 70,
+                                  color: const Color.fromRGBO(5, 5, 2, 0.35),
+                                ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(bottom: 4),
+                    child: Icon(
+                      Icons.shopping_cart,
+                      color: Colors.black45,
+                      size: 28,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              Container(
+                height: 2,
+                width: MediaQuery.of(context).size.width * 0.85,
+                color: const Color.fromRGBO(78, 87, 44, 0.35),
+              ),
+            ],
+          ),
         ),
       ),
-      bottomNavigationBar: _buildBottomNavBar(context),
-    );
-  }
+      body: Column(
+        children: [
+          // üîπ ÎèÑÏ†Ñ Ï§ë! ÌÖçÏä§Ìä∏
+          Padding(
+            padding: const EdgeInsets.only(top: 30),
+            child: Text(
+              "~~ ÎèÑÏ†Ñ Ï§ë! ~~",
+              style: TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'DungGeunMo',
+                color: const Color(0xFF414728),
+              ),
+            ),
+          ),
 
-  /// ? **æ€πŸ (HomeScreen∞˙ µø¿œ)**
-  AppBar _buildAppBar(BuildContext context) {
-    return AppBar(
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-      toolbarHeight: 100,
-      title: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+          // üîπ ÎèÑÏû•Ìåê UI
+          Padding(
+  padding: const EdgeInsets.only(top: 40),
+  child: Stack(
+    alignment: Alignment.center,
+    children: [
+      // üîπ ÎèÑÏû•Ìåê Î∞ïÏä§
+      Container(
+        width: MediaQuery.of(context).size.width * 0.65, // üî• ÌôîÎ©¥Ïùò 65% Ï∞®ÏßÄ
+        height: 160,
+        decoration: BoxDecoration(
+          color: const Color(0xFFE9EFC7),
+          borderRadius: BorderRadius.circular(15),
+          border: Border.all(color: const Color(0xFF798063), width: 2),
+        ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: List.generate(2, (rowIndex) => 
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly, // ‚úÖ ÎèôÍ∑∏ÎùºÎØ∏ Í∑†Îì± Î∞∞Ïπò
+                children: List.generate(4, (colIndex) => 
+                  Container(
+                    width: 40,
+                    height: 40,
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Color(0xFF798063),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+
+      // üîπ Ï¢åÏ∏° ÌôîÏÇ¥Ìëú (Í∞úÎ≥Ñ ÏúÑÏπò Ï°∞Ï†ï Í∞ÄÎä•)
+      // üîπ Ï¢åÏ∏° ÌôîÏÇ¥Ìëú (Îçî Ï†ïÍµêÌïú ÏúÑÏπò Ï°∞Ï†ï Í∞ÄÎä•)
+Transform.translate(
+  offset: const Offset(-155, 0), // ‚úÖ (XÏ∂ï, YÏ∂ï) Ï°∞Ï†ï Í∞ÄÎä•
+  child: Icon(
+    Icons.chevron_left,
+    color: Colors.black.withOpacity(0.27), // ‚úÖ 27% Î∂àÌà¨Î™ÖÎèÑ Ï†ÅÏö©
+    size: 50,
+  ),
+),
+
+// üîπ Ïö∞Ï∏° ÌôîÏÇ¥Ìëú (Îçî Ï†ïÍµêÌïú ÏúÑÏπò Ï°∞Ï†ï Í∞ÄÎä•)
+Transform.translate(
+  offset: const Offset(155, 0), // ‚úÖ (XÏ∂ï, YÏ∂ï) Ï°∞Ï†ï Í∞ÄÎä•
+  child: Icon(
+    Icons.chevron_right,
+    color: Colors.black, // ‚úÖ ÏôÑÏ†Ñ Í≤ÄÏùÄÏÉâ Ï†ÅÏö©
+    size: 50,
+  ),
+),
+
+    ],
+  ),
+),
+
+
+
+
+
+
+          // üîπ ÎèÑÏû• ÎèÑÍ∞ê Î≤ÑÌäº
+          Padding(
+  padding: const EdgeInsets.only(top: 10),
+  child: Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      // üîπ ÎèÑÏû• ÎèÑÍ∞ê ÌÖçÏä§Ìä∏ (ÏúÑÏπò Ï°∞Ï†ï Í∞ÄÎä•)
+      Transform.translate(
+        offset: const Offset(80, 10), // ‚úÖ ÏôºÏ™ΩÏúºÎ°ú 5ÎßåÌÅº Ïù¥Îèô
+        child: const Text(
+          "ÎèÑÏû• ÎèÑÍ∞ê",
+          style: TextStyle(
+            fontSize: 15,
+            fontFamily: 'DungGeunMo',
+            color: Color(0xFF414728),
+          ),
+        ),
+      ),
+
+      const SizedBox(width: 1.5), // ‚úÖ Í∞ÑÍ≤© Ï°∞Ï†ï Í∞ÄÎä•
+
+      // üîπ ÏïÑÏù¥ÏΩò (ÏúÑÏπò Ï°∞Ï†ï Í∞ÄÎä•)
+      Transform.translate(
+        offset: const Offset(85, 10), // ‚úÖ Ïò§Î•∏Ï™ΩÏúºÎ°ú 5ÎßåÌÅº Ïù¥Îèô
+        child: Icon(
+          Icons.info_outline,
+          size: 20,
+          color: const Color(0xFF798063),
+        ),
+      ),
+    ],
+  ),
+),
+
+
+          // üîπ Íµ¨Î∂ÑÏÑ†
+         Padding(
+  padding: const EdgeInsets.symmetric(vertical: 10),
+  child: Align(
+    alignment: Alignment.center, // ‚úÖ Ï§ëÏïô Ï†ïÎ†¨
+    child: Transform.translate(
+      offset: const Offset(0, 27), // ‚úÖ Ïó¨Í∏∞ÏÑú x, y Í∞í Ï°∞Ï†ï Í∞ÄÎä•
+      child: Container(
+        width: MediaQuery.of(context).size.width * 0.85,
+        height: 2,
+        color: const Color.fromRGBO(78, 87, 44, 0.35),
+      ),
+    ),
+  ),
+),
+
+
+          // üîπ ÎÇ¥ ÎèÑÏû• ÌÖçÏä§Ìä∏
+          Padding(
+  padding: const EdgeInsets.only(bottom: 10),
+  child: Align(
+    alignment: Alignment.center, // ‚úÖ Í∏∞Î≥∏ Ï§ëÏïô Ï†ïÎ†¨
+    child: Transform.translate(
+      offset: const Offset(-105, 35), // ‚úÖ x, y Í∞í Ï°∞Ï†ï Í∞ÄÎä• (Ïòà: Offset(0, -5) ‚Üí ÏúÑÎ°ú Ïù¥Îèô)
+      child: Text(
+        "ÎÇ¥ ÎèÑÏû•",
+        style: TextStyle(
+          fontSize: 25,
+          fontWeight: FontWeight.bold,
+          fontFamily: 'DungGeunMo',
+          color: const Color(0xFF414728),
+        ),
+      ),
+    ),
+  ),
+),
+
+
+          // üîπ ÎÇ¥ ÎèÑÏû• Î¶¨Ïä§Ìä∏
+          Padding(
+  padding: const EdgeInsets.only(bottom: 20),
+  child: Align(
+    alignment: Alignment.center, // Í∏∞Î≥∏ Ï§ëÏïô Ï†ïÎ†¨
+    child: Transform.translate(
+      offset: const Offset(0, 40), // x, y Í∞í Ï°∞Ï†ï Í∞ÄÎä•
+      child: Container(
+        width: MediaQuery.of(context).size.width * 0.85, // Ïª®ÌÖåÏù¥ÎÑà ÎÑàÎπÑ Ï°∞Ï†ï
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(15),
+          border: Border.all(color: const Color(0xFF798063), width: 2),
+        ),
+        child: Column(
           children: [
+            // Ï≤´ Î≤àÏß∏ Ï§Ñ (üî•, ‚≠ê, üå±)
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween, // Í∞ÑÍ≤© Ï°∞Ï†à
               children: [
                 Row(
                   children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: Column(
-                        children: [
-                          Text(
-                            '∆Í',
-                            style: TextStyle(
-                              fontSize: 28,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'DungGeunMo',
-                              color: const Color.fromRGBO(78, 87, 44, 0.25),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(width: 25),
-                    Column(
-                      children: [
-                        Text(
-                          'µµ¿Â∆«',
-                          style: TextStyle(
-                            fontSize: 28,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'DungGeunMo',
-                            color: const Color(0xFF414728),
-                          ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(top: 4),
-                          height: 6,
-                          width: 70,
-                          color: const Color.fromRGBO(5, 5, 2, 0.35),
-                        ),
-                      ],
-                    ),
+                    Image.asset("assets/images/1.png", width: 60), // üî• Ïù¥ÎØ∏ÏßÄ ÌÅ¨Í∏∞ Ï§ÑÏûÑ
+                    const SizedBox(width: 5),
+                    const Text("x 0", style: TextStyle(fontSize: 18, fontFamily: 'DungGeunMo')),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Image.asset("assets/images/2.png", width: 60), // ‚≠ê
+                    const SizedBox(width: 5),
+                    const Text("x 0", style: TextStyle(fontSize: 18, fontFamily: 'DungGeunMo')),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Image.asset("assets/images/3.png", width: 60), // üå±
+                    const SizedBox(width: 5),
+                    const Text("x 0", style: TextStyle(fontSize: 18, fontFamily: 'DungGeunMo')),
                   ],
                 ),
               ],
             ),
-            const SizedBox(height: 8),
-            Container(
-              height: 2,
-              width: MediaQuery.of(context).size.width * 0.85,
-              color: const Color.fromRGBO(78, 87, 44, 0.35),
+            const SizedBox(height: 10),
+            // Îëê Î≤àÏß∏ Ï§Ñ (‚öî, ü©π)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center, // Í∞ÄÏö¥Îç∞ Ï†ïÎ†¨
+              children: [
+                Row(
+                  children: [
+                    Image.asset("assets/images/4.png", width: 60), // ‚öî
+                    const SizedBox(width: 5),
+                    const Text("x 0", style: TextStyle(fontSize: 18, fontFamily: 'DungGeunMo')),
+                  ],
+                ),
+                const SizedBox(width: 20), // Îëê Î≤àÏß∏ Ï§Ñ ÏïÑÏù¥ÌÖú Í∞ÑÍ≤© Ï°∞Ï†ï
+                Row(
+                  children: [
+                    Image.asset("assets/images/5.png", width: 60), // ü©π
+                    const SizedBox(width: 5),
+                    const Text("x 0", style: TextStyle(fontSize: 18, fontFamily: 'DungGeunMo')),
+                  ],
+                ),
+              ],
             ),
           ],
         ),
       ),
-    );
-  }
+    ),
+  ),
+),
 
-  /// ? **µµ¿¸ ¡ﬂ! ≈ÿΩ∫∆Æ**
-  Widget _buildChallengeTitle() {
-    return const Text(
-      "~~ µµ¿¸ ¡ﬂ! ~~",
-      style: TextStyle(
-        fontSize: 26,
-        fontWeight: FontWeight.bold,
-        fontFamily: 'DungGeunMo',
-      ),
-    );
-  }
 
-  /// ? **µµ¿Â∆« UI**
-  Widget _buildStampBoard() {
-    return Container(
-      padding: const EdgeInsets.all(15),
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.8),
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: Colors.black, width: 2),
-      ),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(5, (index) => _buildStamp()),
-          ),
-          const SizedBox(height: 8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(5, (index) => _buildStamp()),
-          ),
+
         ],
       ),
-    );
-  }
-
-  /// ? **µµ¿Â∆« µµ∞® (¡§∫∏ πˆ∆∞ ∆˜«‘)**
-  Widget _buildStampCollectionInfo(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const Text(
-          'µµ¿Â µµ∞®',
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'DungGeunMo',
-          ),
-        ),
-        const SizedBox(width: 5),
-        GestureDetector(
-          onTap: () {
-            _showPopupDialog(context);
-          },
-          child: const Icon(Icons.info_outline, size: 22),
-        ),
-      ],
-    );
-  }
-
-  /// ? **≥ª µµ¿Â UI**
-  Widget _buildMyStamps() {
-    return Container(
-      padding: const EdgeInsets.all(15),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: Colors.black, width: 2),
-      ),
-      child: Column(
-        children: [
-          const Text(
-            '≥ª µµ¿Â',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'DungGeunMo',
-            ),
-          ),
-          const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              _buildStampIcon("?", 0),
-              _buildStampIcon("?", 0),
-              _buildStampIcon("?", 0),
-            ],
-          ),
-          const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              _buildStampIcon("??", 0),
-              _buildStampIcon("?", 0),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  /// ? **µµ¿Â æ∆¿Ãƒ‹ (µµ¿Â∆«ø° ¿÷¥¬ ∫Û ø¯)**
-  Widget _buildStamp() {
-    return Container(
-      margin: const EdgeInsets.all(5),
-      width: 40,
-      height: 40,
-      decoration: BoxDecoration(
-        color: const Color(0xFF9FA77D),
-        shape: BoxShape.circle,
-      ),
-    );
-  }
-
-  /// ? **≥ª µµ¿Â æ∆¿Ãƒ‹ + ∞≥ºˆ**
-  Widget _buildStampIcon(String emoji, int count) {
-    return Column(
-      children: [
-        Text(
-          emoji,
-          style: const TextStyle(fontSize: 28),
-        ),
-        Text(
-          "x $count",
-          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-        ),
-      ],
-    );
-  }
-
-  /// ? **∆Àæ˜ ¥Ÿ¿ÃæÛ∑Œ±◊ (µµ¿Â µµ∞® ¡§∫∏)**
-  void _showPopupDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (BuildContext dialogContext) {
-        return Dialog(
-          backgroundColor: Colors.transparent,
-          child: Container(
-            width: MediaQuery.of(context).size.width * 0.8,
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: Colors.black, width: 2),
-            ),
-            child: const Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  'µµ¿Â µµ∞® º≥∏Ì',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'DungGeunMo',
-                  ),
-                ),
-                SizedBox(height: 8),
-                Text(
-                  'µµ¿Â¿ª ∏æ∆∫∏ººø‰!',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 16),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  /// ? **«œ¥‹ ≥◊∫Ò∞‘¿Ãº« πŸ (HomeScreen∞˙ µø¿œ)**
-  Widget _buildBottomNavBar(BuildContext context) {
-    return BottomNavigationBar(
-      type: BottomNavigationBarType.fixed,
-      backgroundColor: const Color.fromRGBO(171, 177, 148, 0.45),
-      selectedItemColor: Colors.white,
-      unselectedItemColor: const Color(0xFF474C34),
-      showSelectedLabels: false,
-      showUnselectedLabels: false,
-      currentIndex: 1, // µµ¿Â∆« ∆‰¿Ã¡ˆ (»®¿∫ 0)
-      onTap: (index) {
-        if (index == 0) {
-          Navigator.pop(context);
-        }
-      },
-      items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: '»®'),
-        BottomNavigationBarItem(icon: Icon(Icons.message), label: 'ªÛ¥„'),
-        BottomNavigationBarItem(icon: Icon(Icons.person), label: '«¡∑Œ« '),
-      ],
     );
   }
 }
+
+
