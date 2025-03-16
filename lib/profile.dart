@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/login.dart';
 import 'package:flutter_application_1/settingScreens/concernInput.dart';
 import 'package:flutter_application_1/settingScreens/nameInput.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_application_1/userProvider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -82,9 +84,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   children: [
                     Row(
                       children: [
-                        const Text(
-                          '세린tv',
-                          style: TextStyle(
+                        Text(
+                          Provider.of<UserProvider>(context).nickname,
+                          style: const TextStyle(
                             fontFamily: 'DungGeunMo',
                             fontSize: 35,
                             fontWeight: FontWeight.normal,
@@ -98,7 +100,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const NameInputScreen(isEdit: true,), // 추후 여기도 화면간 nickname을 받아올 수 있게 해 수정까지 완료해야할듯
+                                builder: (context) => const NameInputScreen(isEdit: true,),
                               ),
                             );
                           },
@@ -183,11 +185,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const ConcernInputScreen(
-                      name: "닉네임", // 수정을 통해 화면간 정보 넘겨받기 필요
-                      gender: "unknown", // 수정을 통해 화면간 정보 넘겨받기 필요
-                      isEdit: true,
-                    ),
+                    builder: (context) => const ConcernInputScreen(isEdit: true),
                   ),
                 );
               },
@@ -277,15 +275,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
 
   Widget _buildSelectedConcerns() {
+    final concerns = Provider.of<UserProvider>(context).concerns; // concerns 리스트 가져오기
+    
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 70),
       child: Wrap(
         spacing: 10,
         runSpacing: 10,
         children: [
-          _buildConcernChip('좁은 인간 관계'),
-          _buildConcernChip('친구'),
-          _buildConcernChip('학교 성적'),
+         ...concerns.map((concern) => _buildConcernChip(concern)), // 리스트에 있는 값만 Chip으로 생성
         ],
       ),
     );
