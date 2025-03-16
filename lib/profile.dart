@@ -33,7 +33,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   // 더미 도장 데이터 (날짜, 도장 유형)
   final List<Map<String, dynamic>> stampData = [
     {'date': '3/14', 'stamp': '⭐️'},
-    {'date': '3/15', 'stamp': '도장 없음'},
+    {'date': '3/15', 'stamp': 'x'},
     {'date': '3/16', 'stamp': '🌱'},
     {'date': '3/17', 'stamp': '🔥'},
     {'date': '3/18', 'stamp': '🌱'},
@@ -88,6 +88,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             fontFamily: 'DungGeunMo',
                             fontSize: 35,
                             fontWeight: FontWeight.normal,
+                            color: Color.fromARGB(255, 63, 71, 31),
                           ),
                         ),
                         const SizedBox(width: 5),
@@ -121,7 +122,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               children: [
                 const Text(
                   'Lv.1                             60%',
-                  style: TextStyle(fontFamily: 'DungGeunMo', fontSize: 17, fontWeight: FontWeight.normal),
+                  style: TextStyle(fontFamily: 'DungGeunMo', fontSize: 17, fontWeight: FontWeight.normal, color: Color.fromARGB(255, 87, 99, 43),),
                 ),
                 const SizedBox(height: 5),
                 ClipRRect(
@@ -129,20 +130,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: LinearProgressIndicator(
                     value: 0.6,
                     minHeight: 15,
-                    backgroundColor: Colors.black12,
-                    color: const Color.fromARGB(255, 121, 138, 61),
+                    backgroundColor: const Color.fromARGB(136, 119, 137, 60),
+                    color: const Color.fromARGB(255, 66, 75, 34),
                   ),
                 ),
               ],
             ),
           ),
-          const SizedBox(height: 30),
+          const SizedBox(height: 20),
 
           // 날짜별 도작 리스트 추가
           _buildStampScroll(),
 
-          const Divider(indent: 20, endIndent: 20, thickness: 2, color: Color.fromARGB(100, 121, 138, 61),),
+          const SizedBox(height: 10),
 
+          const Divider(indent: 30, endIndent: 30, thickness: 2, color: Color.fromARGB(100, 121, 138, 61),),
+
+          const SizedBox(height: 20),
           Expanded(
             child: ListView(
               children: [
