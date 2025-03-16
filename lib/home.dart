@@ -225,33 +225,41 @@ void _showPopupDialog(BuildContext context) {
                       
                         GestureDetector(
   onTap: () {
-    
-    print("🔹 도장판 탭됨! StampBoard 페이지로 이동");
-    Navigator.pushNamed(context, '/stampBoard'); // ✅ 도장판 페이지 이동
-  },
-  child: Column(
-    children: [
-      Text(
-        '도장판',
-        style: TextStyle(
-          fontSize: 28,
-          fontWeight: FontWeight.bold,
-          fontFamily: 'DungGeunMo',
-          color: !isPetSelected
-              ? const Color(0xFF414728)
-              : const Color.fromRGBO(78, 87, 44, 0.25),
+  print("🔹 도장판 클릭됨! StampBoard 페이지로 이동");
+  Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => StampBoard()), // ✅ 직접 StampBoard 호출
+  );
+},
+
+  child: Container(
+    color: Colors.transparent, // 터치 감지 가능하도록 배경 추가
+    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+    child: Column(
+      children: [
+        Text(
+          '도장판',
+          style: TextStyle(
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'DungGeunMo',
+            color: !isPetSelected
+                ? const Color(0xFF414728)
+                : const Color.fromRGBO(78, 87, 44, 0.25),
+          ),
         ),
-      ),
-      if (!isPetSelected)
-        Container(
-          margin: const EdgeInsets.only(top: 4),
-          height: 6,
-          width: 70,
-          color: const Color.fromRGBO(5, 5, 2, 0.35),
-        ),
-    ],
+        if (!isPetSelected)
+          Container(
+            margin: const EdgeInsets.only(top: 4),
+            height: 6,
+            width: 70,
+            color: const Color.fromRGBO(5, 5, 2, 0.35),
+          ),
+      ],
+    ),
   ),
 ),
+
 
                       
                     ],
