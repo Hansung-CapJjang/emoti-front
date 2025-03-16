@@ -4,11 +4,12 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'firstIntro.dart';
 import 'concernInput.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_application_1/userProvider.dart';
+import 'package:flutter_application_1/main.dart';
 
 class GenderInputScreen extends StatefulWidget {
-
-  final String name; // nameInput.dart 에서 이름 받아옴
-  const GenderInputScreen({super.key, required this.name});
+  const GenderInputScreen({super.key});
 
   @override
   _GenderInputScreenState createState() => _GenderInputScreenState();
@@ -17,13 +18,14 @@ class GenderInputScreen extends StatefulWidget {
 class _GenderInputScreenState extends State<GenderInputScreen> {
 
 // 성별 정보 저장하고 고민 세부 사항 설정 페이지로 이동
-void _selectGenderAndProceed(String gender) async {
-    await _sendDataToServer(widget.name, gender); // 서버로 이름 + 성별 저장
+void _selectGenderAndProceed(String gender) { // async {
+    // await _sendDataToServer(context.watch<UserProvider>().nickname, gender); // 서버로 이름 + 성별 저장
     // ConcernInputScreen으로 이동할 때 name과 gender 함께 전달
+    Provider.of<UserProvider>(navigatorKey.currentContext!, listen: false).updateGender(gender);
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ConcernInputScreen(name: widget.name, gender: gender, isEdit: false),
+        builder: (context) => const ConcernInputScreen(isEdit: false),
       ),
     );
   }

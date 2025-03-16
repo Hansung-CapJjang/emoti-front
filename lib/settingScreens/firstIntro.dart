@@ -1,8 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/userProvider.dart';
+import 'package:provider/provider.dart';
 import 'nameInput.dart';
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
+// void main() {
+//   runApp(const EmotiApp());
+// }
+
 void main() {
-  runApp(const EmotiApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => UserProvider()),
+      ],
+      child: MaterialApp(
+        navigatorKey: navigatorKey, // ✅ navigatorKey 설정
+        home: EmotiApp(),
+      ),
+    ),
+  );
 }
 
 class EmotiApp extends StatelessWidget {
@@ -63,7 +81,7 @@ class FirstScreen extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(bottom: 120), // ��ư�� �� ���� �̵�
+            padding: const EdgeInsets.only(bottom: 120),
             child: SizedBox(
               width: 180, // ��ư ũ��
               height: 50,

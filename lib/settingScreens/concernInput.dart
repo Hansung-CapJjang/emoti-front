@@ -5,13 +5,14 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter_application_1/mainScreen.dart';
 import 'package:flutter_application_1/home.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_application_1/userProvider.dart';
+import 'package:flutter_application_1/main.dart';
 
 class ConcernInputScreen extends StatefulWidget {
-  final String name;
-  final String gender;
   final bool isEdit;
 
-  const ConcernInputScreen({super.key, required this.name, required this.gender, required this.isEdit});
+  const ConcernInputScreen({super.key, required this.isEdit});
 
   @override
   _ConcernInputScreenState createState() => _ConcernInputScreenState();
@@ -73,33 +74,35 @@ class _ConcernInputScreenState extends State<ConcernInputScreen> with SingleTick
 }
 
 
-  Future<void> _saveUserData() async {
-    const String apiUrl = '';
+  // Future<void> _saveUserData() async {
+  //   const String apiUrl = '';
 
-    try {
-      final response = await http.post(
-        Uri.parse(apiUrl),
-        headers: {"Content-Type": "application/json"},
-        body: jsonEncode({
-          "name": widget.name,
-          "gender": widget.gender,
-          "concerns": _selectedConcerns.toList(),
-        }),
-      );
+  //   try {
+  //     final response = await http.post(
+  //       Uri.parse(apiUrl),
+  //       headers: {"Content-Type": "application/json"},
+  //       body: jsonEncode({
+  //         "name": context.watch<UserProvider>().nickname,
+  //         "gender": context.watch<UserProvider>().gender,
+  //         "concerns": _selectedConcerns.toList(),
+  //       }),
+  //     );
 
-      if (response.statusCode == 200) {
-        print("사용자 정보 저장 완료!");
-      } else {
-        print("서버 오류: ${response.statusCode}, ${response.body}");
-      }
-    } catch (e) {
-      print("네트워크 오류: $e");
-    }
-  }
+  //     if (response.statusCode == 200) {
+  //       print("사용자 정보 저장 완료!");
+  //     } else {
+  //       print("서버 오류: ${response.statusCode}, ${response.body}");
+  //     }
+  //   } catch (e) {
+  //     print("네트워크 오류: $e");
+  //   }
+  // }
 
   void _onNextPressed() {
     if (_selectedConcerns.isNotEmpty) {
-      _saveUserData();
+      Provider.of<UserProvider>(navigatorKey.currentContext!, listen: false).updateConcerns(_selectedConcerns.toList());
+      // _saveUserData();
+      
       if (widget.isEdit) {
         Navigator.pop(context);
       }

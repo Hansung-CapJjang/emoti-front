@@ -4,6 +4,9 @@ import 'dart:convert'; // JSON 양식 변환을 위한 임포트
 import 'package:http/http.dart' as http; // http package
 import 'firstIntro.dart';
 import 'genderInput.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_application_1/userProvider.dart';
+import 'package:flutter_application_1/main.dart';
 
 class NameInputScreen extends StatefulWidget {
   final bool isEdit;
@@ -203,6 +206,7 @@ class _NameInputScreenState extends State<NameInputScreen>
               onPressed: _isButtonEnabled
                   ? () {
                       String name = _controller.text.trim();
+                      Provider.of<UserProvider>(navigatorKey.currentContext!, listen: false).updateNickname(name);
                       _sendNameToServer(name);
                       if (widget.isEdit) {
                         Navigator.pop(context);
@@ -211,7 +215,7 @@ class _NameInputScreenState extends State<NameInputScreen>
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => GenderInputScreen(name: _controller.text.trim())));
+                            builder: (context) => const GenderInputScreen()));
                       }
                     }
                   : null,
