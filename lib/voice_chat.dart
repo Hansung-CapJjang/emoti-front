@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'package:flutter_tts/flutter_tts.dart'; // 🔹 TTS 추가
+import 'chatting_setting.dart';
 
 class VoiceChatScreen extends StatefulWidget {
   final String counselorType;
@@ -273,7 +274,12 @@ void _showEndDialog(BuildContext context) {
           TextButton(
             onPressed: () {
               Navigator.pop(context); // 다이얼로그 닫기
-              Navigator.pop(context); // 서랍 닫기 (상담 종료 처리)
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ChattingSettingScreen(),
+                  ),
+                ); // 서랍 닫기 (상담 종료 처리)
             },
             child: const Text("예", style: TextStyle(fontFamily: 'DungGeunMo',),),
           ),

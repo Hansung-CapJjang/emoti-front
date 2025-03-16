@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/settingScreens/firstIntro.dart';
+import 'package:flutter_application_1/setting_screen/first_intro.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 void main() {

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/animation.dart';
 import 'dart:convert'; // JSON 양식 변환을 위한 임포트
 import 'package:http/http.dart' as http; // http package
-import 'firstIntro.dart';
-import 'genderInput.dart';
+import 'first_intro.dart';
+import 'gender_input.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_application_1/userProvider.dart';
+import 'package:flutter_application_1/user_provider.dart';
 import 'package:flutter_application_1/main.dart';
 
 class NameInputScreen extends StatefulWidget {

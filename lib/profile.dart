@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/login.dart';
-import 'package:flutter_application_1/settingScreens/concernInput.dart';
-import 'package:flutter_application_1/settingScreens/nameInput.dart';
+import 'package:flutter_application_1/setting_screen/concern_input.dart';
+import 'package:flutter_application_1/setting_screen/name_input.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_application_1/userProvider.dart';
+import 'package:flutter_application_1/user_provider.dart';
 
 void main() {
   runApp(const MyApp());

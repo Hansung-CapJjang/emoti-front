@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:flutter/services.dart';
-import 'package:flutter_application_1/StampBoard.dart';
+import 'package:flutter_application_1/stamp_board.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:math';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'StampBoard.dart';
+import 'stamp_board.dart';
 
 // 📌 이미지를 갤러리에 저장하는 함수
 Future<void> _saveImageToGallery() async {

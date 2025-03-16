@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/userProvider.dart';
+import 'package:flutter_application_1/user_provider.dart';
 import 'package:provider/provider.dart';
-import 'nameInput.dart';
+import 'name_input.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 

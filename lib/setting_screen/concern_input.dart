@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/animation.dart';
-import 'firstIntro.dart';
+import 'first_intro.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:flutter_application_1/mainScreen.dart';
+import 'package:flutter_application_1/main_screen.dart';
 import 'package:flutter_application_1/home.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_application_1/userProvider.dart';
+import 'package:flutter_application_1/user_provider.dart';
 import 'package:flutter_application_1/main.dart';
 
 class ConcernInputScreen extends StatefulWidget {

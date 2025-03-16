@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/animation.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'firstIntro.dart';
-import 'concernInput.dart';
+import 'first_intro.dart';
+import 'concern_input.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_application_1/userProvider.dart';
+import 'package:flutter_application_1/user_provider.dart';
 import 'package:flutter_application_1/main.dart';
 
 class GenderInputScreen extends StatefulWidget {

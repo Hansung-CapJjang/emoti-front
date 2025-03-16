@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'home.dart';
-import 'chattingSetting.dart';
+import 'chatting_setting.dart';
 import 'profile.dart';
 
 // 앱 내 공통 하단 아이콘바 구현

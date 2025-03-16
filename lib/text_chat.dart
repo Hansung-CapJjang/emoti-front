@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'chatting_setting.dart';
 
 class TextChatScreen extends StatefulWidget {
   final String counselorType;
@@ -263,7 +264,12 @@ void _showEndDialog(BuildContext context) {
           TextButton(
             onPressed: () {
               Navigator.pop(context); // 다이얼로그 닫기
-              Navigator.pop(context); // 서랍 닫기 (상담 종료 처리)
+               Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ChattingSettingScreen(),
+                  ),
+                ); // (상담 종료 처리)
             },
             child: const Text("예", style: TextStyle(fontFamily: 'DungGeunMo',),),
           ),

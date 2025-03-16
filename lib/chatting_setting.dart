@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'voiceChat.dart';
-import 'textChat.dart';
+import 'voice_chat.dart';
+import 'text_chat.dart';
 
 void main() {
   runApp(const MyApp());

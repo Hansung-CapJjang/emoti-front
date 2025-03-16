@@ -1,0 +1,1 @@
+ /Users/jeongseyeon/Downloads/emoti-front-voice-chat/.dart_tool/flutter_build/c5211f9982a314136f4539b80cfb4168/native_assets.yaml: 
