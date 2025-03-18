@@ -16,26 +16,26 @@ class UserProvider with ChangeNotifier {
     _email = newEmail;
     _gender = newGender;
     _concerns = newConcerns;
-    notifyListeners(); // UI ¾÷µ¥ÀÌÆ®
+    notifyListeners(); // UI ì—…ë°ì´íŠ¸
   }
 
   void updateNickname(String newNickname) {
     _nickname = newNickname;
-    notifyListeners(); // UI ¾÷µ¥ÀÌÆ®
+    notifyListeners(); // UI ì—…ë°ì´íŠ¸
   }
 
   void updateGender(String newGender) {
     _gender = newGender;
-    notifyListeners(); // UI ¾÷µ¥ÀÌÆ®
+    notifyListeners(); // UI ì—…ë°ì´íŠ¸
   }
 
   void updateEmail(String newEmail) {
     _email = newEmail;
-    notifyListeners(); // UI ¾÷µ¥ÀÌÆ®
+    notifyListeners(); // UI ì—…ë°ì´íŠ¸
   }
 
   void updateConcerns(List newConcerns) {
     _concerns = newConcerns;
-    notifyListeners(); // UI ¾÷µ¥ÀÌÆ®
+    notifyListeners(); // UI ì—…ë°ì´íŠ¸
   }
 }
