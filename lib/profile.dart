@@ -155,11 +155,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 _buildExpandableMenuItem(),
                 
                 if (isExpanded) _buildSelectedConcerns(),
-
-                const SizedBox(height: 20),
-
-          const Divider(indent: 30, endIndent: 30, thickness: 2, color: Color.fromARGB(100, 121, 138, 61),),
-
                 if (isOn) _buildToggleMenuItem('알람 설정', Icons.notifications_active) else _buildToggleMenuItem('알람 설정', Icons.notifications_off),
                 _buildLogoutItem(Icons.logout, '로그아웃'),
                 _buildDeleteItem('회원 탈퇴'),
