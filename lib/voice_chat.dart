@@ -17,6 +17,7 @@ class VoiceChatScreen extends StatefulWidget {
 
 class _VoiceChatScreenState extends State<VoiceChatScreen> {
   bool isListening = false;
+  bool isSpeaking = false;
   String recognizedText = ""; 
   late stt.SpeechToText _speech;
   late FlutterTts _flutterTts; // 🔹 TTS 인스턴스 추가
@@ -24,7 +25,7 @@ class _VoiceChatScreenState extends State<VoiceChatScreen> {
   int _elapsedSeconds = 0;
 
   final List<String> _defaultResponses = [ // 🔹 기본 말뭉치
-    "박한비 솔직히 바보인듯ㅋㅋ",
+    "홍세린님 지금 뭐하시는 거예요?",
     "오늘 기분이 어떠신가요?",
     "편하게 이야기해주세요. 제가 듣고 있습니다.",
     "어떤 고민이 있으신가요?",
@@ -50,15 +51,29 @@ class _VoiceChatScreenState extends State<VoiceChatScreen> {
   void _configureTTS() async {
     await _flutterTts.setLanguage("ko-KR"); // 한국어 설정
     await _flutterTts.setSpeechRate(0.5); // 속도 조절
-    await _flutterTts.setVolume(1.5);
-    await _flutterTts.setPitch(0.3);
+    await _flutterTts.setVolume(1.0);
+    await _flutterTts.setPitch(1.0);
+
+    _flutterTts.setCompletionHandler(() {
+      setState(() {
+        isSpeaking = false;
+      });
+    });
+  }
+
+  /// 🔹 AI 음성 출력 + 상태 업데이트
+  void _speakMessage(String message) async {
+    setState(() {
+      isSpeaking = true;
+    });
+    await _flutterTts.speak(message);
   }
 
   /// 🔹 초기 상담 메시지 음성 출력
   void _speakInitialMessage() async {
     final random = Random();
     String message = _defaultResponses[random.nextInt(_defaultResponses.length)];
-    await _flutterTts.speak(message);
+    _speakMessage(message);
   }
 
   /// 타이머 시작
@@ -126,13 +141,21 @@ class _VoiceChatScreenState extends State<VoiceChatScreen> {
                     ),
                   ),
                   const TextSpan(
-                    text: '상담 중',
+                    text: '상담 중 ',
                     style: TextStyle(
                       fontFamily: 'DungGeunMo',
                       fontSize: 20,
                       color: Colors.blue,
                     ),
                   ),
+                  TextSpan(
+                  text: _formatTime(_elapsedSeconds),
+                  style: const TextStyle(
+                    fontFamily: 'DungGeunMo',
+                    fontSize: 23,
+                    color: Colors.red,
+                  ),
+                ),
                 ],
               ),
             ),
@@ -157,45 +180,39 @@ class _VoiceChatScreenState extends State<VoiceChatScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  _formatTime(_elapsedSeconds),
-                  style: const TextStyle(
-                    fontFamily: 'DungGeunMo',
-                    fontSize: 25,
-                    color: Colors.red,
-                  ),
-                ),
+                
                 const SizedBox(height: 30),
                 SvgPicture.asset(
                   'assets/images/waveformicon.svg',
                   width: 250,
                   height: 150,
                   colorFilter: ColorFilter.mode(
-                    isListening ? Colors.red : Colors.black45,
+                    isListening ? Colors.red : isSpeaking ? const Color.fromARGB(255, 107, 163, 16) : Colors.black45,
                     BlendMode.srcIn,
                   ),
                 ),
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 227, 246, 132),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Text(
-                recognizedText.isEmpty ? "음성을 인식하면 여기에 표시됩니다.\n실제 기기에서만 작동합니다." : recognizedText,
-                style: const TextStyle(
-                  fontFamily: 'DungGeunMo',
-                  fontSize: 16,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-          ),
+          // 사용자 목소리가 텍스트로 변환되어 화면에 나타나는 기능
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(horizontal: 20),
+          //   child: Container(
+          //     padding: const EdgeInsets.all(16),
+          //     decoration: BoxDecoration(
+          //       color: const Color.fromARGB(255, 247, 255, 206),
+          //       borderRadius: BorderRadius.circular(10),
+          //     ),
+          //     child: Text(
+          //       recognizedText.isEmpty ? "음성을 인식하면 여기에 표시됩니다." : recognizedText,
+          //       style: const TextStyle(
+          //         fontFamily: 'DungGeunMo',
+          //         fontSize: 16,
+          //         color: Colors.black,
+          //       ),
+          //     ),
+          //   ),
+          // ),
           const SizedBox(height: 80),
           GestureDetector(
             onTap: () {
@@ -210,7 +227,7 @@ class _VoiceChatScreenState extends State<VoiceChatScreen> {
                 Icon(
                   Icons.mic,
                   size: 60,
-                  color: isListening ? Colors.red : Colors.black45,
+                  color: isListening ? Colors.red : const Color.fromARGB(175, 0, 0, 0),
                 ),
                 const SizedBox(height: 10),
                 Text(
@@ -279,7 +296,7 @@ void _showEndDialog(BuildContext context) {
                   MaterialPageRoute(
                     builder: (context) => const ChattingSettingScreen(),
                   ),
-                ); // 서랍 닫기 (상담 종료 처리)
+                );// 서랍 닫기 (상담 종료 처리)
             },
             child: const Text("예", style: TextStyle(fontFamily: 'DungGeunMo',),),
           ),
