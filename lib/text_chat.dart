@@ -175,6 +175,9 @@ class _TextChatScreenState extends State<TextChatScreen> {
 
   /// 입력창 및 상담 종료 버튼
   Widget _buildChatInput() {
+
+    bool isKeyboardVisible = MediaQuery.of(context).viewInsets.bottom > 0;
+    
     return Column(
       children: [
         Padding(
@@ -222,25 +225,28 @@ class _TextChatScreenState extends State<TextChatScreen> {
           ),
         ),
         const SizedBox(height: 10),
-        Container(
-  width: double.infinity,
-  margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-  child: ElevatedButton(
-    onPressed: () {
-      _showEndDialog(context);
-    },
-    style: ElevatedButton.styleFrom(
-      backgroundColor: const Color(0xFF6C7448),
-      foregroundColor: Colors.white,
-      padding: const EdgeInsets.symmetric(vertical: 14),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-    ),
-    child: const Text(
-      '상담 끝내기',
-      style: TextStyle(fontFamily: 'DungGeunMo', fontSize: 16, fontWeight: FontWeight.bold),
-    ),
-  ),
-),
+        Visibility(
+          visible: !isKeyboardVisible, // 키보드가 올라오면 버튼 숨기기
+          child: Container(
+            width: double.infinity,
+            margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            child: ElevatedButton(
+              onPressed: () {
+                _showEndDialog(context);
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF6C7448),
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(vertical: 14),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              ),
+              child: const Text(
+                '상담 끝내기',
+                style: TextStyle(fontFamily: 'DungGeunMo', fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+        ),
       ],
     );
   }
