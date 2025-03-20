@@ -154,9 +154,9 @@ Align(
 Transform.translate(
   offset: const Offset(120, -130), // 원하는 만큼 오른쪽으로 이동
   child: GestureDetector(
-    onTap: () {
-      print("🔹 Vector image tapped! Downloading image...");
-      _downloadImage(); // ✅ 이미지 다운로드 실행
+    onTap: () async {
+      print("🔹 Vector image tapped! Saving demo_baebse image...");
+      await _saveDemoBaebseImageToGallery(context); // context 전달
     },
     child: Image.asset(
       'assets/images/Vector.png', // Vector 이미지 경로
@@ -164,6 +164,9 @@ Transform.translate(
     ),
   ),
 ),
+
+
+
 
     // 캐릭터 아래 여백 (버튼과 겹치지 않도록 조정 가능)
    Center(
@@ -192,24 +195,28 @@ Transform.translate(
   ),
 ),
 
-    // 🔹 아이콘 위치 조정 가능
-   Transform.translate(
-  offset: const Offset(120, -165), // 기존 위치값 유지 (오른쪽 120, 위로 180)
+    
+Transform.translate(
+  offset: const Offset(120, -130), // 원하는 만큼 오른쪽으로 이동
   child: GestureDetector(
-    onTap: () {
-      print("🔹 Information icon tapped!"); // 터미널 로그 확인용
-      _showPopupDialog(context); // 팝업 호출
+    onTap: () async {
+      print("🔹 Vector image tapped! Saving demo_baebse image...");
+      await _saveDemoBaebseImageToGallery(context); // context 전달
     },
-    child: Container(
-      color: Colors.transparent, // 터치 영역 확보
-      child: Image.asset(
-        'assets/images/informationicon.png',
-        width: 30,
-        height: 30,
-      ),
+    child: Image.asset(
+      'assets/images/Vector.png', // Vector 이미지 경로
+      width: 100, // 원하는 크기로 설정
     ),
   ),
 ),
+
+
+
+
+
+
+
+
 
 
   ],
@@ -222,7 +229,7 @@ Transform.translate(
 }
 
 // 📌 이미지를 갤러리에 저장하는 함수
-Future<void> _saveImageToGallery() async {
+Future<void> _saveDemoBaebseImageToGallery(BuildContext context) async {
   try {
     // 🔹 권한 요청 (Android 13 이상 및 iOS 대응)
     if (Platform.isAndroid) {
@@ -238,7 +245,7 @@ Future<void> _saveImageToGallery() async {
       }
     }
 
-    // 🔹 assets에서 이미지 로드
+    // 🔹 assets에서 demo_baebse.png 이미지 로드
     final ByteData data = await rootBundle.load('assets/images/demo_baebse.png');
     final Uint8List bytes = data.buffer.asUint8List();
 
@@ -251,7 +258,10 @@ Future<void> _saveImageToGallery() async {
     // 🔹 갤러리에 저장 (Android & iOS 대응)
     final result = await ImageGallerySaver.saveFile(filePath);
     if (result['isSuccess'] == true) {
-      print("✅ Image saved to gallery: $result");
+      print("✅ demo_baebse.png saved to gallery: $result");
+
+      // ✅ 저장 성공 시 사용자에게 메시지 표시
+      _showSaveSuccessSnackbar(context);
     } else {
       print("❌ Image save failed: $result");
     }
@@ -259,6 +269,78 @@ Future<void> _saveImageToGallery() async {
     print("❌ Error saving image: $e");
   }
 }
+
+
+
+
+// ✅ 갤러리 저장 완료 시 알림 메시지
+void _showSaveSuccessSnackbar(BuildContext context) {
+  showDialog(
+    context: context,
+    barrierDismissible: true, // 팝업 바깥 클릭 시 닫기 가능
+    builder: (BuildContext dialogContext) {
+      return AlertDialog(
+        backgroundColor: Colors.transparent, // 배경 투명
+        contentPadding: EdgeInsets.zero, // 기본 패딩 제거
+        content: Container(
+          width: MediaQuery.of(context).size.width * 0.8, // 팝업 크기 조정
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Colors.white, // 팝업 배경색
+            borderRadius: BorderRadius.circular(10), // 모서리 둥글게
+            border: Border.all(color: Colors.black, width: 2), // 검은 테두리 추가
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                '이미지 저장 완료!',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'DungGeunMo',
+                  color: Colors.black, // 글자색 검정
+                ),
+              ),
+              const SizedBox(height: 8),
+              const Text(
+                '캐릭터 이미지가\n갤러리에 저장되었습니다!',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontFamily: 'DungGeunMo',
+                  color: Colors.black, // 글자색 검정
+                ),
+              ),
+              const SizedBox(height: 20), // 간격 추가
+              ElevatedButton(
+                onPressed: () => Navigator.pop(dialogContext), // 팝업 닫기
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF798063), // 배경색
+                  foregroundColor: Colors.white, // 글씨색
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    side: const BorderSide(color: Colors.black, width: 1.5),
+                  ),
+                ),
+                child: const Text(
+                  '확인',
+                  style: TextStyle(fontSize: 16, fontFamily: 'DungGeunMo'),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    },
+  );
+}
+
+
+
+
+
 
 // 📌 Vector 이미지 다운로드 함수 (수정된 버전)
 Future<void> _downloadImage() async {

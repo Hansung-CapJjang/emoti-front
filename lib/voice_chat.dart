@@ -275,33 +275,80 @@ class _VoiceChatScreenState extends State<VoiceChatScreen> {
 
 /// 상담 종료 다이얼로그
 void _showEndDialog(BuildContext context) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: const Text("상담을 종료하시겠습니까?", style: TextStyle(fontFamily: 'DungGeunMo', fontSize: 18),),
-        // content: const Text("상담을 종료하시겠습니까?"),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context); // 다이얼로그 닫기
-            },
-            child: const Text("아니오", style: TextStyle(fontFamily: 'DungGeunMo',),),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context); // 다이얼로그 닫기
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const ChattingSettingScreen(),
+  Navigator.pop(context); // 기존 팝업 닫기 (필요한 경우)
+  Future.delayed(Duration(milliseconds: 100), () { // 약간의 딜레이 후 실행
+    showDialog(
+      context: context,
+      barrierDismissible: true, // 팝업 바깥 클릭 시 닫기
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          backgroundColor: Colors.transparent, // 배경 투명 처리
+          contentPadding: EdgeInsets.zero, // 기본 패딩 제거
+          content: Container(
+            width: MediaQuery.of(context).size.width * 0.8, // 팝업 크기 조정
+            padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16), // 내부 패딩 증가
+            decoration: BoxDecoration(
+              color: Colors.white, // 팝업 배경색
+              borderRadius: BorderRadius.circular(10), // 모서리 둥글게
+              border: Border.all(color: Colors.black, width: 2), // 검은 테두리 추가
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text(
+                  '상담을 종료하시겠습니까?',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'DungGeunMo',
                   ),
-                );// 서랍 닫기 (상담 종료 처리)
-            },
-            child: const Text("예", style: TextStyle(fontFamily: 'DungGeunMo',),),
+                ),
+                const SizedBox(height: 20), // 질문과 버튼 간격 증가
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center, // 가운데 정렬
+                  children: [
+                    ElevatedButton(
+                      onPressed: () => Navigator.pop(dialogContext),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.grey[400], // 중립적인 색상
+                        foregroundColor: Colors.black, // 글씨색
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          side: const BorderSide(color: Colors.black, width: 1.5),
+                        ),
+                      ),
+                      child: const Text(
+                        "아니오",
+                        style: TextStyle(fontSize: 16, fontFamily: 'DungGeunMo'),
+                      ),
+                    ),
+                    const SizedBox(width: 12), // 버튼 간격 좁힘
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(dialogContext);
+                        Navigator.pop(context);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF798063), // 기존 팝업과 동일한 배경색
+                        foregroundColor: Colors.white, // 글씨색
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          side: const BorderSide(color: Colors.black, width: 1.5),
+                        ),
+                      ),
+                      child: const Text(
+                        "예",
+                        style: TextStyle(fontSize: 16, fontFamily: 'DungGeunMo'),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
-        ],
-      );
-    },
-  );
+        );
+      },
+    );
+  });
 }
