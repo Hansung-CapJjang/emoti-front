@@ -194,7 +194,7 @@ class _ChattingSettingScreenState extends State<ChattingSettingScreen> {
   /// 서랍 (Drawer) UI
 Widget _buildDrawer() {
   return Drawer(
-    width: MediaQuery.of(context).size.width * 0.8,
+    width: MediaQuery.of(context).size.width * 0.6,
     child: Container(
       color: const Color(0xFFEFEFCC), // 배경색 조정
       child: Column(
@@ -205,8 +205,8 @@ Widget _buildDrawer() {
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Row(
               children: [
-                Icon(Icons.arrow_back, size: 30),
-                SizedBox(width: 10),
+                // Icon(Icons.arrow_back, size: 30),
+                // SizedBox(width: 10),
                 Text(
                   '채팅 기록',
                   style: TextStyle(fontFamily: 'DungGeunMo', fontSize: 20,),
@@ -217,9 +217,9 @@ Widget _buildDrawer() {
           Expanded(
             child: ListView(
               children: [
-                _buildChatRecord('2월 10일', '🔥'),
-                _buildChatRecord('2월 8일', '⭐'),
-                _buildChatRecord('2월 5일', '💧'),
+                _buildChatRecord('2월 10일'),
+                _buildChatRecord('2월 8일'),
+                _buildChatRecord('2월 5일'),
               ],
             ),
           ),
@@ -230,26 +230,28 @@ Widget _buildDrawer() {
 }
 
 /// 채팅 이전 기록 항목 위젯
-Widget _buildChatRecord(String date, String badge) {
-  return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          date,
-          style: const TextStyle(fontFamily: 'DungGeunMo', fontSize: 18,),
-        ),
-        // const SizedBox(height: 5),
-        Row(
-          children: [
-            // const Text('도장 ', style: TextStyle(fontFamily: 'DungGeunMo', fontSize: 14)),
-            Text(badge, style: const TextStyle(fontFamily: 'DungGeunMo', fontSize: 18)),
-          ],
-        ),
-        const Divider(thickness: 1, color: Colors.black26),
-      ],
-    ),
-  );
-}
+  Widget _buildChatRecord(String date) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            date,
+            style: const TextStyle(fontFamily: 'DungGeunMo', fontSize: 18),
+          ),
+          Row(
+            children: [
+              Image.asset(
+                'assets/images/stamp1.png',
+                width: 40,
+                height: 40,
+              ),
+            ],
+          ),
+          const Divider(thickness: 1, color: Colors.black26),
+        ],
+      ),
+    );
+  }
 }
