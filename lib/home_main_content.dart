@@ -196,19 +196,25 @@ Transform.translate(
 ),
 
     
+// 🔹 아이콘 위치 조정 가능
 Transform.translate(
-  offset: const Offset(120, -130), // 원하는 만큼 오른쪽으로 이동
+  offset: const Offset(120, -165), // 기존 위치값 유지 (오른쪽 120, 위로 180)
   child: GestureDetector(
-    onTap: () async {
-      print("🔹 Vector image tapped! Saving demo_baebse image...");
-      await _saveDemoBaebseImageToGallery(context); // context 전달
+    onTap: () {
+      print("🔹 Information icon tapped!"); // 터미널 로그 확인용
+      _showPopupDialog(context); // 팝업 호출
     },
-    child: Image.asset(
-      'assets/images/Vector.png', // Vector 이미지 경로
-      width: 100, // 원하는 크기로 설정
+    child: Container(
+      color: Colors.transparent, // 터치 영역 확보
+      child: Image.asset(
+        'assets/images/informationicon.png',
+        width: 30,
+        height: 30,
+      ),
     ),
   ),
 ),
+
 
 
 
