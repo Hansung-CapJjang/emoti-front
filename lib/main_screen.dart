@@ -6,13 +6,13 @@ import 'profile.dart';
 // 앱 내 공통 하단 아이콘바 구현
 class MainScreen extends StatefulWidget {
   @override
-  _MainScreenState createState() => _MainScreenState();
+  MainScreenState createState() => MainScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> {
+class MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
 
-  void _onItemTapped(int index) {
+  void onItemTapped(int index) {
     setState(() {
       _currentIndex = index;
     });
@@ -37,7 +37,7 @@ class _MainScreenState extends State<MainScreen> {
         showSelectedLabels: false,
         showUnselectedLabels: false,
         currentIndex: _currentIndex,
-        onTap: _onItemTapped,
+        onTap: onItemTapped,
         items: [
           BottomNavigationBarItem(
             icon: ImageIcon(

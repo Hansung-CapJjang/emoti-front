@@ -64,7 +64,7 @@ class _ChattingSettingScreenState extends State<ChattingSettingScreen> {
             const Divider(color: Color.fromARGB(130, 65, 80, 62), thickness: 1),
             const SizedBox(height: 30),
             const Text(
-              '※ 님이 선호하는 상담사 유형을\n  직접 선택하여 상담 받을 수 있어요.',
+              '※ 선호하는 상담사 유형을 직접 선택할 수 있어요!',
               style: TextStyle(fontFamily: 'DungGeunMo', fontSize: 14, color: Colors.black54),
             ),
             const SizedBox(height: 20),

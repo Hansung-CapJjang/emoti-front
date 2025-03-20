@@ -275,7 +275,6 @@ class _VoiceChatScreenState extends State<VoiceChatScreen> {
 
 /// 상담 종료 다이얼로그
 void _showEndDialog(BuildContext context) {
-  Navigator.pop(context); // 기존 팝업 닫기 (필요한 경우)
   Future.delayed(Duration(milliseconds: 100), () { // 약간의 딜레이 후 실행
     showDialog(
       context: context,
