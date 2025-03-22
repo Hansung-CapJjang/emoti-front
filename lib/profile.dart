@@ -47,6 +47,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFFDDE5B6),
       appBar: AppBar(
+        surfaceTintColor: Colors.transparent, // 색이 변하지 않음
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: const Text(

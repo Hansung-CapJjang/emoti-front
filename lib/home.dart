@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
-import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/stamp_board.dart';
-import 'package:path_provider/path_provider.dart';
-import 'dart:math';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'home_main_content.dart';
 
 void main() {
@@ -44,6 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: const Color(0xFFDCE6B7),
       appBar: AppBar(
         automaticallyImplyLeading: false,
+        surfaceTintColor: Colors.transparent, // 색이 변하지 않음
         backgroundColor: Colors.transparent,
         elevation: 0,
         toolbarHeight: 100,

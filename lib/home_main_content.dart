@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:flutter/services.dart';
-import 'package:flutter_application_1/stamp_board.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:math';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'stamp_board.dart';
-import 'home.dart';
 import 'home_speech_bubble.dart';
 
 class MainContent extends StatefulWidget {
@@ -70,7 +67,7 @@ class _MainContentState extends State<MainContent> {
                             fontSize: 32,
                             fontWeight: FontWeight.bold,
                             fontFamily: 'DungGeunMo',
-                            color: const Color(0xFF414728),
+                            color: Color(0xFF414728),
                           ),
                         ),
                       ],
@@ -109,7 +106,7 @@ class _MainContentState extends State<MainContent> {
                           style: TextStyle(
                             fontSize: 20,
                             fontFamily: 'DungGeunMo',
-                            color: const Color(0xFF5A6140),
+                            color: Color(0xFF5A6140),
                           ),
                         ),
                       ],
@@ -143,20 +140,20 @@ Align(
     Align(
   alignment: Alignment.center,
   child: Transform.translate(
-    offset: const Offset(0, -40), // 🔥 원하는 만큼 위로 올리기 (숫자 조정 가능)
+    offset: const Offset(0, -10), // 🔥 원하는 만큼 위로 올리기 (숫자 조정 가능)
     child: Image.asset(
-      'assets/images/demo_baebse.png',
-      width: 280,
+      'assets/images/baebse.png',
+      width: 230,
     ),
   ),
 ),
 
 Transform.translate(
-  offset: const Offset(120, -130), // 원하는 만큼 오른쪽으로 이동
+  offset: const Offset(120, -80), // 원하는 만큼 오른쪽으로 이동
   child: GestureDetector(
     onTap: () async {
       print("🔹 Vector image tapped! Saving demo_baebse image...");
-      await _saveDemoBaebseImageToGallery(context); // context 전달
+      await _saveBaebseImageToGallery(context); // context 전달
     },
     child: Image.asset(
       'assets/images/Vector.png', // Vector 이미지 경로
@@ -164,14 +161,10 @@ Transform.translate(
     ),
   ),
 ),
-
-
-
-
     // 캐릭터 아래 여백 (버튼과 겹치지 않도록 조정 가능)
    Center(
   child: Transform.translate(
-    offset: const Offset(0, -120), // 원하는 만큼 위로 올리기
+    offset: const Offset(0, -60), // 원하는 만큼 위로 올리기
     child: ElevatedButton(
       onPressed: () {
         // 도장판 제출 버튼 클릭 시 동작
@@ -182,13 +175,13 @@ Transform.translate(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
         ),
-        minimumSize: const Size(180, 55), // 버튼 크기 유지
+        minimumSize: const Size(150, 45), // 버튼 크기 유지
       ),
       child: const Text(
         '도장판 제출',
         style: TextStyle(
           fontFamily: 'DungGeunMo',
-          fontSize: 20,
+          fontSize: 18,
         ),
       ),
     ),
@@ -198,7 +191,7 @@ Transform.translate(
     
 // 🔹 아이콘 위치 조정 가능
 Transform.translate(
-  offset: const Offset(120, -165), // 기존 위치값 유지 (오른쪽 120, 위로 180)
+  offset: const Offset(120, -95), // 기존 위치값 유지 (오른쪽 120, 위로 180)
   child: GestureDetector(
     onTap: () {
       print("🔹 Information icon tapped!"); // 터미널 로그 확인용
@@ -208,23 +201,12 @@ Transform.translate(
       color: Colors.transparent, // 터치 영역 확보
       child: Image.asset(
         'assets/images/informationicon.png',
-        width: 30,
-        height: 30,
+        width: 17,
+        height: 17,
       ),
     ),
   ),
 ),
-
-
-
-
-
-
-
-
-
-
-
   ],
 ),
             const SizedBox(height: 30), // 버튼 아래 간격 추가
@@ -235,7 +217,7 @@ Transform.translate(
 }
 
 // 📌 이미지를 갤러리에 저장하는 함수
-Future<void> _saveDemoBaebseImageToGallery(BuildContext context) async {
+Future<void> _saveBaebseImageToGallery(BuildContext context) async {
   try {
     // 🔹 권한 요청 (Android 13 이상 및 iOS 대응)
     if (Platform.isAndroid) {
@@ -252,12 +234,12 @@ Future<void> _saveDemoBaebseImageToGallery(BuildContext context) async {
     }
 
     // 🔹 assets에서 demo_baebse.png 이미지 로드
-    final ByteData data = await rootBundle.load('assets/images/demo_baebse.png');
+    final ByteData data = await rootBundle.load('assets/images/baebse.png');
     final Uint8List bytes = data.buffer.asUint8List();
 
     // 🔹 파일을 임시 디렉토리에 저장
     final Directory tempDir = await getTemporaryDirectory();
-    final String filePath = '${tempDir.path}/demo_baebse.png';
+    final String filePath = '${tempDir.path}/baebse.png';
     final File imageFile = File(filePath);
     await imageFile.writeAsBytes(bytes);
 
@@ -275,9 +257,6 @@ Future<void> _saveDemoBaebseImageToGallery(BuildContext context) async {
     print("❌ Error saving image: $e");
   }
 }
-
-
-
 
 // ✅ 갤러리 저장 완료 시 알림 메시지
 void _showSaveSuccessSnackbar(BuildContext context) {
@@ -342,11 +321,6 @@ void _showSaveSuccessSnackbar(BuildContext context) {
     },
   );
 }
-
-
-
-
-
 
 // 📌 Vector 이미지 다운로드 함수 (수정된 버전)
 Future<void> _downloadImage() async {
