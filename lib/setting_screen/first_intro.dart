@@ -6,10 +6,6 @@ import 'package:flutter_application_1/notification_service.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
-// void main() {
-//   runApp(const EmotiApp());
-// }
-
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await NotificationService().initialize();
@@ -21,7 +17,7 @@ void main() async{
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        navigatorKey: navigatorKey, // ✅ navigatorKey 설정
+        navigatorKey: navigatorKey, // navigatorKey 설정
         home: EmotiApp(),
       ),
     ),
@@ -62,7 +58,6 @@ void navigateWithAnimation(BuildContext context, Widget nextScreen) {
   );
 }
 
-// 1
 class FirstScreen extends StatelessWidget {
   const FirstScreen({super.key});
 
@@ -114,7 +109,6 @@ class FirstScreen extends StatelessWidget {
   }
 }
 
-// 2
 class SecondScreen extends StatelessWidget {
   const SecondScreen({super.key});
 
@@ -190,14 +184,14 @@ class _ProgressBarState extends State<ProgressBar> with SingleTickerProviderStat
     );
     _animation = Tween<double>(begin: 0, end: widget.progress).animate(_controller);
 
-    _controller.forward(); //
+    _controller.forward();
   }
 
   @override
   void didUpdateWidget(covariant ProgressBar oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.progress != widget.progress) {
-      _controller.animateTo(widget.progress); // 
+      _controller.animateTo(widget.progress);
     }
   }
 
@@ -217,7 +211,7 @@ class _ProgressBarState extends State<ProgressBar> with SingleTickerProviderStat
           return LinearProgressIndicator(
             value: _animation.value,
             minHeight: 8,
-            backgroundColor: const Color.fromARGB(255, 116, 123, 77), // 
+            backgroundColor: const Color.fromARGB(255, 116, 123, 77),
             valueColor: const AlwaysStoppedAnimation<Color>(Colors.white),
           );
         },

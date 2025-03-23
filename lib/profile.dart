@@ -78,7 +78,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
       body: Column(
         children: [
-          const SizedBox(height: 20), // 간격 추가
+          const SizedBox(height: 20),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Row(
@@ -127,7 +127,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ],
             ),
           ),
-          const SizedBox(height: 10), // 간격 추가
+          const SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 40),
             child: Column(
@@ -152,14 +152,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           const SizedBox(height: 20),
 
-          // 날짜별 도작 리스트 추가
           _buildStampScroll(),
 
           const SizedBox(height: 10),
 
-          const Divider(indent: 30, endIndent: 30, thickness: 2, color: Color.fromARGB(100, 121, 138, 61),),
+          const Divider(indent: 30, endIndent: 30, thickness: 2, color: Color.fromARGB(100, 121, 138, 61)),
 
-          // const SizedBox(height: 20),
           Expanded(
             child: ListView(
               children: [
@@ -172,10 +170,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ],
             ),
           ),
-          
         ],
       ),
-      
     );
   }
 
@@ -215,45 +211,45 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   // 날짜별 도장 가로 스크롤
   Widget _buildStampScroll() {
-  return Padding(
-    padding: const EdgeInsets.symmetric(vertical: 20),
-    child: Stack(
-      children: [
-        SizedBox(
-          height: 70,
-          
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            itemCount: stampData.length,
-            itemBuilder: (context, index) {
-              return _buildStampItem(stampData[index]['date'], stampData[index]['stamp']);
-            },
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 20),
+      child: Stack(
+        children: [
+          SizedBox(
+            height: 70,
+            width: 330,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              itemCount: stampData.length,
+              itemBuilder: (context, index) {
+                return _buildStampItem(stampData[index]['date'], stampData[index]['stamp']);
+              },
+            ),
           ),
-        ),
-        Positioned.fill(
-          child: IgnorePointer(
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                  colors: [
-                    Color(0xFFDDE5B6),
-                    Color(0xFFDDE5B6).withOpacity(0),
-                    Color(0xFFDDE5B6).withOpacity(0),
-                    Color(0xFFDDE5B6),
-                  ],
-                  stops: [0.0, 0.2, 0.8, 1.0],
+          Positioned.fill(
+            child: IgnorePointer(
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                    colors: [
+                      Color(0xFFDDE5B6),
+                      Color(0xFFDDE5B6).withOpacity(0),
+                      Color(0xFFDDE5B6).withOpacity(0),
+                      Color(0xFFDDE5B6),
+                    ],
+                    stops: [0.0, 0.2, 0.8, 1.0],
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-      ],
-    ),
-  );
-}
+        ],
+      ),
+    );
+  }
 
   // 개별 도장 아이템
   Widget _buildStampItem(String date, String stamp) {
@@ -268,12 +264,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             color: Colors.black26,
             blurRadius: 4,
             offset: Offset(2, 2),
-            
           ),
-          
         ],
       ),
-      
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -281,10 +274,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           Text(stamp, style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 73, 76, 57),)),
         ],
       ),
-    );
-    
+    ); 
   }
-
 
   Widget _buildSelectedConcerns() {
     final concerns = Provider.of<UserProvider>(context).concerns; // concerns 리스트 가져오기
@@ -322,40 +313,40 @@ class _ProfileScreenState extends State<ProfileScreen> {
       title: Text(title, style: const TextStyle(fontFamily: 'DungGeunMo', fontSize: 16)),
       onTap: () {
         Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => LoginScreen(),
-                  ),
-                );
+          context,
+          MaterialPageRoute(
+            builder: (context) => LoginScreen(),
+          ),
+        );
       },
     );
   }
 
   Widget _buildToggleMenuItem(String title, IconData icon) {
-  return ListTile(
-    contentPadding: const EdgeInsets.only(left: 40, right: 40),
-    leading: Icon(icon, color: Colors.black54), // 알림 아이콘 추가
-    title: Text(
-      title, 
-      style: const TextStyle(fontFamily: 'DungGeunMo', fontSize: 16),
-    ),
-    trailing: Switch(
-      value: isOn,
-      onChanged: (value) {
-        setState(() {
-          isOn = value;
-          notificationService.initialize(); // 알림 권한 요청
-          notificationService.scheduleNotification(isOn);
-        });
-      },
-      activeColor:  Color.fromARGB(255, 71, 75, 51),
-      activeTrackColor: const Color(0xFF959D75),
-      inactiveThumbColor: const Color(0xFFDCE6B7),
-      inactiveTrackColor: const Color(0xFF959D75),
-      trackOutlineColor: WidgetStateProperty.all(Colors.transparent),
-    ),
-  );
-}
+    return ListTile(
+      contentPadding: const EdgeInsets.only(left: 40, right: 40),
+      leading: Icon(icon, color: Colors.black54),
+      title: Text(
+        title, 
+        style: const TextStyle(fontFamily: 'DungGeunMo', fontSize: 16),
+      ),
+      trailing: Switch(
+        value: isOn,
+        onChanged: (value) {
+          setState(() {
+            isOn = value;
+            notificationService.initialize(); // 알림 권한 요청
+            notificationService.scheduleNotification(isOn);
+          });
+        },
+        activeColor:  Color.fromARGB(255, 71, 75, 51),
+        activeTrackColor: const Color(0xFF959D75),
+        inactiveThumbColor: const Color(0xFFDCE6B7),
+        inactiveTrackColor: const Color(0xFF959D75),
+        trackOutlineColor: WidgetStateProperty.all(Colors.transparent),
+      ),
+    );
+  }
 
 
   Widget _buildDeleteItem(String title) {
@@ -369,82 +360,81 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   void _showConfirmDialog(BuildContext context) {
-  showDialog(
-    context: context,
-    barrierDismissible: true, // 팝업 바깥 클릭 시 닫기
-    builder: (BuildContext dialogContext) {
-      return AlertDialog(
-        backgroundColor: Colors.transparent, // 배경 투명 처리
-        contentPadding: EdgeInsets.zero, // 기본 패딩 제거
-        content: Container(
-          width: MediaQuery.of(context).size.width * 0.8, // 팝업 크기 조정
-          padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16), // 내부 패딩 증가
-          decoration: BoxDecoration(
-            color: Colors.white, // 팝업 배경색
-            borderRadius: BorderRadius.circular(10), // 모서리 둥글게
-            border: Border.all(color: Colors.black, width: 2), // 검은 테두리 추가
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Text(
-                '정말 탈퇴하시겠습니까?',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'DungGeunMo',
+    showDialog(
+      context: context,
+      barrierDismissible: true, // 팝업 바깥 클릭 시 닫기
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          backgroundColor: Colors.transparent, // 배경 투명 처리
+          contentPadding: EdgeInsets.zero, // 기본 패딩 제거
+          content: Container(
+            width: MediaQuery.of(context).size.width * 0.8,
+            padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
+            decoration: BoxDecoration(
+              color: Colors.white, // 팝업 배경색
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: Colors.black, width: 2),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text(
+                  '정말 탈퇴하시겠습니까?',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'DungGeunMo',
+                  ),
                 ),
-              ),
-              const SizedBox(height: 20), // 질문과 버튼 사이 간격 증가
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center, // 가운데 정렬
-                children: [
-                  ElevatedButton(
-                    onPressed: () => Navigator.pop(dialogContext),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey[400], // 중립적인 색상
-                      foregroundColor: Colors.black, // 글씨색
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        side: const BorderSide(color: Colors.black, width: 1.5),
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center, // 가운데 정렬
+                  children: [
+                    ElevatedButton(
+                      onPressed: () => Navigator.pop(dialogContext),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.grey[400],
+                        foregroundColor: Colors.black,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          side: const BorderSide(color: Colors.black, width: 1.5),
+                        ),
+                      ),
+                      child: const Text(
+                        "아니오",
+                        style: TextStyle(fontSize: 16, fontFamily: 'DungGeunMo'),
                       ),
                     ),
-                    child: const Text(
-                      "아니오",
-                      style: TextStyle(fontSize: 16, fontFamily: 'DungGeunMo'),
-                    ),
-                  ),
-                  const SizedBox(width: 12), // 버튼 간격 조정
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.pop(dialogContext);
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => LoginScreen()),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF798063), // 기존 팝업과 동일한 배경색
-                      foregroundColor: Colors.white, // 글씨색
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        side: const BorderSide(color: Colors.black, width: 1.5),
+                    const SizedBox(width: 12),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(dialogContext);
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => LoginScreen()),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF798063),
+                        foregroundColor: Colors.white, // 글씨색
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          side: const BorderSide(color: Colors.black, width: 1.5),
+                        ),
+                      ),
+                      child: const Text(
+                        "예",
+                        style: TextStyle(fontSize: 16, fontFamily: 'DungGeunMo'),
                       ),
                     ),
-                    child: const Text(
-                      "예",
-                      style: TextStyle(fontSize: 16, fontFamily: 'DungGeunMo'),
-                    ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
-        ),
-      );
-    },
-  );
-}
-
+        );
+      },
+    );
+  }
 }

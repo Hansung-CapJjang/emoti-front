@@ -32,58 +32,58 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     super.initState();
     _controller = WebViewController()
-      ..setJavaScriptMode(JavaScriptMode.unrestricted) // ✅ JavaScript 활성화
+      ..setJavaScriptMode(JavaScriptMode.unrestricted) // JavaScript 활성화
       ..loadRequest(Uri.parse("https://flutter.dev"));
   }
 
-void _showFloatingPage(BuildContext context, String url) {
-  showDialog(
-    context: context,
-    barrierDismissible: false,
-    builder: (context) {
-      WebViewController dialogController = WebViewController()
-        ..setJavaScriptMode(JavaScriptMode.unrestricted)
-        ..loadRequest(Uri.parse(url));
+  void _showFloatingPage(BuildContext context, String url) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        WebViewController dialogController = WebViewController()
+          ..setJavaScriptMode(JavaScriptMode.unrestricted)
+          ..loadRequest(Uri.parse(url));
 
-      return Dialog(
-        insetPadding: const EdgeInsets.all(10),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        child: Stack(
-          children: [
-            SizedBox(
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height * 0.8,
-              child: WebViewWidget(
-                controller: dialogController
-                  ..setNavigationDelegate(
-                    NavigationDelegate(
-                      onPageFinished: (String url) {
-                        if (url.contains("callback_url")) {  // ✅ 로그인 성공 여부 확인 (콜백 URL)
-                          Navigator.pop(context);  // 다이얼로그 닫기
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(builder: (context) => const FirstScreen()),
-                          );
-                        }
-                      },
+        return Dialog(
+          insetPadding: const EdgeInsets.all(10),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          child: Stack(
+            children: [
+              SizedBox(
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height * 0.8,
+                child: WebViewWidget(
+                  controller: dialogController
+                    ..setNavigationDelegate(
+                      NavigationDelegate(
+                        onPageFinished: (String url) {
+                          if (url.contains("callback_url")) {  // 로그인 성공 여부 확인 (콜백 URL)
+                            Navigator.pop(context);  // 다이얼로그 닫기
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(builder: (context) => const FirstScreen()),
+                            );
+                          }
+                        },
+                      ),
                     ),
-                  ),
+                ),
               ),
-            ),
-            Positioned(
-              right: 5,
-              top: 5,
-              child: IconButton(
-                icon: const Icon(Icons.close),
-                onPressed: () => Navigator.pop(context),
+              Positioned(
+                right: 5,
+                top: 5,
+                child: IconButton(
+                  icon: const Icon(Icons.close),
+                  onPressed: () => Navigator.pop(context),
+                ),
               ),
-            ),
-          ],
-        ),
-      );
-    },
-  );
-}
+            ],
+          ),
+        );
+      },
+    );
+  }
 
 
   @override

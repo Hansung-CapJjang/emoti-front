@@ -3,8 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
-import 'package:flutter_tts/flutter_tts.dart'; // 🔹 TTS 추가
-import 'chatting_setting.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 class VoiceChatScreen extends StatefulWidget {
   final String counselorType;
@@ -20,13 +19,12 @@ class _VoiceChatScreenState extends State<VoiceChatScreen> {
   bool isSpeaking = false;
   String recognizedText = ""; 
   late stt.SpeechToText _speech;
-  late FlutterTts _flutterTts; // 🔹 TTS 인스턴스 추가
+  late FlutterTts _flutterTts; // TTS 인스턴스 추가
   Timer? _timer;
   int _elapsedSeconds = 0;
   bool shouldSpeakAfterListening = false;
 
-  final List<String> _defaultResponses = [ // 🔹 기본 말뭉치
-    "홍세린님 지금 뭐하시는 거예요?",
+  final List<String> _defaultResponses = [ // 기본 말뭉치
     "오늘 기분이 어떠신가요?",
     "편하게 이야기해주세요. 제가 듣고 있습니다.",
     "어떤 고민이 있으신가요?",
@@ -36,10 +34,10 @@ class _VoiceChatScreenState extends State<VoiceChatScreen> {
   void initState() {
     super.initState();
     _speech = stt.SpeechToText();
-    _flutterTts = FlutterTts(); // 🔹 TTS 초기화
+    _flutterTts = FlutterTts(); // TTS 초기화
     _configureTTS();
     _startTimer();
-    _speakInitialMessage(); // 🔹 앱 시작 시 첫 음성 출력
+    _speakInitialMessage(); // 앱 시작 시 첫 음성 출력
   }
 
   @override
@@ -48,7 +46,7 @@ class _VoiceChatScreenState extends State<VoiceChatScreen> {
     super.dispose();
   }
 
-  /// 🔹 TTS 설정
+  // TTS 설정
   void _configureTTS() async {
     await _flutterTts.setLanguage("ko-KR"); // 한국어 설정
     await _flutterTts.setSpeechRate(0.5); // 속도 조절
@@ -62,7 +60,7 @@ class _VoiceChatScreenState extends State<VoiceChatScreen> {
     });
   }
 
-  /// 🔹 AI 음성 출력 + 상태 업데이트
+  // AI 음성 출력 + 상태 업데이트
   void _speakMessage(String message) async {
     setState(() {
       isSpeaking = true;
@@ -70,14 +68,14 @@ class _VoiceChatScreenState extends State<VoiceChatScreen> {
     await _flutterTts.speak(message);
   }
 
-  /// 🔹 초기 상담 메시지 음성 출력
+  // 초기 상담 메시지 음성 출력
   void _speakInitialMessage() async {
     final random = Random();
     String message = _defaultResponses[random.nextInt(_defaultResponses.length)];
     _speakMessage(message);
   }
 
-  /// 타이머 시작
+  // 타이머 시작
   void _startTimer() {
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
@@ -86,14 +84,14 @@ class _VoiceChatScreenState extends State<VoiceChatScreen> {
     });
   }
 
-  /// 경과 시간을 "MM:SS" 형식으로 변환
+  // 경과 시간을 "MM:SS" 형식으로 변환
   String _formatTime(int seconds) {
     final minutes = (seconds ~/ 60).toString().padLeft(2, '0');
     final secs = (seconds % 60).toString().padLeft(2, '0');
     return "$minutes:$secs";
   }
 
-  /// 음성 인식 시작
+  // 음성 인식 시작
   void _startListening() async {
     bool available = await _speech.initialize();
     if (available) {
@@ -113,7 +111,7 @@ class _VoiceChatScreenState extends State<VoiceChatScreen> {
     }
   }
 
-  /// 음성 인식 중지
+  // 음성 인식 중지
   void _stopListening() {
     _speech.stop();
     setState(() {
@@ -162,13 +160,13 @@ class _VoiceChatScreenState extends State<VoiceChatScreen> {
                     ),
                   ),
                   TextSpan(
-                  text: _formatTime(_elapsedSeconds),
-                  style: const TextStyle(
-                    fontFamily: 'DungGeunMo',
-                    fontSize: 23,
-                    color: Colors.red,
+                    text: _formatTime(_elapsedSeconds),
+                    style: const TextStyle(
+                      fontFamily: 'DungGeunMo',
+                      fontSize: 23,
+                      color: Colors.red,
+                    ),
                   ),
-                ),
                 ],
               ),
             ),
@@ -193,7 +191,6 @@ class _VoiceChatScreenState extends State<VoiceChatScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                
                 const SizedBox(height: 30),
                 SvgPicture.asset(
                   'assets/images/waveformicon.svg',
@@ -207,25 +204,6 @@ class _VoiceChatScreenState extends State<VoiceChatScreen> {
               ],
             ),
           ),
-          // 사용자 목소리가 텍스트로 변환되어 화면에 나타나는 기능
-          // Padding(
-          //   padding: const EdgeInsets.symmetric(horizontal: 20),
-          //   child: Container(
-          //     padding: const EdgeInsets.all(16),
-          //     decoration: BoxDecoration(
-          //       color: const Color.fromARGB(255, 247, 255, 206),
-          //       borderRadius: BorderRadius.circular(10),
-          //     ),
-          //     child: Text(
-          //       recognizedText.isEmpty ? "음성을 인식하면 여기에 표시됩니다." : recognizedText,
-          //       style: const TextStyle(
-          //         fontFamily: 'DungGeunMo',
-          //         fontSize: 16,
-          //         color: Colors.black,
-          //       ),
-          //     ),
-          //   ),
-          // ),
           const SizedBox(height: 80),
           GestureDetector(
             onTap: () {
@@ -286,7 +264,7 @@ class _VoiceChatScreenState extends State<VoiceChatScreen> {
   }
 }
 
-/// 상담 종료 다이얼로그
+// 상담 종료 다이얼로그
 void _showEndDialog(BuildContext context) {
   Future.delayed(Duration(milliseconds: 100), () { // 약간의 딜레이 후 실행
     showDialog(
@@ -297,12 +275,12 @@ void _showEndDialog(BuildContext context) {
           backgroundColor: Colors.transparent, // 배경 투명 처리
           contentPadding: EdgeInsets.zero, // 기본 패딩 제거
           content: Container(
-            width: MediaQuery.of(context).size.width * 0.8, // 팝업 크기 조정
-            padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16), // 내부 패딩 증가
+            width: MediaQuery.of(context).size.width * 0.8,
+            padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
             decoration: BoxDecoration(
               color: Colors.white, // 팝업 배경색
-              borderRadius: BorderRadius.circular(10), // 모서리 둥글게
-              border: Border.all(color: Colors.black, width: 2), // 검은 테두리 추가
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: Colors.black, width: 2),
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -316,14 +294,14 @@ void _showEndDialog(BuildContext context) {
                     fontFamily: 'DungGeunMo',
                   ),
                 ),
-                const SizedBox(height: 20), // 질문과 버튼 간격 증가
+                const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center, // 가운데 정렬
                   children: [
                     ElevatedButton(
                       onPressed: () => Navigator.pop(dialogContext),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.grey[400], // 중립적인 색상
+                        backgroundColor: Colors.grey[400],
                         foregroundColor: Colors.black, // 글씨색
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
@@ -335,14 +313,14 @@ void _showEndDialog(BuildContext context) {
                         style: TextStyle(fontSize: 16, fontFamily: 'DungGeunMo'),
                       ),
                     ),
-                    const SizedBox(width: 12), // 버튼 간격 좁힘
+                    const SizedBox(width: 12),
                     ElevatedButton(
                       onPressed: () {
                         Navigator.pop(dialogContext);
                         Navigator.pop(context);
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF798063), // 기존 팝업과 동일한 배경색
+                        backgroundColor: const Color(0xFF798063),
                         foregroundColor: Colors.white, // 글씨색
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),

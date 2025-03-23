@@ -40,6 +40,8 @@ dependencies:
   speech_to_text:
   flutter_tts:
   http: ^1.2.2
+  path_provider:
+  webview_flutter:
 
   flutter_localizations:
     sdk: flutter
