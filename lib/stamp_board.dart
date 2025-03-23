@@ -8,37 +8,54 @@ class StampBoard extends StatefulWidget {
 }
 
 class _StampBoardState extends State<StampBoard> {
-  List<bool> stampStates = List.generate(8, (index) => true); // 도장 상태를 저장하는 리스트
+  int currentLevel = 0;
+  List<int> stampCounts = [1, 3, 5, 8];
+
+  void _nextLevel() {
+    setState(() {
+      if (currentLevel < stampCounts.length - 1) {
+        currentLevel++;
+      }
+    });
+  }
+
+  void _prevLevel() {
+    setState(() {
+      if (currentLevel > 0) {
+        currentLevel--;
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    int currentStampCount = stampCounts[currentLevel];
+    int rowCount = (currentStampCount / 4).ceil();
+    double containerHeight = rowCount * 60.0 + 40.0;
+
     return Scaffold(
       backgroundColor: const Color(0xFFDCE6B7),
       body: Column(
         children: [
-          // 🔹 도전 중! 텍스트
-          const Padding(
-            padding: EdgeInsets.only(top: 30),
-            child: Text(
-              "~~ 도전 중! ~~",
-              style: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'DungGeunMo',
-                color: Color(0xFF414728),
-              ),
+          const SizedBox(height: 30),
+          Text(
+            "~~ 도전 중! Lv.${currentLevel + 1} ~~",
+            style: const TextStyle(
+              fontSize: 28,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'DungGeunMo',
+              color: Color(0xFF414728),
             ),
           ),
-
-          // 🔹 도장판 UI
-          Padding(
-            padding: const EdgeInsets.only(top: 40),
+          const SizedBox(height: 40),
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.85, // 도장판 + 화살표 포함 넉넉한 너비
             child: Stack(
               alignment: Alignment.center,
               children: [
-                // 🔹 도장판 박스
+                // 도장판
                 Container(
-                  width: MediaQuery.of(context).size.width * 0.65,
+                  width: MediaQuery.of(context).size.width * 0.71,
                   height: 160,
                   decoration: BoxDecoration(
                     color: const Color(0xFFE9EFC7),
@@ -47,53 +64,82 @@ class _StampBoardState extends State<StampBoard> {
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: List.generate(2, (rowIndex) => 
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: List.generate(4, (colIndex) {
-                            int index = rowIndex * 4 + colIndex;
-                            return Stack(
-                              alignment: Alignment.center,
-                              children: [
-                                Container(
-                                  width: 40,
-                                  height: 40,
-                                  decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Color(0xFF798063),
+                    children: () {
+                      int currentStampCount = stampCounts[currentLevel];
+                      List<List<int>> rows = [];
+                      if (currentStampCount == 5) {
+                        rows = [
+                          [0, 1, 2],
+                          [3, 4]
+                        ];
+                      } else {
+                        for (int i = 0; i < currentStampCount; i += 4) {
+                          int end = (i + 4 < currentStampCount) ? i + 4 : currentStampCount;
+                          rows.add(List.generate(end - i, (j) => i + j));
+                        }
+                      }
+                      return rows.map((row) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 1),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: row.map((stampIndex) {
+                              return Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  Container(
+                                    width: 40,
+                                    height: 40,
+                                    decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Color(0xFF798063),
+                                    ),
                                   ),
-                                ),
-                                if (stampStates[index])
                                   Image.asset(
-                                    "assets/images/stamp${(index % 5) + 1}.png",
-                                    width: 35,
+                                    "assets/images/stamp${(stampIndex % 5) + 1}.png",
+                                    width: 70,
                                   ),
-                              ],
-                            );
-                          }),
-                        ),
-                      ),
+                                ],
+                              );
+                            }).toList(),
+                          ),
+                        );
+                      }).toList();
+                    }(),
+                  ),
+                ),
+                // 왼쪽 화살표
+                Positioned(
+                  left: -25,
+                  child: IconButton(
+                    splashColor: Colors.transparent,        // 🔒 효과 제거
+                    highlightColor: Colors.transparent,     // 🔒 강조 제거
+                    hoverColor: Colors.transparent,         // 🔒 마우스 hover 제거
+                    icon: Icon(
+                      Icons.chevron_left,
+                      color: currentLevel > 0
+                          ? const Color(0xFF56644B)
+                          : Colors.black.withOpacity(0.27),
+                      size: 50,
                     ),
+                    onPressed: currentLevel > 0 ? _prevLevel : null,
                   ),
                 ),
-                // 🔹 좌측 화살표 (더 정교한 위치 조정 가능)
-                Transform.translate(
-                  offset: const Offset(-155, 0), // ✅ (X축, Y축) 조정 가능
-                  child: Icon(
-                    Icons.chevron_left,
-                    color: Colors.black.withOpacity(0.27), // ✅ 27% 불투명도 적용
-                    size: 50,
-                  ),
-                ),
-                // 🔹 우측 화살표 (더 정교한 위치 조정 가능)
-                Transform.translate(
-                  offset: const Offset(155, 0), // ✅ (X축, Y축) 조정 가능
-                  child: const Icon(
-                    Icons.chevron_right,
-                    color: Colors.black, // ✅ 완전 검은색 적용
-                    size: 50,
+                // 오른쪽 화살표
+                Positioned(
+                  right: -25,
+                  child: IconButton(
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    hoverColor: Colors.transparent,
+                    icon: Icon(
+                      Icons.chevron_right,
+                      color: currentLevel < stampCounts.length - 1
+                          ? const Color(0xFF56644B)
+                          : Colors.black.withOpacity(0.27),
+                      size: 50,
+                    ),
+                    onPressed: currentLevel < stampCounts.length - 1 ? _nextLevel : null,
                   ),
                 ),
               ],
@@ -105,9 +151,8 @@ class _StampBoardState extends State<StampBoard> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // 도장 도감 텍스트 (위치 조정 가능)
                 Transform.translate(
-                  offset: const Offset(80, 10), // ✅ 왼쪽으로 5만큼 이동
+                  offset: const Offset(80, 10),
                   child: const Text(
                     "도장 도감",
                     style: TextStyle(
@@ -117,10 +162,9 @@ class _StampBoardState extends State<StampBoard> {
                     ),
                   ),
                 ),
-                const SizedBox(width: 1.5), // ✅ 간격 조정 가능
-                // 아이콘 (위치 조정 가능)
+                const SizedBox(width: 1.5),
                 Transform.translate(
-                  offset: const Offset(85, 10), // ✅ 오른쪽으로 5만큼 이동
+                  offset: const Offset(85, 10),
                   child: GestureDetector(
                     onTap: () {
                       _showPopupDialog(context);
@@ -138,13 +182,13 @@ class _StampBoardState extends State<StampBoard> {
               ],
             ),
           ),
-          // 🔹 구분선
+          // 구분선
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: Align(
-              alignment: Alignment.center, // ✅ 중앙 정렬
+              alignment: Alignment.center,
               child: Transform.translate(
-                offset: const Offset(0, 27), // ✅ 여기서 x, y 값 조정 가능
+                offset: const Offset(0, 27),
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.85,
                   height: 2,
@@ -154,13 +198,13 @@ class _StampBoardState extends State<StampBoard> {
             ),
           ),
           const SizedBox(height: 10),
-          // 🔹 내 도장 텍스트
+          // 내 도장 텍스트
           Padding(
             padding: const EdgeInsets.only(bottom: 10),
             child: Align(
-              alignment: Alignment.center, // ✅ 기본 중앙 정렬
+              alignment: Alignment.center,
               child: Transform.translate(
-                offset: const Offset(-105, 35), // ✅ x, y 값 조정 가능 (예: Offset(0, -5) → 위로 이동)
+                offset: const Offset(-105, 35),
                 child: const Text(
                   "내 도장",
                   style: TextStyle(
@@ -173,16 +217,17 @@ class _StampBoardState extends State<StampBoard> {
               ),
             ),
           ),
-          // 🔹 내 도장 리스트
+          // 내 도장 리스트
           Padding(
             padding: const EdgeInsets.only(bottom: 20),
             child: Align(
-              alignment: Alignment.center, // 기본 중앙 정렬
+              alignment: Alignment.center,
               child: Transform.translate(
-                offset: const Offset(0, 40), // x, y 값 조정 가능
+                offset: const Offset(0, 40),
                 child: Container(
-                  width: MediaQuery.of(context).size.width * 0.85, // 컨테이너 너비 조정
-                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                  width: MediaQuery.of(context).size.width * 0.85,
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 10, horizontal: 15),
                   decoration: BoxDecoration(
                     color: const Color(0xFFE9EFC7),
                     borderRadius: BorderRadius.circular(15),
@@ -190,27 +235,27 @@ class _StampBoardState extends State<StampBoard> {
                   ),
                   child: Column(
                     children: [
-                      // 첫 번째 줄 (🔥, ⭐, 🌱)
+                      // 첫 번째 줄
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween, // 간격 조절
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Row(
                             children: [
-                              Image.asset("assets/images/stamp1.png", width: 60), // 🔥 이미지 크기 줄임
+                              Image.asset("assets/images/stamp1.png", width: 60),
                               const SizedBox(width: 5),
                               const Text("x 0", style: TextStyle(fontSize: 18, fontFamily: 'DungGeunMo')),
                             ],
                           ),
                           Row(
                             children: [
-                              Image.asset("assets/images/stamp2.png", width: 60), // ⭐
+                              Image.asset("assets/images/stamp2.png", width: 60),
                               const SizedBox(width: 5),
                               const Text("x 0", style: TextStyle(fontSize: 18, fontFamily: 'DungGeunMo')),
                             ],
                           ),
                           Row(
                             children: [
-                              Image.asset("assets/images/stamp3.png", width: 60), // 🌱
+                              Image.asset("assets/images/stamp3.png", width: 60),
                               const SizedBox(width: 5),
                               const Text("x 0", style: TextStyle(fontSize: 18, fontFamily: 'DungGeunMo')),
                             ],
@@ -218,21 +263,21 @@ class _StampBoardState extends State<StampBoard> {
                         ],
                       ),
                       const SizedBox(height: 10),
-                      // 두 번째 줄 (⚔, 🩹)
+                      // 두 번째 줄
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.center, // 가운데 정렬
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Row(
                             children: [
-                              Image.asset("assets/images/stamp4.png", width: 60), // ⚔
+                              Image.asset("assets/images/stamp4.png", width: 60),
                               const SizedBox(width: 5),
                               const Text("x 0", style: TextStyle(fontSize: 18, fontFamily: 'DungGeunMo')),
                             ],
                           ),
-                          const SizedBox(width: 20), // 두 번째 줄 아이템 간격 조정
+                          const SizedBox(width: 20),
                           Row(
                             children: [
-                              Image.asset("assets/images/stamp5.png", width: 60), // 🩹
+                              Image.asset("assets/images/stamp5.png", width: 60),
                               const SizedBox(width: 5),
                               const Text("x 0", style: TextStyle(fontSize: 18, fontFamily: 'DungGeunMo')),
                             ],
