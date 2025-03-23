@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'chatting_setting.dart';
-import 'main_screen.dart';
 
 class TextChatScreen extends StatefulWidget {
   final String counselorType;
@@ -63,7 +61,6 @@ class _TextChatScreenState extends State<TextChatScreen> {
                 style: const TextStyle(
                   fontFamily: 'DungGeunMo',
                   fontSize: 20,
-                  // fontWeight: FontWeight.bold,
                   color: Colors.black,
                 ),
               ),
@@ -72,7 +69,6 @@ class _TextChatScreenState extends State<TextChatScreen> {
                 style: TextStyle(
                   fontFamily: 'DungGeunMo',
                   fontSize: 20,
-                  // fontWeight: FontWeight.bold,
                   color: Colors.blue,
                 ),
               ),
@@ -107,9 +103,9 @@ class _TextChatScreenState extends State<TextChatScreen> {
               controller: _scrollController,
               padding: const EdgeInsets.symmetric(horizontal: 16),
               children: [
-                _buildMessageBubble("안녕하세요, 00님! 만나서 반가워요.", false),
+                _buildMessageBubble("안녕하세요, 만나서 반가워요.", false),
                 _buildMessageBubble("앞서 작성한 고민 키워드와 관련한 내용으로 상담하시겠어요?", false),
-                _buildMessageBubble("응?", false),
+                _buildMessageBubble("새로운 주제로 상담을 시작하시겠어요?", false),
                 for (var message in _messages)
                   _buildMessageBubble(message['text'], message['isUser']),
               ],
@@ -121,13 +117,13 @@ class _TextChatScreenState extends State<TextChatScreen> {
     );
   }
 
-  /// 채팅 메시지 버블 (사용자 입력 시 오른쪽 정렬)
+  // 채팅 메시지 버블 (사용자 입력 시 오른쪽 정렬)
   Widget _buildMessageBubble(String message, bool isUser) {
     return Align(
       alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
         constraints: BoxConstraints(
-          maxWidth: MediaQuery.of(context).size.width * 0.6, // 최대 가로 길이 60%
+          maxWidth: MediaQuery.of(context).size.width * 0.6,
         ),
         margin: const EdgeInsets.symmetric(vertical: 6),
         padding: const EdgeInsets.all(12),
@@ -168,13 +164,13 @@ class _TextChatScreenState extends State<TextChatScreen> {
     );
   }
 
-  /// 현재 시간을 "HH:mm" 형식으로 반환
+  // 현재 시간을 "HH:mm" 형식으로 반환
   String _getCurrentTime() {
     final now = DateTime.now();
     return "${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}";
   }
 
-  /// 입력창 및 상담 종료 버튼
+  // 입력창 및 상담 종료 버튼
   Widget _buildChatInput() {
 
     bool isKeyboardVisible = MediaQuery.of(context).viewInsets.bottom > 0;
@@ -214,13 +210,12 @@ class _TextChatScreenState extends State<TextChatScreen> {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: IconButton(
-  icon: Transform.rotate(
-    angle: -0.7854, // 라디안 단위 (-45도 = -π/4)
-    child: const Icon(Icons.send, color: Colors.white),
-  ),
-  onPressed: _textController.text.trim().isEmpty ? null : _sendMessage,
-),
-
+                  icon: Transform.rotate(
+                    angle: -0.7854, // 라디안 단위 (-45도 = -π/4)
+                    child: const Icon(Icons.send, color: Colors.white),
+                  ),
+                  onPressed: _textController.text.trim().isEmpty ? null : _sendMessage,
+                ),
               ),
             ],
           ),
@@ -253,7 +248,7 @@ class _TextChatScreenState extends State<TextChatScreen> {
   }
 }
 
-/// 상담 종료 다이얼로그
+// 상담 종료 다이얼로그
 void _showEndDialog(BuildContext context) {
   Future.delayed(Duration(milliseconds: 100), () { // 약간의 딜레이 후 실행
     showDialog(
@@ -264,12 +259,12 @@ void _showEndDialog(BuildContext context) {
           backgroundColor: Colors.transparent, // 배경 투명 처리
           contentPadding: EdgeInsets.zero, // 기본 패딩 제거
           content: Container(
-            width: MediaQuery.of(context).size.width * 0.8, // 팝업 크기 조정
-            padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16), // 내부 패딩 증가
+            width: MediaQuery.of(context).size.width * 0.8,
+            padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
             decoration: BoxDecoration(
               color: Colors.white, // 팝업 배경색
-              borderRadius: BorderRadius.circular(10), // 모서리 둥글게
-              border: Border.all(color: Colors.black, width: 2), // 검은 테두리 추가
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: Colors.black, width: 2),
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -283,14 +278,14 @@ void _showEndDialog(BuildContext context) {
                     fontFamily: 'DungGeunMo',
                   ),
                 ),
-                const SizedBox(height: 20), // 질문과 버튼 간격 증가
+                const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center, // 가운데 정렬
                   children: [
                     ElevatedButton(
                       onPressed: () => Navigator.pop(dialogContext),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.grey[400], // 중립적인 색상
+                        backgroundColor: Colors.grey[400],
                         foregroundColor: Colors.black, // 글씨색
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
@@ -302,7 +297,7 @@ void _showEndDialog(BuildContext context) {
                         style: TextStyle(fontSize: 16, fontFamily: 'DungGeunMo'),
                       ),
                     ),
-                    const SizedBox(width: 12), // 버튼 간격 좁힘
+                    const SizedBox(width: 12),
                     ElevatedButton(
                       onPressed: () {
                         Navigator.pop(dialogContext);

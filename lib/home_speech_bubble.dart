@@ -60,24 +60,24 @@ class SpeechBubble extends StatelessWidget {
   }) : super(key: key);
 
   @override
-Widget build(BuildContext context) {
-  return Container(
-    constraints: const BoxConstraints(minWidth: 100, minHeight: 50),
-    child: CustomPaint(
-      size: const Size(160, 60),
-      painter: SpeechBubblePainter(fillColor: fillColor, borderColor: borderColor),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-        child: Text(
-          text,
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            fontSize: 18,
-            fontFamily: 'DungGeunMo',
+  Widget build(BuildContext context) {
+    return Container(
+      constraints: const BoxConstraints(minWidth: 100, minHeight: 50),
+      child: CustomPaint(
+        size: const Size(160, 60),
+        painter: SpeechBubblePainter(fillColor: fillColor, borderColor: borderColor),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+          child: Text(
+            text,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontSize: 18,
+              fontFamily: 'DungGeunMo',
+            ),
           ),
         ),
       ),
-    ),
-  );
-}
+    );
+  }
 }

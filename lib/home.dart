@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_application_1/stamp_board.dart';
 import 'home_main_content.dart';
 
 void main() {
-  runApp(const MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: HomeScreen(),
-  ));
+  runApp(
+    const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: HomeScreen(),
+    ),
+  );
 }
 
 class HomeScreen extends StatefulWidget {
@@ -80,45 +81,34 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       const SizedBox(width: 15),
                       
-                        GestureDetector(
-  onTap: () => _onTabTapped(1), // {
-//   print("🔹 도장판 클릭됨! StampBoard 페이지로 이동");
-//   Navigator.push(
-//     context,
-//     MaterialPageRoute(builder: (context) => StampBoard()), // ✅ 직접 StampBoard 호출
-//   );
-// },
-
-  child: Container(
-    color: Colors.transparent, // 터치 감지 가능하도록 배경 추가
-    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-    child: Column(
-      children: [
-        Text(
-          '도장판',
-          style: TextStyle(
-            fontSize: 23,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'DungGeunMo',
-            color: _selectedIndex == 1
-                                ? const Color(0xFF414728)
-                                : const Color.fromRGBO(78, 87, 44, 0.25),
+                      GestureDetector(
+                        onTap: () => _onTabTapped(1),
+                        child: Container(
+                          color: Colors.transparent, // 터치 감지 가능하도록 배경 추가
+                          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                          child: Column(
+                            children: [
+                              Text(
+                                '도장판',
+                                style: TextStyle(
+                                  fontSize: 23,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'DungGeunMo',
+                                  color: _selectedIndex == 1
+                                    ? const Color(0xFF414728) : const Color.fromRGBO(78, 87, 44, 0.25),
+                                ),
+                              ),
+                              if (_selectedIndex == 1)
+                                Container(
+                                  margin: const EdgeInsets.only(top: 4),
+                                  height: 6,
+                                  width: 70,
+                                  color: const Color.fromRGBO(5, 5, 2, 0.35),
+                                ),
+                            ],
                           ),
-                            ),
-                            if (_selectedIndex == 1)
-          Container(
-            margin: const EdgeInsets.only(top: 4),
-            height: 6,
-            width: 70,
-            color: const Color.fromRGBO(5, 5, 2, 0.35),
-          ),
-      ],
-    ),
-  ),
-),
-
-
-                      
+                        ),
+                      ),
                     ],
                   ),
                   const Padding(
@@ -154,8 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
           );
         },
         child: _selectedIndex == 0
-            ? MainContent(key: const ValueKey(0)) // 메인 화면
-            : StampBoard(key: const ValueKey(1)), // 도장판 화면
+          ? MainContent(key: const ValueKey(0)) : StampBoard(key: const ValueKey(1)),
       ),
     );
   }

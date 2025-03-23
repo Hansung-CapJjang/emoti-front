@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/animation.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'first_intro.dart';
 import 'concern_input.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_application_1/user_provider.dart';
-import 'package:flutter_application_1/main.dart';
 
 class GenderInputScreen extends StatefulWidget {
   const GenderInputScreen({super.key});
@@ -37,7 +35,7 @@ void _selectGenderAndProceed(String gender) { // async {
       final response = await http.post(
         Uri.parse(apiUrl),
         headers: {"Content-Type": "application/json"},
-        body: jsonEncode({"name": name, "gender": gender}), // 🔹 JSON으로 전송
+        body: jsonEncode({"name": name, "gender": gender}), // JSON으로 전송
       );
 
       if (response.statusCode == 200) {
@@ -71,7 +69,7 @@ void _selectGenderAndProceed(String gender) { // async {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ProgressBar(progress: 0.5), // Progress Bar (50%)
+            ProgressBar(progress: 0.5),
             const SizedBox(height: 30),
             const Text(
               '성별을 선택 해주세요.',
@@ -93,8 +91,6 @@ void _selectGenderAndProceed(String gender) { // async {
               ),
             ),
             const Spacer(flex: 10),
-
-            //
             const SizedBox(height: 30),
             GenderButton(label: '남성', onTap: () => _selectGenderAndProceed('남성')),
             const SizedBox(height: 15),
@@ -108,21 +104,13 @@ void _selectGenderAndProceed(String gender) { // async {
       ),
     );
   }
-
-  // void _goToNextScreen(BuildContext context) {
-  //   Navigator.push(
-  //     context,
-  //     MaterialPageRoute(builder: (context) => const ConcernInputScreen()),
-  //   );
-  // }
 }
 
-// 
 class GenderButton extends StatelessWidget {
   final String label;
-  final VoidCallback onTap; // 
+  final VoidCallback onTap;
 
-  const GenderButton({super.key, required this.label, required this.onTap}); // onTap 
+  const GenderButton({super.key, required this.label, required this.onTap}); 
 
   @override
   Widget build(BuildContext context) {

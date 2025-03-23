@@ -78,8 +78,7 @@ class NotificationService {
     );
 
     await flutterLocalNotificationsPlugin.initialize(initializationSettings);
-    // 타임존 설정
-    await _configureLocalTimeZone();
+    await _configureLocalTimeZone(); // 타임존 설정
 
   }
 
@@ -118,6 +117,7 @@ class NotificationService {
       );
 
       await _configureLocalTimeZone(); // 타임존을 다시 확인
+
       // 매일 22시(KST)에 알림 설정
       final now = tz.TZDateTime.now(tz.local);
       tz.TZDateTime scheduledDate = tz.TZDateTime(

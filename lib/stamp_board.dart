@@ -39,7 +39,7 @@ class _StampBoardState extends State<StampBoard> {
         children: [
           const SizedBox(height: 30),
           Text(
-            "~~ 도전 중! Lv.${currentLevel + 1} ~~",
+            "도전 중! Lv.${currentLevel + 1}",
             style: const TextStyle(
               fontSize: 28,
               fontWeight: FontWeight.bold,
@@ -49,7 +49,7 @@ class _StampBoardState extends State<StampBoard> {
           ),
           const SizedBox(height: 40),
           SizedBox(
-            width: MediaQuery.of(context).size.width * 0.85, // 도장판 + 화살표 포함 넉넉한 너비
+            width: MediaQuery.of(context).size.width * 0.85,
             child: Stack(
               alignment: Alignment.center,
               children: [
@@ -108,13 +108,14 @@ class _StampBoardState extends State<StampBoard> {
                     }(),
                   ),
                 ),
+                
                 // 왼쪽 화살표
                 Positioned(
                   left: -25,
                   child: IconButton(
-                    splashColor: Colors.transparent,        // 🔒 효과 제거
-                    highlightColor: Colors.transparent,     // 🔒 강조 제거
-                    hoverColor: Colors.transparent,         // 🔒 마우스 hover 제거
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    hoverColor: Colors.transparent,
                     icon: Icon(
                       Icons.chevron_left,
                       color: currentLevel > 0
@@ -125,6 +126,7 @@ class _StampBoardState extends State<StampBoard> {
                     onPressed: currentLevel > 0 ? _prevLevel : null,
                   ),
                 ),
+
                 // 오른쪽 화살표
                 Positioned(
                   right: -25,
@@ -145,6 +147,7 @@ class _StampBoardState extends State<StampBoard> {
               ],
             ),
           ),
+
           // 도장 도감 버튼
           Padding(
             padding: const EdgeInsets.only(top: 10),
@@ -182,6 +185,7 @@ class _StampBoardState extends State<StampBoard> {
               ],
             ),
           ),
+
           // 구분선
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
@@ -198,6 +202,7 @@ class _StampBoardState extends State<StampBoard> {
             ),
           ),
           const SizedBox(height: 10),
+
           // 내 도장 텍스트
           Padding(
             padding: const EdgeInsets.only(bottom: 10),
@@ -217,6 +222,7 @@ class _StampBoardState extends State<StampBoard> {
               ),
             ),
           ),
+
           // 내 도장 리스트
           Padding(
             padding: const EdgeInsets.only(bottom: 20),
@@ -262,6 +268,7 @@ class _StampBoardState extends State<StampBoard> {
                           ),
                         ],
                       ),
+
                       const SizedBox(height: 10),
                       // 두 번째 줄
                       Row(
@@ -305,12 +312,12 @@ void _showPopupDialog(BuildContext context) {
         backgroundColor: Colors.transparent, // 배경 투명 처리
         contentPadding: EdgeInsets.zero, // 기본 패딩 제거
         content: Container(
-          width: MediaQuery.of(context).size.width * 0.8, // 팝업 크기 조정
+          width: MediaQuery.of(context).size.width * 0.8,
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
             color: Colors.white, // 팝업 배경색
-            borderRadius: BorderRadius.circular(10), // 모서리 둥글게
-            border: Border.all(color: Colors.black, width: 2), // 검은 테두리 추가
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: Colors.black, width: 2),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,

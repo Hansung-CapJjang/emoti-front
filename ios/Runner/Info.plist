@@ -31,7 +31,6 @@
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>이 앱은 음성 인식을 사용하여 상담을 제공합니다.</string>
 
-	<!-- ✅ 사진 저장 권한 추가 -->
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>이 앱은 사진을 저장하기 위해 사진 라이브러리에 접근합니다.</string>
 
@@ -50,7 +49,8 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>UISupportedInterfaceOrientations~ipad</key>
+
+	<!-- <key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
@@ -64,6 +64,6 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UNUserNotificationCenter</key>
-	<string>YES</string>
+	<string>YES</string> -->
 </dict>
 </plist>
