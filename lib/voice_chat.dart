@@ -23,6 +23,7 @@ class _VoiceChatScreenState extends State<VoiceChatScreen> {
   late FlutterTts _flutterTts; // 🔹 TTS 인스턴스 추가
   Timer? _timer;
   int _elapsedSeconds = 0;
+  bool shouldSpeakAfterListening = false;
 
   final List<String> _defaultResponses = [ // 🔹 기본 말뭉치
     "홍세린님 지금 뭐하시는 거예요?",
@@ -99,6 +100,7 @@ class _VoiceChatScreenState extends State<VoiceChatScreen> {
       setState(() {
         isListening = true;
         recognizedText = "";
+        shouldSpeakAfterListening = false;
       });
       _speech.listen(
         onResult: (result) {
@@ -116,7 +118,18 @@ class _VoiceChatScreenState extends State<VoiceChatScreen> {
     _speech.stop();
     setState(() {
       isListening = false;
+      shouldSpeakAfterListening = true;
     });
+    if (recognizedText.isNotEmpty) {
+      Future.delayed(const Duration(milliseconds: 500), () {
+        if (shouldSpeakAfterListening) {
+          _speakMessage(recognizedText);
+          setState(() {
+            shouldSpeakAfterListening = false;
+          });
+        }
+      });
+    }
   }
 
   @override

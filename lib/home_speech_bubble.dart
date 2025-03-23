@@ -15,37 +15,31 @@ class SpeechBubblePainter extends CustomPainter {
     final borderPaint = Paint()
       ..color = borderColor
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 2; // �׵θ� �β�
+      ..strokeWidth = 2;
 
     final path = Path();
-    const radius = 12.0; // ��ǳ�� �ձ� �𼭸� ������
-    const tailHeight = 12.0; // ���� ����
-    const tailWidth = 20.0; // ���� �ʺ�
+    const radius = 12.0;
+    const tailHeight = 12.0;
+    const tailWidth = 20.0;
 
-    // ��ǳ�� ��� ���� �ձ� �κ�
     path.moveTo(radius, 0);
     path.lineTo(size.width - radius, 0);
     path.quadraticBezierTo(size.width, 0, size.width, radius);
     
-    // ������
     path.lineTo(size.width, size.height - tailHeight - radius);
     path.quadraticBezierTo(size.width, size.height - tailHeight, size.width - radius, size.height - tailHeight);
     
-    // ��ǳ�� ���� (�ﰢ��)
     path.lineTo(size.width / 2 + tailWidth / 2, size.height - tailHeight);
     path.lineTo(size.width / 2, size.height);
     path.lineTo(size.width / 2 - tailWidth / 2, size.height - tailHeight);
     
-    // ������
     path.lineTo(radius, size.height - tailHeight);
     path.quadraticBezierTo(0, size.height - tailHeight, 0, size.height - tailHeight - radius);
     path.lineTo(0, radius);
     path.quadraticBezierTo(0, 0, radius, 0);
 
-    // ���� ���� ä���
     canvas.drawPath(path, paint);
 
-    // �׵θ� �׸���
     canvas.drawPath(path, borderPaint);
   }
 
@@ -53,7 +47,6 @@ class SpeechBubblePainter extends CustomPainter {
   bool shouldRepaint(CustomPainter oldDelegate) => false;
 }
 
-// ��ǳ�� ����
 class SpeechBubble extends StatelessWidget {
   final String text;
   final Color fillColor;
@@ -63,18 +56,18 @@ class SpeechBubble extends StatelessWidget {
     Key? key,
     required this.text,
     this.fillColor = Colors.white,
-    this.borderColor = const Color.fromARGB(255, 48, 67, 34), // �⺻ �׵θ� ���� �ʷ�
+    this.borderColor = const Color.fromARGB(255, 48, 67, 34),
   }) : super(key: key);
 
   @override
 Widget build(BuildContext context) {
   return Container(
-    constraints: const BoxConstraints(minWidth: 100, minHeight: 50), // �ּ� ũ�� ����
+    constraints: const BoxConstraints(minWidth: 100, minHeight: 50),
     child: CustomPaint(
-      size: const Size(160, 60), // ��ǳ�� ũ�� ���������� ����
+      size: const Size(160, 60),
       painter: SpeechBubblePainter(fillColor: fillColor, borderColor: borderColor),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6), // ? vertical ���̱�
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
         child: Text(
           text,
           textAlign: TextAlign.center,

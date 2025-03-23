@@ -75,7 +75,7 @@ class _NameInputScreenState extends State<NameInputScreen>
       if (_controller.text.trim().length > 5) {
         _showWarning = true;
         _isButtonEnabled = false;
-        _animationController.forward(from: 0); // ��鸮�� �ִϸ��̼� ����
+        _animationController.forward(from: 0);
       } else {
         _showWarning = false;
         _isButtonEnabled = _controller.text.trim().isNotEmpty;

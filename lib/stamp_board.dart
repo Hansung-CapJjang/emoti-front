@@ -78,180 +78,235 @@ class _StampBoardState extends State<StampBoard> {
                     ),
                   ),
                 ),
-      // 🔹 좌측 화살표 (더 정교한 위치 조정 가능)
-Transform.translate(
-  offset: const Offset(-155, 0), // ✅ (X축, Y축) 조정 가능
-  child: Icon(
-    Icons.chevron_left,
-    color: Colors.black.withOpacity(0.27), // ✅ 27% 불투명도 적용
-    size: 50,
-  ),
-),
-
-// 🔹 우측 화살표 (더 정교한 위치 조정 가능)
-Transform.translate(
-  offset: const Offset(155, 0), // ✅ (X축, Y축) 조정 가능
-  child: const Icon(
-    Icons.chevron_right,
-    color: Colors.black, // ✅ 완전 검은색 적용
-    size: 50,
-  ),
-),
-
-    ],
-  ),
-),
-
+                // 🔹 좌측 화살표 (더 정교한 위치 조정 가능)
+                Transform.translate(
+                  offset: const Offset(-155, 0), // ✅ (X축, Y축) 조정 가능
+                  child: Icon(
+                    Icons.chevron_left,
+                    color: Colors.black.withOpacity(0.27), // ✅ 27% 불투명도 적용
+                    size: 50,
+                  ),
+                ),
+                // 🔹 우측 화살표 (더 정교한 위치 조정 가능)
+                Transform.translate(
+                  offset: const Offset(155, 0), // ✅ (X축, Y축) 조정 가능
+                  child: const Icon(
+                    Icons.chevron_right,
+                    color: Colors.black, // ✅ 완전 검은색 적용
+                    size: 50,
+                  ),
+                ),
+              ],
+            ),
+          ),
           // 도장 도감 버튼
           Padding(
-  padding: const EdgeInsets.only(top: 10),
-  child: Row(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: [
-      // 도장 도감 텍스트 (위치 조정 가능)
-      Transform.translate(
-        offset: const Offset(80, 10), // ✅ 왼쪽으로 5만큼 이동
-        child: const Text(
-          "도장 도감",
-          style: TextStyle(
-            fontSize: 15,
-            fontFamily: 'DungGeunMo',
-            color: Color(0xFF414728),
+            padding: const EdgeInsets.only(top: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // 도장 도감 텍스트 (위치 조정 가능)
+                Transform.translate(
+                  offset: const Offset(80, 10), // ✅ 왼쪽으로 5만큼 이동
+                  child: const Text(
+                    "도장 도감",
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontFamily: 'DungGeunMo',
+                      color: Color(0xFF414728),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 1.5), // ✅ 간격 조정 가능
+                // 아이콘 (위치 조정 가능)
+                Transform.translate(
+                  offset: const Offset(85, 10), // ✅ 오른쪽으로 5만큼 이동
+                  child: GestureDetector(
+                    onTap: () {
+                      _showPopupDialog(context);
+                    },
+                    child: Container(
+                      color: Colors.transparent,
+                      child: const Icon(
+                        Icons.info_outline,
+                        size: 20,
+                        color: Color(0xFF798063),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-      ),
-
-      const SizedBox(width: 1.5), // ✅ 간격 조정 가능
-
-      // 아이콘 (위치 조정 가능)
-      Transform.translate(
-        offset: const Offset(85, 10), // ✅ 오른쪽으로 5만큼 이동
-        child: const Icon(
-          Icons.info_outline,
-          size: 20,
-          color: Color(0xFF798063),
-        ),
-      ),
-    ],
-  ),
-),
-
           // 🔹 구분선
-         Padding(
-  padding: const EdgeInsets.symmetric(vertical: 10),
-  child: Align(
-    alignment: Alignment.center, // ✅ 중앙 정렬
-    child: Transform.translate(
-      offset: const Offset(0, 27), // ✅ 여기서 x, y 값 조정 가능
-      child: Container(
-        width: MediaQuery.of(context).size.width * 0.85,
-        height: 2,
-        color: const Color.fromRGBO(78, 87, 44, 0.35),
-      ),
-    ),
-  ),
-),
-
-const SizedBox(height: 10,),
-
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Align(
+              alignment: Alignment.center, // ✅ 중앙 정렬
+              child: Transform.translate(
+                offset: const Offset(0, 27), // ✅ 여기서 x, y 값 조정 가능
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.85,
+                  height: 2,
+                  color: const Color.fromRGBO(78, 87, 44, 0.35),
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 10),
           // 🔹 내 도장 텍스트
           Padding(
-  padding: const EdgeInsets.only(bottom: 10),
-  child: Align(
-    alignment: Alignment.center, // ✅ 기본 중앙 정렬
-    child: Transform.translate(
-      offset: const Offset(-105, 35), // ✅ x, y 값 조정 가능 (예: Offset(0, -5) → 위로 이동)
-      child: const Text(
-        "내 도장",
-        style: TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-          fontFamily: 'DungGeunMo',
-          color: Color(0xFF414728),
-        ),
-      ),
-    ),
-  ),
-),
-
-
+            padding: const EdgeInsets.only(bottom: 10),
+            child: Align(
+              alignment: Alignment.center, // ✅ 기본 중앙 정렬
+              child: Transform.translate(
+                offset: const Offset(-105, 35), // ✅ x, y 값 조정 가능 (예: Offset(0, -5) → 위로 이동)
+                child: const Text(
+                  "내 도장",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'DungGeunMo',
+                    color: Color(0xFF414728),
+                  ),
+                ),
+              ),
+            ),
+          ),
           // 🔹 내 도장 리스트
           Padding(
-  padding: const EdgeInsets.only(bottom: 20),
-  child: Align(
-    alignment: Alignment.center, // 기본 중앙 정렬
-    child: Transform.translate(
-      offset: const Offset(0, 40), // x, y 값 조정 가능
-      child: Container(
-        width: MediaQuery.of(context).size.width * 0.85, // 컨테이너 너비 조정
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-        decoration: BoxDecoration(
-          color: const Color(0xFFE9EFC7),
-          borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: const Color(0xFF798063), width: 2),
-        ),
-        child: Column(
-          children: [
-            // 첫 번째 줄 (🔥, ⭐, 🌱)
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween, // 간격 조절
-              children: [
-                Row(
-                  children: [
-                    Image.asset("assets/images/stamp1.png", width: 60), // 🔥 이미지 크기 줄임
-                    const SizedBox(width: 5),
-                    const Text("x 0", style: TextStyle(fontSize: 18, fontFamily: 'DungGeunMo')),
-                  ],
+            padding: const EdgeInsets.only(bottom: 20),
+            child: Align(
+              alignment: Alignment.center, // 기본 중앙 정렬
+              child: Transform.translate(
+                offset: const Offset(0, 40), // x, y 값 조정 가능
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.85, // 컨테이너 너비 조정
+                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFE9EFC7),
+                    borderRadius: BorderRadius.circular(15),
+                    border: Border.all(color: const Color(0xFF798063), width: 2),
+                  ),
+                  child: Column(
+                    children: [
+                      // 첫 번째 줄 (🔥, ⭐, 🌱)
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween, // 간격 조절
+                        children: [
+                          Row(
+                            children: [
+                              Image.asset("assets/images/stamp1.png", width: 60), // 🔥 이미지 크기 줄임
+                              const SizedBox(width: 5),
+                              const Text("x 0", style: TextStyle(fontSize: 18, fontFamily: 'DungGeunMo')),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Image.asset("assets/images/stamp2.png", width: 60), // ⭐
+                              const SizedBox(width: 5),
+                              const Text("x 0", style: TextStyle(fontSize: 18, fontFamily: 'DungGeunMo')),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Image.asset("assets/images/stamp3.png", width: 60), // 🌱
+                              const SizedBox(width: 5),
+                              const Text("x 0", style: TextStyle(fontSize: 18, fontFamily: 'DungGeunMo')),
+                            ],
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      // 두 번째 줄 (⚔, 🩹)
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center, // 가운데 정렬
+                        children: [
+                          Row(
+                            children: [
+                              Image.asset("assets/images/stamp4.png", width: 60), // ⚔
+                              const SizedBox(width: 5),
+                              const Text("x 0", style: TextStyle(fontSize: 18, fontFamily: 'DungGeunMo')),
+                            ],
+                          ),
+                          const SizedBox(width: 20), // 두 번째 줄 아이템 간격 조정
+                          Row(
+                            children: [
+                              Image.asset("assets/images/stamp5.png", width: 60), // 🩹
+                              const SizedBox(width: 5),
+                              const Text("x 0", style: TextStyle(fontSize: 18, fontFamily: 'DungGeunMo')),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-                Row(
-                  children: [
-                    Image.asset("assets/images/stamp2.png", width: 60), // ⭐
-                    const SizedBox(width: 5),
-                    const Text("x 0", style: TextStyle(fontSize: 18, fontFamily: 'DungGeunMo')),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Image.asset("assets/images/stamp3.png", width: 60), // 🌱
-                    const SizedBox(width: 5),
-                    const Text("x 0", style: TextStyle(fontSize: 18, fontFamily: 'DungGeunMo')),
-                  ],
-                ),
-              ],
+              ),
             ),
-            const SizedBox(height: 10),
-            // 두 번째 줄 (⚔, 🩹)
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center, // 가운데 정렬
-              children: [
-                Row(
-                  children: [
-                    Image.asset("assets/images/stamp4.png", width: 60), // ⚔
-                    const SizedBox(width: 5),
-                    const Text("x 0", style: TextStyle(fontSize: 18, fontFamily: 'DungGeunMo')),
-                  ],
-                ),
-                const SizedBox(width: 20), // 두 번째 줄 아이템 간격 조정
-                Row(
-                  children: [
-                    Image.asset("assets/images/stamp5.png", width: 60), // 🩹
-                    const SizedBox(width: 5),
-                    const Text("x 0", style: TextStyle(fontSize: 18, fontFamily: 'DungGeunMo')),
-                  ],
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    ),
-  ),
-),
-
-
-
+          ),
         ],
       ),
     );
   }
+}
+
+void _showPopupDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    barrierDismissible: true, // 팝업 바깥 클릭 시 닫기
+    builder: (BuildContext dialogContext) {
+      return AlertDialog(
+        backgroundColor: Colors.transparent, // 배경 투명 처리
+        contentPadding: EdgeInsets.zero, // 기본 패딩 제거
+        content: Container(
+          width: MediaQuery.of(context).size.width * 0.8, // 팝업 크기 조정
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Colors.white, // 팝업 배경색
+            borderRadius: BorderRadius.circular(10), // 모서리 둥글게
+            border: Border.all(color: Colors.black, width: 2), // 검은 테두리 추가
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                '레벨 별 필요 도장 개수',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 8),
+              const Text(
+                'Lv 1 -> 0개\nLv 2 -> 1개\nLv 3 -> 3개\nLv 4 -> 5개\nLv 5 -> 8개',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontFamily: 'DungGeunMo',
+                ),
+              ),
+              const SizedBox(height: 12),
+              ElevatedButton(
+                onPressed: () => Navigator.of(dialogContext).pop(), // 팝업 닫기
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF798063), // 배경색
+                  foregroundColor: Colors.white, // 글씨색
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    side: const BorderSide(color: Colors.black, width: 1.5),
+                  ),
+                ),
+                child: const Text(
+                  '확인',
+                  style: TextStyle(fontSize: 16, fontFamily: 'DungGeunMo'),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    },
+  );
 }

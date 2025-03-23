@@ -129,8 +129,7 @@ class GenderButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onTap, 
       style: ElevatedButton.styleFrom(
-        backgroundColor: const Color.fromARGB(255, 167, 177, 115), // ��ư ���� (�ø����)
-        foregroundColor: Colors.white,
+        backgroundColor: const Color.fromARGB(255, 167, 177, 115),
         textStyle: const TextStyle(
           fontSize: 17,
           fontWeight: FontWeight.normal,

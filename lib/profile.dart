@@ -4,6 +4,7 @@ import 'package:flutter_application_1/setting_screen/concern_input.dart';
 import 'package:flutter_application_1/setting_screen/name_input.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_application_1/user_provider.dart';
+import 'package:flutter_application_1/notification_service.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,16 +32,24 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   bool isOn = false; // 알람 설정 상태
   bool isExpanded = false; // 고민 사항 확장 여부
+  late NotificationService notificationService;
 
   // 더미 도장 데이터 (날짜, 도장 유형)
   final List<Map<String, dynamic>> stampData = [
-    {'date': '3/14', 'stamp': '⭐️'},
-    {'date': '3/15', 'stamp': 'x'},
-    {'date': '3/16', 'stamp': '🌱'},
-    {'date': '3/17', 'stamp': '🔥'},
-    {'date': '3/18', 'stamp': '🌱'},
-    {'date': '3/19', 'stamp': '?'},
+    {'date': 'Sun', 'stamp': 'X'},
+    {'date': 'Mon', 'stamp': '⭐️'},
+    {'date': 'Tue', 'stamp': 'x'},
+    {'date': 'Wed', 'stamp': '🌱'},
+    {'date': 'Thu', 'stamp': '🔥'},
+    {'date': 'Fri', 'stamp': '🌱'},
+    {'date': 'Sat', 'stamp': '?'},
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    notificationService = NotificationService();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -211,6 +220,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       children: [
         SizedBox(
           height: 70,
+          
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -333,6 +343,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
       onChanged: (value) {
         setState(() {
           isOn = value;
+          notificationService.initialize(); // 알림 권한 요청
+          notificationService.scheduleNotification(isOn);
         });
       },
       activeColor:  Color.fromARGB(255, 71, 75, 51),
