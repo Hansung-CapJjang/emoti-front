@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/user_provider.dart';
 import 'package:provider/provider.dart';
 import 'name_input.dart';
+import 'package:flutter_application_1/notification_service.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -9,7 +10,10 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 //   runApp(const EmotiApp());
 // }
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await NotificationService().initialize();
+
   runApp(
     MultiProvider(
       providers: [
@@ -65,10 +69,10 @@ class FirstScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFE3E7C0), // ����
+      backgroundColor: const Color(0xFFE3E7C0),
       body: Column(
         children: [
-          const SizedBox(height: 130), // �۾� �߾� ����
+          const SizedBox(height: 130),
           const Expanded(
             child: Center(
               child: Text(
@@ -76,7 +80,7 @@ class FirstScreen extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 27,
                   fontFamily: 'DungGeunMo',
-                  color: Color(0xFF5A5F3C), // �۾� ����
+                  color: Color(0xFF5A5F3C),
                 ),
               ),
             ),
@@ -84,17 +88,17 @@ class FirstScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(bottom: 120),
             child: SizedBox(
-              width: 180, // ��ư ũ��
+              width: 180,
               height: 50,
               child: ElevatedButton(
                 onPressed: () {
                   navigateWithAnimation(context, const SecondScreen());
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF5A5F3C), // ��ư ����
-                  foregroundColor: Colors.white, // ���ڻ�
+                  backgroundColor: const Color(0xFF5A5F3C),
+                  foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12), // �ձ� ��ư
+                    borderRadius: BorderRadius.circular(12),
                   ),
                 ),
                 child: const Text(
@@ -117,10 +121,10 @@ class SecondScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFE3E7C0), // ����
+      backgroundColor: const Color(0xFFE3E7C0),
       body: Column(
         children: [
-          const SizedBox(height: 130), // �۾� �߾� ����
+          const SizedBox(height: 130),
           const Expanded(
             child: Center(
               child: Text(
@@ -129,25 +133,25 @@ class SecondScreen extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 25,
                   fontFamily: 'DungGeunMo',
-                  color: Color(0xFF5A5F3C), // �۾� ����
+                  color: Color(0xFF5A5F3C),
                 ),
               ),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(bottom: 120), // ��ư�� �� ���� �̵�
+            padding: const EdgeInsets.only(bottom: 120),
             child: SizedBox(
-              width: 180, // ��ư ũ��
+              width: 180,
               height: 50,
               child: ElevatedButton(
                 onPressed: () {
                   navigateWithAnimation(context, const NameInputScreen(isEdit: false));
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF5A5F3C), // ��ư ����
-                  foregroundColor: Colors.white, // ���ڻ�
+                  backgroundColor: const Color(0xFF5A5F3C),
+                  foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12), // �ձ� ��ư
+                    borderRadius: BorderRadius.circular(12),
                   ),
                 ),
                 child: const Text(

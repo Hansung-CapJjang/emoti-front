@@ -29,7 +29,12 @@ class MainScreenState extends State<MainScreen> {
           ProfileScreen(),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar: Theme(
+        data: Theme.of(context).copyWith(
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
+        ),
+        child:  BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         backgroundColor: const Color(0xFFDCE6B7),
         selectedItemColor: Colors.white,
@@ -64,7 +69,7 @@ class MainScreenState extends State<MainScreen> {
             label: '프로필',
           ),
         ],
-
+      ),
       ),
     );
   }
