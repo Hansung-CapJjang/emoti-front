@@ -99,7 +99,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Provider.of<UserProvider>(context).nickname,
                           style: const TextStyle(
                             fontFamily: 'DungGeunMo',
-                            fontSize: 35,
+                            fontSize: 26,
                             fontWeight: FontWeight.normal,
                             color: Color.fromARGB(255, 63, 71, 31),
                           ),
@@ -129,27 +129,58 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           const SizedBox(height: 10), // 간격 추가
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 40),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'Lv.1                             60%',
-                  style: TextStyle(fontFamily: 'DungGeunMo', fontSize: 17, fontWeight: FontWeight.normal, color: Color.fromARGB(255, 87, 99, 43),),
-                ),
-                const SizedBox(height: 5),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: const LinearProgressIndicator(
-                    value: 0.6,
-                    minHeight: 15,
-                    backgroundColor: Color.fromARGB(136, 119, 137, 60),
-                    color: Color.fromARGB(255, 66, 75, 34),
-                  ),
-                ),
-              ],
+  padding: const EdgeInsets.symmetric(horizontal: 40),
+  child: Column(
+    crossAxisAlignment: CrossAxisAlignment.center,
+    children: [
+      Row(
+        children: [
+          // 🔹 Lv.1을 왼쪽에 배치 + 위치 이동
+          Padding(
+            padding: const EdgeInsets.only(left: 18), // ← 여기 수치로 왼쪽 위치 조절
+            child: const Text(
+              'Lv.1',
+              style: TextStyle(
+                fontFamily: 'DungGeunMo',
+                fontSize: 17,
+                fontWeight: FontWeight.normal,
+                color: Color.fromARGB(255, 87, 99, 43),
+              ),
             ),
           ),
+          const Spacer(),
+          // 🔹 60%를 오른쪽에 배치 + 위치 이동
+          Padding(
+            padding: const EdgeInsets.only(right: 18), // ← 여기 수치로 오른쪽 위치 조절
+            child: const Text(
+              '60%',
+              style: TextStyle(
+                fontFamily: 'DungGeunMo',
+                fontSize: 17,
+                fontWeight: FontWeight.normal,
+                color: Color.fromARGB(255, 87, 99, 43),
+              ),
+            ),
+          ),
+        ],
+      ),
+      const SizedBox(height: 5),
+      ClipRRect(
+  borderRadius: BorderRadius.circular(10),
+  child: SizedBox(
+    width: 300, // 👉 원하는 너비 지정
+    child: const LinearProgressIndicator(
+      value: 0.6,
+      minHeight: 15,
+      backgroundColor: Color.fromARGB(136, 119, 137, 60),
+      color: Color.fromARGB(255, 66, 75, 34),
+    ),
+  ),
+),
+
+    ],
+  ),
+),
           const SizedBox(height: 20),
 
           // 날짜별 도작 리스트 추가
@@ -221,7 +252,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       children: [
         SizedBox(
           height: 70,
-          
+          width: 330,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.symmetric(horizontal: 20),
