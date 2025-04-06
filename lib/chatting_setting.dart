@@ -41,6 +41,7 @@ class _ChattingSettingScreenState extends State<ChattingSettingScreen> {
           '상담 방식 선택',
           style: TextStyle(
             fontFamily: 'DungGeunMo',
+            // ontWeight: FontWeight.bold,
             color: Colors.black,
           ),
         ),
@@ -107,6 +108,9 @@ class _ChattingSettingScreenState extends State<ChattingSettingScreen> {
                       ),
                     );
                   } else {
+                    // ScaffoldMessenger.of(context).showSnackBar(
+                    //   const SnackBar(content: Text('문자 상담은 아직 구현되지 않았습니다.')),
+                    // );
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -135,12 +139,13 @@ class _ChattingSettingScreenState extends State<ChattingSettingScreen> {
             const Spacer(),
           ],
         ),
-      ),
+      // ),
+    ),
       endDrawer: _buildDrawer(),
     );
   }
 
-  // 옵션 선택 버튼 UI
+  /// 옵션 선택 버튼 UI
   Widget _buildOptionButton(String text, bool isCounselor) {
     bool isSelected = isCounselor ? (selectedCounselor == text) : (selectedMethod == text);
 
@@ -186,43 +191,45 @@ class _ChattingSettingScreenState extends State<ChattingSettingScreen> {
     );
   }
 
-  // 서랍 (Drawer) UI
-  Widget _buildDrawer() {
-    return Drawer(
-      width: MediaQuery.of(context).size.width * 0.6,
-      child: Container(
-        color: const Color(0xFFEFEFCC), // 배경색 조정
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 80),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Row(
-                children: [
-                  Text(
-                    '채팅 기록',
-                    style: TextStyle(fontFamily: 'DungGeunMo', fontSize: 20,),
-                  ),
-                ],
-              ),
+  /// 서랍 (Drawer) UI
+Widget _buildDrawer() {
+  return Drawer(
+    width: MediaQuery.of(context).size.width * 0.6,
+    child: Container(
+      color: const Color(0xFFEFEFCC), // 배경색 조정
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 80),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
+              children: [
+                // Icon(Icons.arrow_back, size: 30),
+                // SizedBox(width: 10),
+                Text(
+                  '채팅 기록',
+                  style: TextStyle(fontFamily: 'DungGeunMo', fontSize: 20,),
+                ),
+              ],
             ),
-            Expanded(
-              child: ListView(
-                children: [
-                  _buildChatRecord('2월 10일'),
-                  _buildChatRecord('2월 8일'),
-                  _buildChatRecord('2월 5일'),
-                ],
-              ),
+          ),
+          Expanded(
+            child: ListView(
+              children: [
+                _buildChatRecord('2월 10일'),
+                _buildChatRecord('2월 8일'),
+                _buildChatRecord('2월 5일'),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
-    );
-  }
+    ),
+  );
+}
 
-  // 채팅 이전 기록 항목 위젯
+/// 채팅 이전 기록 항목 위젯
   Widget _buildChatRecord(String date) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
@@ -236,7 +243,7 @@ class _ChattingSettingScreenState extends State<ChattingSettingScreen> {
           Row(
             children: [
               Image.asset(
-                'assets/images/stamp1.png',
+                'assets/images/hopestamp.png',
                 width: 40,
                 height: 40,
               ),
