@@ -95,6 +95,7 @@ flutter:
     - assets/images/hopestamp.png
     - assets/images/recoverystamp.png
     - assets/images/reflectionstamp.png
+    - assets/data.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

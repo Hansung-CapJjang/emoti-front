@@ -267,14 +267,14 @@ class _StampBoardState extends State<StampBoard> {
                           ),
                           Row(
                             children: [
-                              Image.asset("assets/images/hopestamp.png", width: 60),
+                              Image.asset("assets/images/couragestamp.png", width: 60),
                               const SizedBox(width: 5),
                               const Text("x 0", style: TextStyle(fontSize: 18, fontFamily: 'DungGeunMo')),
                             ],
                           ),
                           Row(
                             children: [
-                              Image.asset("assets/images/hopestamp.png", width: 60),
+                              Image.asset("assets/images/determinationstamp.png", width: 60),
                               const SizedBox(width: 5),
                               const Text("x 0", style: TextStyle(fontSize: 18, fontFamily: 'DungGeunMo')),
                             ],
@@ -288,7 +288,7 @@ class _StampBoardState extends State<StampBoard> {
                         children: [
                           Row(
                             children: [
-                              Image.asset("assets/images/stamp4.png", width: 60),
+                              Image.asset("assets/images/reflectionstamp.png", width: 60),
                               const SizedBox(width: 5),
                               const Text("x 0", style: TextStyle(fontSize: 18, fontFamily: 'DungGeunMo')),
                             ],
@@ -296,7 +296,7 @@ class _StampBoardState extends State<StampBoard> {
                           const SizedBox(width: 20),
                           Row(
                             children: [
-                              Image.asset("assets/images/stamp5.png", width: 60),
+                              Image.asset("assets/images/recoverystamp.png", width: 60),
                               const SizedBox(width: 5),
                               const Text("x 0", style: TextStyle(fontSize: 18, fontFamily: 'DungGeunMo')),
                             ],

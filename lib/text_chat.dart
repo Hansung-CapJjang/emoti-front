@@ -1,6 +1,8 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'chatting_setting.dart';
-import 'main_screen.dart';
+import 'package:flutter/services.dart';
+import 'dart:math'; // Random을 사용하기 위한 import
+
 
 class TextChatScreen extends StatefulWidget {
   final String counselorType;
@@ -8,41 +10,166 @@ class TextChatScreen extends StatefulWidget {
   const TextChatScreen({super.key, required this.counselorType});
 
   @override
-  _TextChatScreenState createState() => _TextChatScreenState();
+  State<TextChatScreen> createState() => _TextChatScreenState();
 }
 
 class _TextChatScreenState extends State<TextChatScreen> {
-  final TextEditingController _textController = TextEditingController();
   final List<Map<String, dynamic>> _messages = [];
+  final List<Map<String, dynamic>> _presetMessagesQueue = [];
+  final TextEditingController _controller = TextEditingController();
   final ScrollController _scrollController = ScrollController();
 
+  int _currentPresetIndex = 0;
+  bool _isWaitingForUser = false;
+
   @override
-  void dispose() {
-    _textController.dispose();
-    _scrollController.dispose();
-    super.dispose();
+  void initState() {
+    super.initState();
+    _loadPresetMessages();
   }
 
-  // 채팅 추가 및 스크롤 맨 아래로 이동
-  void _sendMessage() {
-    final String text = _textController.text.trim();
-    if (text.isEmpty) return;
+  Future<void> _loadPresetMessages() async {
+  final String jsonString = await rootBundle.loadString('assets/data.json');
+  final List<dynamic> jsonData = json.decode(jsonString);
+
+  final matches = jsonData.where((item) => item['counselorType'] == widget.counselorType).toList();
+
+  if (matches.isNotEmpty) {
+    final randomMatch = matches[Random().nextInt(matches.length)];
+    final List<dynamic> msgs = randomMatch['messages'];
+
+    setState(() {
+      _presetMessagesQueue.addAll(msgs.map((e) => {
+        'text': e['text'],
+        'isUser': e['isUser'],
+      }));
+    });
+
+    // 🟢 첫 메시지 출력 시작
+    if (_presetMessagesQueue.isNotEmpty) {
+      _playNextBotMessage();
+    }
+  }
+}
+
+
+
+  void _sendMessage(String text) {
+    if (text.trim().isEmpty || !_isWaitingForUser) return;
 
     setState(() {
       _messages.add({'text': text, 'isUser': true});
+      _controller.clear();
+      _isWaitingForUser = false;
+      _currentPresetIndex++;
     });
 
-    _textController.clear();
     _scrollToBottom();
+    _playNextBotMessage();
   }
 
-  // ListView를 가장 아래로 스크롤
+  void _playNextBotMessage() async {
+    if (_currentPresetIndex >= _presetMessagesQueue.length) return;
+
+    final current = _presetMessagesQueue[_currentPresetIndex];
+    final isUser = current['isUser'];
+
+    if (isUser) {
+      _isWaitingForUser = true;
+    } else {
+      await Future.delayed(const Duration(seconds: 1));
+      setState(() {
+        _messages.add(current);
+        _currentPresetIndex++;
+      });
+      _scrollToBottom();
+      _playNextBotMessage();
+    }
+  }
+
   void _scrollToBottom() {
-    Future.delayed(const Duration(milliseconds: 100), () {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       _scrollController.animateTo(
         _scrollController.position.maxScrollExtent,
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeOut,
+      );
+    });
+  }
+
+  String _getCurrentTime() {
+    final now = DateTime.now();
+    return "${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}";
+  }
+
+  void _showEndDialog() {
+    Future.delayed(const Duration(milliseconds: 100), () {
+      showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (BuildContext dialogContext) {
+          return AlertDialog(
+            backgroundColor: Colors.transparent,
+            contentPadding: EdgeInsets.zero,
+            content: Container(
+              width: MediaQuery.of(context).size.width * 0.8,
+              padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Colors.black, width: 2),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text(
+                    '상담을 종료하시겠습니까?',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'DungGeunMo',
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () => Navigator.pop(dialogContext),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.grey[400],
+                          foregroundColor: Colors.black,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            side: const BorderSide(color: Colors.black, width: 1.5),
+                          ),
+                        ),
+                        child: const Text("아니오", style: TextStyle(fontSize: 16, fontFamily: 'DungGeunMo')),
+                      ),
+                      const SizedBox(width: 12),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(dialogContext);
+                          Navigator.pop(context);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF798063),
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            side: const BorderSide(color: Colors.black, width: 1.5),
+                          ),
+                        ),
+                        child: const Text("예", style: TextStyle(fontSize: 16, fontFamily: 'DungGeunMo')),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
       );
     });
   }
@@ -52,82 +179,38 @@ class _TextChatScreenState extends State<TextChatScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFFDCE6B7),
       appBar: AppBar(
-        automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: RichText(
-          text: TextSpan(
-            children: [
-              TextSpan(
-                text: '(${widget.counselorType}) ',
-                style: const TextStyle(
-                  fontFamily: 'DungGeunMo',
-                  fontSize: 20,
-                  // fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
-              const TextSpan(
-                text: '상담 중',
-                style: TextStyle(
-                  fontFamily: 'DungGeunMo',
-                  fontSize: 20,
-                  // fontWeight: FontWeight.bold,
-                  color: Colors.blue,
-                ),
-              ),
-            ],
-          ),
+        title: Text(
+          '(${widget.counselorType}) 상담 중',
+          style: const TextStyle(fontFamily: 'DungGeunMo', color: Colors.black),
         ),
         centerTitle: true,
       ),
       body: Column(
         children: [
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-            child: Divider(color: Colors.black26, thickness: 1),
-          ),
-          const Padding(
-            padding: EdgeInsets.all(12.0),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                '※ 상담을 시작합니다.',
-                style: TextStyle(
-                  fontFamily: 'DungGeunMo',
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87,
-                ),
-              ),
-            ),
-          ),
+          const SizedBox(height: 10),
           Expanded(
             child: ListView(
               controller: _scrollController,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              children: [
-                _buildMessageBubble("안녕하세요, 00님! 만나서 반가워요.", false),
-                _buildMessageBubble("앞서 작성한 고민 키워드와 관련한 내용으로 상담하시겠어요?", false),
-                _buildMessageBubble("응?", false),
-                for (var message in _messages)
-                  _buildMessageBubble(message['text'], message['isUser']),
-              ],
+              padding: const EdgeInsets.all(12),
+              children: _messages
+                  .map((m) => _buildMessageBubble(m['text'], m['isUser']))
+                  .toList(),
             ),
           ),
-          _buildChatInput(),
+          _buildInputBar(),
         ],
       ),
     );
   }
 
-  /// 채팅 메시지 버블 (사용자 입력 시 오른쪽 정렬)
   Widget _buildMessageBubble(String message, bool isUser) {
     return Align(
       alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
         constraints: BoxConstraints(
-          maxWidth: MediaQuery.of(context).size.width * 0.6, // 최대 가로 길이 60%
+          maxWidth: MediaQuery.of(context).size.width * 0.6,
         ),
         margin: const EdgeInsets.symmetric(vertical: 6),
         padding: const EdgeInsets.all(12),
@@ -139,7 +222,7 @@ class _TextChatScreenState extends State<TextChatScreen> {
             bottomLeft: isUser ? const Radius.circular(12) : const Radius.circular(0),
             bottomRight: isUser ? const Radius.circular(0) : const Radius.circular(12),
           ),
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(color: Colors.black26, offset: Offset(2, 2), blurRadius: 3),
           ],
         ),
@@ -159,7 +242,7 @@ class _TextChatScreenState extends State<TextChatScreen> {
               alignment: Alignment.bottomRight,
               child: Text(
                 _getCurrentTime(),
-                style: const TextStyle(fontSize: 10, color: Color.fromARGB(255, 0, 0, 0)),
+                style: const TextStyle(fontSize: 10, color: Colors.black),
               ),
             ),
           ],
@@ -168,17 +251,9 @@ class _TextChatScreenState extends State<TextChatScreen> {
     );
   }
 
-  /// 현재 시간을 "HH:mm" 형식으로 반환
-  String _getCurrentTime() {
-    final now = DateTime.now();
-    return "${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}";
-  }
+  Widget _buildInputBar() {
+    final bool isKeyboardVisible = MediaQuery.of(context).viewInsets.bottom > 0;
 
-  /// 입력창 및 상담 종료 버튼
-  Widget _buildChatInput() {
-
-    bool isKeyboardVisible = MediaQuery.of(context).viewInsets.bottom > 0;
-    
     return Column(
       children: [
         Padding(
@@ -194,47 +269,42 @@ class _TextChatScreenState extends State<TextChatScreen> {
                     border: Border.all(color: Colors.black45),
                   ),
                   child: TextField(
-                    style: TextStyle(fontFamily: 'DungGeunMo',),
-                    controller: _textController,
+                    style: const TextStyle(fontFamily: 'DungGeunMo'),
+                    controller: _controller,
                     decoration: const InputDecoration(
                       border: InputBorder.none,
                       hintText: '메시지를 입력하세요...',
                       hintStyle: TextStyle(fontFamily: 'DungGeunMo', color: Colors.black38),
                     ),
-                    onChanged: (text) {
-                      setState(() {}); // 입력값이 변경될 때마다 UI 업데이트
-                    },
+                    onChanged: (text) => setState(() {}),
                   ),
                 ),
               ),
               const SizedBox(width: 8),
               Container(
                 decoration: BoxDecoration(
-                  color: _textController.text.trim().isEmpty ? Colors.grey : const Color(0xFF6C7448),
+                  color: _controller.text.trim().isEmpty ? Colors.grey : const Color(0xFF6C7448),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: IconButton(
-  icon: Transform.rotate(
-    angle: -0.7854, // 라디안 단위 (-45도 = -π/4)
-    child: const Icon(Icons.send, color: Colors.white),
-  ),
-  onPressed: _textController.text.trim().isEmpty ? null : _sendMessage,
-),
-
+                  icon: Transform.rotate(
+                    angle: -0.7854,
+                    child: const Icon(Icons.send, color: Colors.white),
+                  ),
+                  onPressed: _controller.text.trim().isEmpty ? null : () => _sendMessage(_controller.text),
+                ),
               ),
             ],
           ),
         ),
         const SizedBox(height: 10),
         Visibility(
-          visible: !isKeyboardVisible, // 키보드가 올라오면 버튼 숨기기
+          visible: !isKeyboardVisible,
           child: Container(
             width: double.infinity,
             margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: ElevatedButton(
-              onPressed: () {
-                _showEndDialog(context);
-              },
+              onPressed: _showEndDialog,
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF6C7448),
                 foregroundColor: Colors.white,
@@ -252,6 +322,8 @@ class _TextChatScreenState extends State<TextChatScreen> {
     );
   }
 }
+
+
 
 /// 상담 종료 다이얼로그
 void _showEndDialog(BuildContext context) {
