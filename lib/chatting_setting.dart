@@ -1,22 +1,8 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'voice_chat.dart';
 import 'text_chat.dart';
-
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: ChattingSettingScreen(),
-    );
-  }
-}
 
 class ChattingSettingScreen extends StatefulWidget {
   const ChattingSettingScreen({super.key});
@@ -26,8 +12,45 @@ class ChattingSettingScreen extends StatefulWidget {
 }
 
 class _ChattingSettingScreenState extends State<ChattingSettingScreen> {
-  String selectedCounselor = '공감형'; // 기본 선택값
-  String selectedMethod = '문자 상담'; // 기본 선택값
+  String selectedCounselor = '공감형';
+  String selectedMethod = '문자 상담';
+
+  List<Map<String, dynamic>> chatRecords = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadChatHistory();
+  }
+
+  Future<void> _loadChatHistory() async {
+    final String jsonString = await rootBundle.loadString('assets/data.json');
+    final List<dynamic> jsonData = json.decode(jsonString);
+
+    final records = jsonData.map<Map<String, dynamic>>((item) {
+      final timestamp = DateTime.parse(item['timestamp']);
+      final month = timestamp.month;
+      final day = timestamp.day;
+      final formattedDate = '$month월 $day일';
+      final stamp = item['stamp'] ?? '희망';
+
+      final messages = item['messages'] as List<dynamic>;
+      final preview = messages.firstWhere(
+        (m) => m['isUser'] == true,
+        orElse: () => {'text': ''},
+      )['text'];
+
+      return {
+        'date': formattedDate,
+        'stamp': stamp,
+        'preview': preview,
+      };
+    }).toList();
+
+    setState(() {
+      chatRecords = records;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +64,6 @@ class _ChattingSettingScreenState extends State<ChattingSettingScreen> {
           '상담 방식 선택',
           style: TextStyle(
             fontFamily: 'DungGeunMo',
-            // ontWeight: FontWeight.bold,
             color: Colors.black,
           ),
         ),
@@ -56,6 +78,7 @@ class _ChattingSettingScreenState extends State<ChattingSettingScreen> {
           ),
         ],
       ),
+      endDrawer: _buildDrawer(),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
@@ -78,7 +101,6 @@ class _ChattingSettingScreenState extends State<ChattingSettingScreen> {
               ],
             ),
             const Spacer(),
-            const SizedBox(height: 30),
             const Divider(color: Colors.black45, thickness: 0.5),
             const SizedBox(height: 30),
             const Text(
@@ -98,28 +120,14 @@ class _ChattingSettingScreenState extends State<ChattingSettingScreen> {
             Center(
               child: ElevatedButton(
                 onPressed: () {
-                  if (selectedMethod == '음성 상담') {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => VoiceChatScreen(
-                          counselorType: selectedCounselor, // 선택한 상담가 유형 전달
-                        ),
-                      ),
-                    );
-                  } else {
-                    // ScaffoldMessenger.of(context).showSnackBar(
-                    //   const SnackBar(content: Text('문자 상담은 아직 구현되지 않았습니다.')),
-                    // );
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => TextChatScreen(
-                          counselorType: selectedCounselor, // 선택한 상담가 유형 전달
-                        ),
-                      ),
-                    );
-                  }
+                  final screen = selectedMethod == '음성 상담'
+                      ? VoiceChatScreen(counselorType: selectedCounselor)
+                      : TextChatScreen(counselorType: selectedCounselor);
+
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => screen),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF6C7448),
@@ -139,13 +147,10 @@ class _ChattingSettingScreenState extends State<ChattingSettingScreen> {
             const Spacer(),
           ],
         ),
-      // ),
-    ),
-      endDrawer: _buildDrawer(),
+      ),
     );
   }
 
-  /// 옵션 선택 버튼 UI
   Widget _buildOptionButton(String text, bool isCounselor) {
     bool isSelected = isCounselor ? (selectedCounselor == text) : (selectedMethod == text);
 
@@ -161,9 +166,13 @@ class _ChattingSettingScreenState extends State<ChattingSettingScreen> {
       },
       child: Container(
         decoration: BoxDecoration(
-          color: isSelected ? const Color.fromARGB(255, 247, 253, 217) : const Color.fromARGB(255, 217, 225, 176),
+          color: isSelected
+              ? const Color.fromARGB(255, 247, 253, 217)
+              : const Color.fromARGB(255, 217, 225, 176),
           border: Border.all(
-            color: isSelected ? const Color.fromARGB(104, 141, 170, 102) : const Color.fromARGB(255, 119, 147, 82),
+            color: isSelected
+                ? const Color.fromARGB(104, 141, 170, 102)
+                : const Color(0xFF779352),
             width: isSelected ? 2 : 0,
           ),
           borderRadius: BorderRadius.circular(10),
@@ -172,67 +181,67 @@ class _ChattingSettingScreenState extends State<ChattingSettingScreen> {
               color: Colors.black26,
               offset: Offset(0, 3),
               blurRadius: 4,
-            )
+            ),
           ],
         ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          child: Text(
-            text,
-            style: TextStyle(
-              fontFamily: 'DungGeunMo',
-              fontSize: 16,
-              fontWeight: FontWeight.normal,
-              color: isSelected ? Colors.black : Colors.black54,
-            ),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        child: Text(
+          text,
+          style: TextStyle(
+            fontFamily: 'DungGeunMo',
+            fontSize: 16,
+            fontWeight: FontWeight.normal,
+            color: isSelected ? Colors.black : Colors.black54,
           ),
         ),
       ),
     );
   }
 
-  /// 서랍 (Drawer) UI
-Widget _buildDrawer() {
-  return Drawer(
-    width: MediaQuery.of(context).size.width * 0.6,
-    child: Container(
-      color: const Color(0xFFEFEFCC), // 배경색 조정
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(height: 80),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Row(
-              children: [
-                // Icon(Icons.arrow_back, size: 30),
-                // SizedBox(width: 10),
-                Text(
-                  '채팅 기록',
-                  style: TextStyle(fontFamily: 'DungGeunMo', fontSize: 20,),
-                ),
-              ],
+  Widget _buildDrawer() {
+    return Drawer(
+      width: MediaQuery.of(context).size.width * 0.6,
+      child: Container(
+        color: const Color(0xFFEFEFCC),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 80),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Text(
+                '채팅 기록',
+                style: TextStyle(fontFamily: 'DungGeunMo', fontSize: 20),
+              ),
             ),
-          ),
-          Expanded(
-            child: ListView(
-              children: [
-                _buildChatRecord('2월 10일'),
-                _buildChatRecord('2월 8일'),
-                _buildChatRecord('2월 5일'),
-              ],
+            Expanded(
+              child: ListView.builder(
+                itemCount: chatRecords.length,
+                itemBuilder: (context, index) {
+                  final record = chatRecords[index];
+                  return _buildChatRecord(record['date'], record['stamp'], record['preview']);
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
-    ),
-  );
-}
+    );
+  }
 
-/// 채팅 이전 기록 항목 위젯
-  Widget _buildChatRecord(String date) {
+  Widget _buildChatRecord(String date, String stamp, [String? preview]) {
+    final imageMap = {
+      '희망': 'assets/images/hopestamp.png',
+      '회복': 'assets/images/recoverystamp.png',
+      '결단': 'assets/images/determinationstamp.png',
+      '성찰': 'assets/images/reflectionstamp.png',
+      '용기': 'assets/images/couragestamp.png',
+    };
+
+    final imagePath = imageMap[stamp] ?? 'assets/images/hopestamp.png';
+
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -240,13 +249,23 @@ Widget _buildDrawer() {
             date,
             style: const TextStyle(fontFamily: 'DungGeunMo', fontSize: 18),
           ),
+          const SizedBox(height: 4),
           Row(
             children: [
               Image.asset(
-                'assets/images/hopestamp.png',
+                imagePath,
                 width: 40,
                 height: 40,
               ),
+              const SizedBox(width: 10),
+              if (preview != null && preview.isNotEmpty)
+                Expanded(
+                  child: Text(
+                    preview,
+                    style: const TextStyle(fontFamily: 'DungGeunMo', fontSize: 14, color: Colors.black87),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
             ],
           ),
           const Divider(thickness: 1, color: Colors.black26),
