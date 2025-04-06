@@ -44,6 +44,7 @@ class _ChattingSettingScreenState extends State<ChattingSettingScreen> {
         'date': formattedDate,
         'stamp': stamp,
         'preview': preview,
+        'messages': messages,
       };
     }).toList();
 
@@ -219,7 +220,21 @@ class _ChattingSettingScreenState extends State<ChattingSettingScreen> {
                 itemCount: chatRecords.length,
                 itemBuilder: (context, index) {
                   final record = chatRecords[index];
-                  return _buildChatRecord(record['date'], record['stamp'], record['preview']);
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ChatHistoryDetailScreen(
+                            date: record['date'],
+                            stamp: record['stamp'],
+                            messages: List<Map<String, dynamic>>.from(record['messages']),
+                          ),
+                        ),
+                      );
+                    },
+                    child: _buildChatRecord(record['date'], record['stamp'], record['preview']),
+                  );
                 },
               ),
             ),
@@ -270,6 +285,90 @@ class _ChattingSettingScreenState extends State<ChattingSettingScreen> {
           ),
           const Divider(thickness: 1, color: Colors.black26),
         ],
+      ),
+    );
+  }
+}
+
+// ✅ 이 부분이 새로 추가된 대화 상세 화면
+class ChatHistoryDetailScreen extends StatelessWidget {
+  final String date;
+  final String stamp;
+  final List<Map<String, dynamic>> messages;
+
+  const ChatHistoryDetailScreen({
+    super.key,
+    required this.date,
+    required this.stamp,
+    required this.messages,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final imageMap = {
+      '희망': 'assets/images/hopestamp.png',
+      '회복': 'assets/images/recoverystamp.png',
+      '결단': 'assets/images/determinationstamp.png',
+      '성찰': 'assets/images/reflectionstamp.png',
+      '용기': 'assets/images/couragestamp.png',
+    };
+    final imagePath = imageMap[stamp] ?? 'assets/images/hopestamp.png';
+
+    return Scaffold(
+      backgroundColor: const Color(0xFFF5F5DC),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        iconTheme: const IconThemeData(color: Colors.black),
+        title: Text(
+          '$date 상담 기록',
+          style: const TextStyle(
+            fontFamily: 'DungGeunMo',
+            color: Colors.black,
+          ),
+        ),
+        centerTitle: true,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          children: [
+            Image.asset(imagePath, width: 50, height: 50),
+            const SizedBox(height: 20),
+            Expanded(
+              child: ListView.builder(
+                itemCount: messages.length,
+                itemBuilder: (context, index) {
+                  final msg = messages[index];
+                  final isUser = msg['isUser'] == true;
+
+                  return Align(
+  alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
+  child: Container(
+    constraints: BoxConstraints(
+      maxWidth: MediaQuery.of(context).size.width * 0.7, // ✅ 여기 추가
+    ),
+    margin: const EdgeInsets.symmetric(vertical: 4),
+    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+    decoration: BoxDecoration(
+      color: isUser ? Colors.green[100] : Colors.grey[300],
+      borderRadius: BorderRadius.circular(12),
+    ),
+    child: Text(
+      msg['text'] ?? '',
+      style: const TextStyle(
+        fontFamily: 'DungGeunMo',
+        fontSize: 14,
+      ),
+    ),
+  ),
+);
+
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
