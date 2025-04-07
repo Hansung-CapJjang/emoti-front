@@ -45,25 +45,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future<void> _loadChatHistory() async {
-  final String jsonString = await rootBundle.loadString('assets/data.json');
-  final List<dynamic> jsonData = json.decode(jsonString);
+    final String jsonString = await rootBundle.loadString('assets/data/chat_data.json');
+    final List<dynamic> jsonData = json.decode(jsonString);
 
-  final records = jsonData.map<Map<String, dynamic>>((item) {
-    final timestamp = DateTime.parse(item['timestamp']);
-    final formattedDate = '${timestamp.month}/${timestamp.day}';
-    final stamp = item['stamp'] ?? '희망';
+    final records = jsonData.map<Map<String, dynamic>>((item) {
+      final timestamp = DateTime.parse(item['timestamp']);
+      final formattedDate = '${timestamp.month}/${timestamp.day}';
+      final stamp = item['stamp'] ?? '희망';
 
-    return {
-      'date': formattedDate, // ✅ 이 부분이 핵심
-      'stamp': stamp,
-    };
-  }).toList();
+      return {
+        'date': formattedDate,
+        'stamp': stamp,
+      };
+    }).toList();
 
-  setState(() {
-    chatRecords = records;
-  });
-}
-
+    setState(() {
+      chatRecords = records;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -147,7 +146,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Row(
+                const Row(
                   children: [
                     const Padding(
                       padding: EdgeInsets.only(left: 18),
@@ -194,71 +193,71 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           const SizedBox(height: 30),
           Padding(
-  padding: const EdgeInsets.symmetric(horizontal: 40),
-  child: SizedBox(
-    height: 80,
-    child: Stack(
-      children: [
-        ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: chatRecords.length,
-          itemBuilder: (context, index) {
-            final record = chatRecords[index];
-            final imageMap = {
-              '희망': 'assets/images/hopestamp.png',
-              '회복': 'assets/images/recoverystamp.png',
-              '결단': 'assets/images/determinationstamp.png',
-              '성찰': 'assets/images/reflectionstamp.png',
-              '용기': 'assets/images/couragestamp.png',
-            };
-            final imagePath = imageMap[record['stamp']] ?? 'assets/images/hopestamp.png';
-            return Container(
-              width: 100,
-              margin: const EdgeInsets.symmetric(horizontal: 5),
-              decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 246, 250, 222),
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.black26,
-                    blurRadius: 4,
-                    offset: Offset(5, 5),
+            padding: const EdgeInsets.symmetric(horizontal: 40),
+            child: SizedBox(
+              height: 80,
+              child: Stack(
+                children: [
+                  ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: chatRecords.length,
+                    itemBuilder: (context, index) {
+                      final record = chatRecords[index];
+                      final imageMap = {
+                        '희망': 'assets/images/hopestamp.png',
+                        '회복': 'assets/images/recoverystamp.png',
+                        '결단': 'assets/images/determinationstamp.png',
+                        '성찰': 'assets/images/reflectionstamp.png',
+                        '용기': 'assets/images/couragestamp.png',
+                      };
+                      final imagePath = imageMap[record['stamp']] ?? 'assets/images/hopestamp.png';
+                      return Container(
+                        width: 100,
+                        margin: const EdgeInsets.symmetric(horizontal: 5),
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 246, 250, 222),
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Colors.black26,
+                              blurRadius: 4,
+                              offset: Offset(5, 5),
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(record['date'], style: const TextStyle(fontFamily: "DungGeunMo", fontSize: 18, color: Color.fromARGB(255, 73, 76, 57))),
+                            Image.asset(imagePath, width: 30, height: 30),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                  Positioned.fill(
+                    child: IgnorePointer(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight,
+                            colors: [
+                              const Color(0xFFDDE5B6),
+                              const Color(0xFFDDE5B6).withOpacity(0),
+                              const Color(0xFFDDE5B6).withOpacity(0),
+                              const Color(0xFFDDE5B6),
+                            ],
+                            stops: const [0.0, 0.1, 0.9, 1.0],
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(record['date'], style: const TextStyle(fontFamily: "DungGeunMo", fontSize: 18, color: Color.fromARGB(255, 73, 76, 57))),
-                  Image.asset(imagePath, width: 30, height: 30),
-                ],
-              ),
-            );
-          },
-        ),
-        Positioned.fill(
-          child: IgnorePointer(
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                  colors: [
-                    const Color(0xFFDDE5B6),
-                    const Color(0xFFDDE5B6).withOpacity(0),
-                    const Color(0xFFDDE5B6).withOpacity(0),
-                    const Color(0xFFDDE5B6),
-                  ],
-                  stops: const [0.0, 0.1, 0.9, 1.0],
-                ),
-              ),
             ),
           ),
-        ),
-      ],
-    ),
-  ),
-),
 
           const Divider(indent: 30, endIndent: 30, thickness: 2, color: Color.fromARGB(100, 121, 138, 61)),
           Expanded(

@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'user_provider.dart';
 import 'voice_chat.dart';
 import 'text_chat.dart';
 
@@ -24,10 +26,14 @@ class _ChattingSettingScreenState extends State<ChattingSettingScreen> {
   }
 
   Future<void> _loadChatHistory() async {
-    final String jsonString = await rootBundle.loadString('assets/data.json');
+    final userEmail = Provider.of<UserProvider>(context, listen: false).email;
+
+    final String jsonString = await rootBundle.loadString('assets/data/chat_data.json');
     final List<dynamic> jsonData = json.decode(jsonString);
 
-    final records = jsonData.map<Map<String, dynamic>>((item) {
+    final filteredData = jsonData.where((item) => item['email'] == userEmail);
+
+    final records = filteredData.map<Map<String, dynamic>>((item) {
       final timestamp = DateTime.parse(item['timestamp']);
       final month = timestamp.month;
       final day = timestamp.day;
@@ -52,6 +58,7 @@ class _ChattingSettingScreenState extends State<ChattingSettingScreen> {
       chatRecords = records;
     });
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -290,7 +297,6 @@ class _ChattingSettingScreenState extends State<ChattingSettingScreen> {
   }
 }
 
-// ✅ 이 부분이 새로 추가된 대화 상세 화면
 class ChatHistoryDetailScreen extends StatelessWidget {
   final String date;
   final String stamp;
@@ -343,27 +349,26 @@ class ChatHistoryDetailScreen extends StatelessWidget {
                   final isUser = msg['isUser'] == true;
 
                   return Align(
-  alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
-  child: Container(
-    constraints: BoxConstraints(
-      maxWidth: MediaQuery.of(context).size.width * 0.7, // ✅ 여기 추가
-    ),
-    margin: const EdgeInsets.symmetric(vertical: 4),
-    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-    decoration: BoxDecoration(
-      color: isUser ? Colors.green[100] : Colors.grey[300],
-      borderRadius: BorderRadius.circular(12),
-    ),
-    child: Text(
-      msg['text'] ?? '',
-      style: const TextStyle(
-        fontFamily: 'DungGeunMo',
-        fontSize: 14,
-      ),
-    ),
-  ),
-);
-
+                    alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
+                    child: Container(
+                      constraints: BoxConstraints(
+                        maxWidth: MediaQuery.of(context).size.width * 0.7,
+                      ),
+                      margin: const EdgeInsets.symmetric(vertical: 4),
+                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                      decoration: BoxDecoration(
+                        color: isUser ? Colors.green[100] : Colors.grey[300],
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Text(
+                        msg['text'] ?? '',
+                        style: const TextStyle(
+                          fontFamily: 'DungGeunMo',
+                          fontSize: 14,
+                        ),
+                      ),
+                    ),
+                  );
                 },
               ),
             ),

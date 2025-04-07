@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'dart:math'; // Random을 사용하기 위한 import
+import 'dart:math';
 
 
 class TextChatScreen extends StatefulWidget {
@@ -29,30 +29,28 @@ class _TextChatScreenState extends State<TextChatScreen> {
   }
 
   Future<void> _loadPresetMessages() async {
-  final String jsonString = await rootBundle.loadString('assets/data.json');
-  final List<dynamic> jsonData = json.decode(jsonString);
+    final String jsonString = await rootBundle.loadString('assets/data/chat_data.json');
+    final List<dynamic> jsonData = json.decode(jsonString);
 
-  final matches = jsonData.where((item) => item['counselorType'] == widget.counselorType).toList();
+    final matches = jsonData.where((item) => item['counselorType'] == widget.counselorType).toList();
 
-  if (matches.isNotEmpty) {
-    final randomMatch = matches[Random().nextInt(matches.length)];
-    final List<dynamic> msgs = randomMatch['messages'];
+    if (matches.isNotEmpty) {
+      final randomMatch = matches[Random().nextInt(matches.length)];
+      final List<dynamic> msgs = randomMatch['messages'];
 
-    setState(() {
-      _presetMessagesQueue.addAll(msgs.map((e) => {
-        'text': e['text'],
-        'isUser': e['isUser'],
-      }));
-    });
+      setState(() {
+        _presetMessagesQueue.addAll(msgs.map((e) => {
+          'text': e['text'],
+          'isUser': e['isUser'],
+        }));
+      });
 
-    // 🟢 첫 메시지 출력 시작
-    if (_presetMessagesQueue.isNotEmpty) {
-      _playNextBotMessage();
+      // 첫 메시지 출력 시작
+      if (_presetMessagesQueue.isNotEmpty) {
+        _playNextBotMessage();
+      }
     }
   }
-}
-
-
 
   void _sendMessage(String text) {
     if (text.trim().isEmpty || !_isWaitingForUser) return;
