@@ -97,7 +97,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: Row(
               children: [
                 Image.asset(
-                  'assets/images/character_1.png',
+                  'assets/images/emoti_character.png',
                   width: 120,
                   height: 120,
                   fit: BoxFit.cover,

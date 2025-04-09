@@ -137,7 +137,7 @@ class _MainContentState extends State<MainContent> {
                 child: Transform.translate(
                   offset: const Offset(0, -10),
                   child: Image.asset(
-                    'assets/images/baebse.png',
+                    'assets/images/baebse1.png',
                     width: 230,
                   ),
                 ),
@@ -150,7 +150,7 @@ class _MainContentState extends State<MainContent> {
                     await _saveBaebseImageToGallery(context); // context 전달
                   },
                   child: Image.asset(
-                    'assets/images/Vector.png', // Vector 이미지 경로
+                    'assets/images/download.png', // Vector 이미지 경로
                     width: 100,
                   ),
                 ),
@@ -224,7 +224,7 @@ Future<void> _saveBaebseImageToGallery(BuildContext context) async {
     }
 
     // assets에서 이미지 로드
-    final ByteData data = await rootBundle.load('assets/images/baebse.png');
+    final ByteData data = await rootBundle.load('assets/images/baebse1.png');
     final Uint8List bytes = data.buffer.asUint8List();
 
     // 파일을 임시 디렉토리에 저장
@@ -311,12 +311,12 @@ void _showSaveSuccessSnackbar(BuildContext context) {
 Future<void> _downloadImage() async {
   try {
     // assets에서 이미지 로드
-    final ByteData data = await rootBundle.load('assets/images/Vector.png');
+    final ByteData data = await rootBundle.load('assets/images/download.png');
     final Uint8List bytes = data.buffer.asUint8List();
 
     // 앱 내 저장소에 저장
     final Directory directory = await getApplicationDocumentsDirectory();
-    final String filePath = '${directory.path}/Vector.png';
+    final String filePath = '${directory.path}/download.png';
     final File imageFile = File(filePath);
     await imageFile.writeAsBytes(bytes);
   } catch (e) {
