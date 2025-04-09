@@ -1,10 +1,13 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:flutter/services.dart';
+import 'package:flutter_application_1/user_provider.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:math';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
 import 'home_speech_bubble.dart';
 
 class MainContent extends StatefulWidget {
@@ -28,10 +31,45 @@ class _MainContentState extends State<MainContent> {
   // 랜덤 문구를 저장할 변수
   late String randomSpeechText;
 
+  String characterIamgePath = 'assets/images/egg.png';
+  String pet = "Egg";
+  int level = 1;
+
+  Future<void> _getLoadData() async {
+    final userEmail = Provider.of<UserProvider>(context, listen: false).email;
+    final String jsonString = await rootBundle.loadString('assets/data/user_data.json');
+    final List<dynamic> jsonData = json.decode(jsonString);
+
+    final user = jsonData.cast<Map<String, dynamic>>().firstWhere(
+      (u) => u['email'] == userEmail,
+      orElse: () => {},
+    );
+
+    if (user.isNotEmpty) {
+      setState(() {
+        if (user['level'] == 1) {
+          pet = 'Egg';
+          level = user['level'];
+          characterIamgePath = 'assets/images/egg.png';
+        } else if (user['level'] != 1) { // else
+          pet = user['pet'];
+          level = user['level'];
+          String imageName = '${pet == "뱁새" ? "baebse" : "penguin"}${level-1}.png'; //'baebse1.png';
+          characterIamgePath = 'assets/images/$imageName';
+        }
+      });
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     randomSpeechText = speechTexts[Random().nextInt(speechTexts.length)];
+
+    Future.microtask(() async {
+      await _getLoadData();
+      setState(() {});
+    });
   }
 
   @override
@@ -51,7 +89,7 @@ class _MainContentState extends State<MainContent> {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        'Lv.1',
+                        'Lv.$level',
                         style: TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.normal,
@@ -60,9 +98,9 @@ class _MainContentState extends State<MainContent> {
                         ),
                       ),
                       const SizedBox(width: 10),
-                      const Text(
-                        'Egg',
-                        style: TextStyle(
+                      Text(
+                        pet,
+                        style: const TextStyle(
                           fontSize: 32,
                           fontWeight: FontWeight.bold,
                           fontFamily: 'DungGeunMo',
@@ -137,7 +175,7 @@ class _MainContentState extends State<MainContent> {
                 child: Transform.translate(
                   offset: const Offset(0, -10),
                   child: Image.asset(
-                    'assets/images/baebse1.png',
+                    characterIamgePath,
                     width: 230,
                   ),
                 ),
@@ -147,10 +185,10 @@ class _MainContentState extends State<MainContent> {
                 offset: const Offset(120, -80),
                 child: GestureDetector(
                   onTap: () async {
-                    await _saveBaebseImageToGallery(context); // context 전달
+                    await _saveCharacterImageToGallery(context, characterIamgePath); // context 전달
                   },
                   child: Image.asset(
-                    'assets/images/download.png', // Vector 이미지 경로
+                    'assets/images/download.png',
                     width: 100,
                   ),
                 ),
@@ -209,7 +247,7 @@ class _MainContentState extends State<MainContent> {
 }
 
 // 이미지를 갤러리에 저장하는 함수
-Future<void> _saveBaebseImageToGallery(BuildContext context) async {
+Future<void> _saveCharacterImageToGallery(BuildContext context, String characterIamgePath) async {
   try {
     // 권한 요청 (Android 13 이상 및 iOS 대응)
     if (Platform.isAndroid) {
@@ -224,12 +262,12 @@ Future<void> _saveBaebseImageToGallery(BuildContext context) async {
     }
 
     // assets에서 이미지 로드
-    final ByteData data = await rootBundle.load('assets/images/baebse1.png');
+    final ByteData data = await rootBundle.load(characterIamgePath);
     final Uint8List bytes = data.buffer.asUint8List();
 
     // 파일을 임시 디렉토리에 저장
     final Directory tempDir = await getTemporaryDirectory();
-    final String filePath = '${tempDir.path}/baebse.png';
+    final String filePath = '${tempDir.path}/character_image.png';
     final File imageFile = File(filePath);
     await imageFile.writeAsBytes(bytes);
 
@@ -305,23 +343,6 @@ void _showSaveSuccessSnackbar(BuildContext context) {
       );
     },
   );
-}
-
-// Vector 이미지 다운로드 함수
-Future<void> _downloadImage() async {
-  try {
-    // assets에서 이미지 로드
-    final ByteData data = await rootBundle.load('assets/images/download.png');
-    final Uint8List bytes = data.buffer.asUint8List();
-
-    // 앱 내 저장소에 저장
-    final Directory directory = await getApplicationDocumentsDirectory();
-    final String filePath = '${directory.path}/download.png';
-    final File imageFile = File(filePath);
-    await imageFile.writeAsBytes(bytes);
-  } catch (e) {
-    rethrow;
-  }
 }
 
 void _showPopupDialog(BuildContext context) {
