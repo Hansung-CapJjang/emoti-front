@@ -10,7 +10,7 @@
 		</data>
 		<key>Headers/kakao_flutter_sdk_common-Swift.h</key>
 		<data>
-		6Ulo4Q2LEu6w7QrSZptUtNJh/Lw=
+		I0DcaxRmFxuM+wU1ufFZ1oqPKlg=
 		</data>
 		<key>Headers/kakao_flutter_sdk_common-umbrella.h</key>
 		<data>
@@ -18,15 +18,15 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		Hmb3rY8pWSQ3nW54Kuwi4oW0lOA=
+		1vlT3ohXuaXFFCZJ1/xus4MKOnU=
 		</data>
 		<key>Modules/kakao_flutter_sdk_common.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo</key>
 		<data>
-		vg2TsD+oqN6wTdWRUAfKsnoo+Kk=
+		ixf/R95wysD2ZcvfVtnkNQPd+Vg=
 		</data>
 		<key>Modules/kakao_flutter_sdk_common.swiftmodule/Project/x86_64-apple-ios-simulator.swiftsourceinfo</key>
 		<data>
-		GWbeMsWU+kAf4qXunkFMQfOHkSM=
+		+5pvURmKMLYV+n2QCqUzM5Qv88M=
 		</data>
 		<key>Modules/kakao_flutter_sdk_common.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -34,11 +34,11 @@
 		</data>
 		<key>Modules/kakao_flutter_sdk_common.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		4zX25tztqhrg5CDPmmL1Tvr/2Lg=
+		aRzT9VHlFQiY3kJea9v5XreCs9w=
 		</data>
 		<key>Modules/kakao_flutter_sdk_common.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		ikyeGaHlpsZ6GoB5UANwq5SIs6Y=
+		NFh36Ts6YoZiAvCHLPV46WjH3e4=
 		</data>
 		<key>Modules/kakao_flutter_sdk_common.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -46,11 +46,11 @@
 		</data>
 		<key>Modules/kakao_flutter_sdk_common.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		2R2CSgrH6ikJSpqHsq9fsew0uC0=
+		9pHzgzm6EwDRlvvhSXFKeDiQ2KY=
 		</data>
 		<key>Modules/kakao_flutter_sdk_common.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		iC8/LydOuzLG5oo6H9jfgiLLiok=
+		BpysyNsJbCarrFBLlyHWqV54VJ4=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -58,7 +58,7 @@
 		</data>
 		<key>kakao_flutter_sdk_common_privacy.bundle/Info.plist</key>
 		<data>
-		JMcaBHv6C1xb12TksQZCc016/Xw=
+		PJT5/1E6+gp4IpbzR/Uf2FkBWo8=
 		</data>
 		<key>kakao_flutter_sdk_common_privacy.bundle/PrivacyInfo.xcprivacy</key>
 		<data>
@@ -78,7 +78,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			RCw0BlUT3uh89mTtCfkD98PSyAUHROlB0L2ebGAvvIg=
+			EGOkzd+K0/bE3W91RNOtogO4A2szIpA00TlDA4MrB4A=
 			</data>
 		</dict>
 		<key>Headers/kakao_flutter_sdk_common-umbrella.h</key>
@@ -92,14 +92,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			L+HUy5qc0X0MMqCmrOiEbZ+ewBGRqaDSuGbu+uqey6Y=
+			IO/PzSiIJIhlk0GF6VbvMM+0jrq+qkzqzLUXQZ668dE=
 			</data>
 		</dict>
 		<key>Modules/kakao_flutter_sdk_common.swiftmodule/Project/x86_64-apple-ios-simulator.swiftsourceinfo</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ZEn6FL98mlhZzO7/2Nq/WYbTNyTu6zIXnez65FxsIsY=
+			CmtoBh6+WalEmA1FDVnD4mrN94rkk7hCePRkP2/PXnk=
 			</data>
 		</dict>
 		<key>Modules/kakao_flutter_sdk_common.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
@@ -113,14 +113,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			UuQErtmv7nz5dAssKgUhXCGj+P+pHdLJldUnkcLoXmI=
+			N3RGtJKC1ZgOYMvXbRrcHzZ4kxKIhiOwlvXebUKeeyo=
 			</data>
 		</dict>
 		<key>Modules/kakao_flutter_sdk_common.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			kgMXLuXtUQJGPH5EtPoN5/j1IUI3u4yLH8gwBp9ujX0=
+			Hqrc6HLVjNeZy7hQtziePJuq1VWKBu/BedS1KNUwB7s=
 			</data>
 		</dict>
 		<key>Modules/kakao_flutter_sdk_common.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
@@ -134,14 +134,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			iqdSE3bm9RNAlgL2NwUdWx3vdSKkhJWEzGoxvicZOPk=
+			cqBsPSfKIvH5+P5iyqGGOhTP0i6ETDKV+dUY+3R0kL0=
 			</data>
 		</dict>
 		<key>Modules/kakao_flutter_sdk_common.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			VQ4XUIjLaSPNfIIK0Dzk0AoW33Uci/uOJYn6ZMk1YJs=
+			EEH37KOvtj7SgRGfs83wUSwXGyiWnSct0DxcjfZECnc=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
@@ -155,7 +155,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			Ggt8wgCof5KK8l4+1E3BCGv3i4DPSrAv6II0uRMZMlA=
+			lz/D4KkfQ/R//MpTowQvO9fsh+aK90gx1gVLLgdzpiE=
 			</data>
 		</dict>
 		<key>kakao_flutter_sdk_common_privacy.bundle/PrivacyInfo.xcprivacy</key>

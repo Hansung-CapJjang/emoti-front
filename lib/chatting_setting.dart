@@ -6,16 +6,14 @@ import 'user_provider.dart';
 import 'voice_chat.dart';
 import 'text_chat.dart';
 
-class ChattingSettingScreen extends StatefulWidget {
-  const ChattingSettingScreen({super.key});
-
+class CounselorSelectionPage extends StatefulWidget {
   @override
-  State<ChattingSettingScreen> createState() => _ChattingSettingScreenState();
+  _CounselorSelectionPageState createState() => _CounselorSelectionPageState();
 }
 
-class _ChattingSettingScreenState extends State<ChattingSettingScreen> {
+class _CounselorSelectionPageState extends State<CounselorSelectionPage> {
   String selectedCounselor = '공감형';
-  String selectedMethod = '문자 상담';
+  String selectedMethod = 'chat';
 
   List<Map<String, dynamic>> chatRecords = [];
 
@@ -59,76 +57,136 @@ class _ChattingSettingScreenState extends State<ChattingSettingScreen> {
     });
   }
 
+  Widget _buildCounselorButton(String label, String imagePath) {
+    bool isSelected = selectedCounselor == label;
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          selectedCounselor = label;
+        });
+      },
+      child: Container(
+        width: 100,
+        padding: const EdgeInsets.symmetric(vertical: 20),
+        decoration: BoxDecoration(
+          color: Colors.transparent,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+            color: isSelected ? const Color.fromARGB(255, 110, 120, 91) : Colors.white54,
+            width: 3,
+          ),
+        ),
+        child: Column(
+          children: [
+            CircleAvatar(
+              radius: 30,
+              backgroundImage: AssetImage(imagePath),
+              backgroundColor: Colors.white,
+            ),
+            const SizedBox(height: 10),
+            Text(
+              label,
+              style: const TextStyle(
+                fontFamily: 'DungGeunMo',
+                fontSize: 14,
+                color: Colors.black,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMethodButton(String label, Widget iconWidget, String value) {
+  bool isSelected = selectedMethod == value;
+  return GestureDetector(
+    onTap: () {
+      setState(() {
+        selectedMethod = value;
+      });
+    },
+    child: Container(
+      padding: const EdgeInsets.all(35),
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: isSelected ? const Color(0xFFF1F3E5) : const Color(0xFFF1F3E5),
+        border: Border.all(
+          color: isSelected ? const Color.fromARGB(255, 110, 120, 91) : Colors.white,
+          width: 3,
+        ),
+      ),
+      child: SizedBox(
+        width: 55,
+        height: 55,
+        child: iconWidget,
+      ),
+    ),
+  );
+}
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFDCE6B7),
+      backgroundColor: const Color(0xFFE9EBD9),
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.transparent,
+        backgroundColor: const Color(0xFFE9EBD9),
         elevation: 0,
-        title: const Text(
-          '상담 방식 선택',
-          style: TextStyle(
-            fontFamily: 'DungGeunMo',
-            color: Colors.black,
-          ),
-        ),
+        title: const Text(' 상담 준비하기', style: TextStyle(fontFamily: 'DungGeunMo', fontSize: 30, color: Colors.black)),
+        centerTitle: false,
+        iconTheme: const IconThemeData(color: Colors.black),
         actions: [
-          Builder(
-            builder: (context) => IconButton(
-              icon: const Icon(Icons.menu, color: Colors.black),
-              onPressed: () {
-                Scaffold.of(context).openEndDrawer();
-              },
-            ),
-          ),
-        ],
+  Padding(
+    padding: const EdgeInsets.only(right: 16.0), // 원하는 만큼 여백 설정
+    child: Builder(
+      builder: (context) => IconButton(
+        icon: const Icon(Icons.menu, size: 30, color: Colors.black),
+        onPressed: () {
+          Scaffold.of(context).openEndDrawer();
+        },
+      ),
+    ),
+  ),
+],
       ),
       endDrawer: _buildDrawer(),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+        padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Divider(color: Color.fromARGB(130, 65, 80, 62), thickness: 1),
-            const SizedBox(height: 30),
-            const Text(
-              '※ 선호하는 상담사 유형을 직접 선택할 수 있어요!',
-              style: TextStyle(fontFamily: 'DungGeunMo', fontSize: 14, color: Colors.black54),
-            ),
+            const Text('  * 상담사 유형 선택', style: TextStyle(fontSize: 16, color: const Color.fromARGB(255, 110, 120, 91), fontFamily: 'DungGeunMo')),
             const SizedBox(height: 20),
-            Wrap(
-              spacing: 10,
-              runSpacing: 10,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _buildOptionButton('공감형', true),
-                _buildOptionButton('조언형', true),
-                _buildOptionButton('유머러스형', true),
+                _buildCounselorButton('조언형', 'assets/images/counselor1.png'),
+                _buildCounselorButton('공감형', 'assets/images/counselor2.png'),
+                _buildCounselorButton('유머러스형', 'assets/images/counselor3.png'),
+              ],
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 30.0),
+              child: Divider(color: Colors.black26, thickness: 2, indent: 8, endIndent: 8),
+            ),
+            const Text('  * 상담 방식 선택', style: TextStyle(fontSize: 16, color: const Color.fromARGB(255, 110, 120, 91), fontFamily: 'DungGeunMo')),
+            const SizedBox(height: 4),
+            const Text('  * 음성 상담 시 상담 기록은 저장되지 않아요!', style: TextStyle(fontSize: 15, color: const Color.fromARGB(255, 110, 120, 91), fontFamily: 'DungGeunMo')),
+            const SizedBox(height: 40),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                _buildMethodButton('음성', Image.asset('assets/images/voicecounsel.png', width: 24, height: 24), 'voice'),
+_buildMethodButton('채팅', Image.asset('assets/images/chatcounsel.png', width: 24, height: 24), 'chat'),
+
               ],
             ),
             const Spacer(),
-            const Divider(color: Colors.black45, thickness: 0.5),
-            const SizedBox(height: 30),
-            const Text(
-              '※ 음성으로 상담 시 상담 기록이\n  저장되지 않아요!',
-              style: TextStyle(fontFamily: 'DungGeunMo', fontSize: 14, color: Colors.black54),
-            ),
-            const SizedBox(height: 20),
-            Wrap(
-              spacing: 10,
-              runSpacing: 10,
-              children: [
-                _buildOptionButton('문자 상담', false),
-                _buildOptionButton('음성 상담', false),
-              ],
-            ),
-            const Spacer(flex: 2),
             Center(
               child: ElevatedButton(
                 onPressed: () {
-                  final screen = selectedMethod == '음성 상담'
+                  final screen = selectedMethod == 'voice'
                       ? VoiceChatScreen(counselorType: selectedCounselor)
                       : TextChatScreen(counselorType: selectedCounselor);
 
@@ -138,69 +196,20 @@ class _ChattingSettingScreenState extends State<ChattingSettingScreen> {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF6C7448),
-                  foregroundColor: Colors.white,
-                  minimumSize: const Size(200, 50),
+                  backgroundColor: const Color.fromARGB(255, 110, 120, 91),
+                  padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 13),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(12),
                   ),
                 ),
                 child: const Text(
                   '상담 시작하기',
-                  style: TextStyle(fontFamily: 'DungGeunMo', fontSize: 16, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontFamily: 'DungGeunMo', fontSize: 20, color: Colors.white),
                 ),
               ),
             ),
             const SizedBox(height: 20),
-            const Spacer(),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildOptionButton(String text, bool isCounselor) {
-    bool isSelected = isCounselor ? (selectedCounselor == text) : (selectedMethod == text);
-
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          if (isCounselor) {
-            selectedCounselor = text;
-          } else {
-            selectedMethod = text;
-          }
-        });
-      },
-      child: Container(
-        decoration: BoxDecoration(
-          color: isSelected
-              ? const Color.fromARGB(255, 247, 253, 217)
-              : const Color.fromARGB(255, 217, 225, 176),
-          border: Border.all(
-            color: isSelected
-                ? const Color.fromARGB(104, 141, 170, 102)
-                : const Color(0xFF779352),
-            width: isSelected ? 2 : 0,
-          ),
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: const [
-            BoxShadow(
-              color: Colors.black26,
-              offset: Offset(0, 3),
-              blurRadius: 4,
-            ),
-          ],
-        ),
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        child: Text(
-          text,
-          style: TextStyle(
-            fontFamily: 'DungGeunMo',
-            fontSize: 16,
-            fontWeight: FontWeight.normal,
-            color: isSelected ? Colors.black : Colors.black54,
-          ),
         ),
       ),
     );
@@ -378,3 +387,4 @@ class ChatHistoryDetailScreen extends StatelessWidget {
     );
   }
 }
+

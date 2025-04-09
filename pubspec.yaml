@@ -98,6 +98,11 @@ flutter:
     - assets/images/hopestamp.png
     - assets/images/recoverystamp.png
     - assets/images/reflectionstamp.png
+    - assets/images/chatcounsel.png
+    - assets/images/voicecounsel.png
+    - assets/images/counselor1.png
+    - assets/images/counselor2.png
+    - assets/images/counselor3.png
     - assets/data/chat_data.json
     - assets/data/user_data.json
 

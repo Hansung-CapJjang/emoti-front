@@ -23,9 +23,9 @@ class MainScreenState extends State<MainScreen> {
     return Scaffold(
       body: IndexedStack(
         index: _currentIndex,
-        children: const [
+        children: [
           HomeScreen(),
-          ChattingSettingScreen(),
+          CounselorSelectionPage(),
           ProfileScreen(),
         ],
       ),

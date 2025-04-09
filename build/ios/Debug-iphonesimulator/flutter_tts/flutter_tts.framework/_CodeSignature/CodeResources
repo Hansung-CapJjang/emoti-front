@@ -10,7 +10,7 @@
 		</data>
 		<key>Headers/flutter_tts-Swift.h</key>
 		<data>
-		ej9eyZIfEJ9fHNURRguX+QfYyzk=
+		AigpbP+Ym6JTE4/Ek33BOs+kFFw=
 		</data>
 		<key>Headers/flutter_tts-umbrella.h</key>
 		<data>
@@ -18,15 +18,15 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		Fg8Jpx80D2o40xdck8qbxJ1Wrd4=
+		5Gaqj43UtkoWvBMbZV37iQl9cNs=
 		</data>
 		<key>Modules/flutter_tts.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo</key>
 		<data>
-		ZiBZ1Bdn0QqIejC+cxvZpNqZv3k=
+		TXN7TKfnrTu2QxWOWLHki0pJu6w=
 		</data>
 		<key>Modules/flutter_tts.swiftmodule/Project/x86_64-apple-ios-simulator.swiftsourceinfo</key>
 		<data>
-		cg+BvIvrETOkxUKu6RFTtTbYy8U=
+		S4tn4SPrDt+OmWUyDJSU3y8X6ws=
 		</data>
 		<key>Modules/flutter_tts.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -34,11 +34,11 @@
 		</data>
 		<key>Modules/flutter_tts.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		LnfKa6kztUgRMTLp6H3k1cEffqg=
+		+OHR/z+F0PbBuypPxyGafgh29Vg=
 		</data>
 		<key>Modules/flutter_tts.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		7plrfQwFqAOM0OPQgGQzfNmmXf0=
+		ju6Kvz1rTnpYX0vFBvs2CjA461U=
 		</data>
 		<key>Modules/flutter_tts.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -46,11 +46,11 @@
 		</data>
 		<key>Modules/flutter_tts.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		3YtzLOW7HzsoQMnYY98qsqjX1hE=
+		OOInzLNi6CJLariB8j5BvcpVoeg=
 		</data>
 		<key>Modules/flutter_tts.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		KKJjlTWg3JLwT2KLG54TRbWHbYs=
+		6iMfwr4aiyGHjyT5ePLe7Y2T2Y8=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -74,11 +74,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			ej9eyZIfEJ9fHNURRguX+QfYyzk=
+			AigpbP+Ym6JTE4/Ek33BOs+kFFw=
 			</data>
 			<key>hash2</key>
 			<data>
-			pcbAtpMUuWmL316nEkTkqDjfRMV1BQh2o3SrFShmU/4=
+			Yj49yUBKTCTiwU0IWZRKuAWF3ujE8r4zNtF9PmzH4es=
 			</data>
 		</dict>
 		<key>Headers/flutter_tts-umbrella.h</key>
@@ -96,22 +96,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			ZiBZ1Bdn0QqIejC+cxvZpNqZv3k=
+			TXN7TKfnrTu2QxWOWLHki0pJu6w=
 			</data>
 			<key>hash2</key>
 			<data>
-			YVKVcKBz5pkUkkcK5ESSDFI40mrqgAeQy+NdYgkyT9w=
+			vzppr/Zy+ihBPERJ+HR5vR01I0XSpvNUcBZU+KU6BaE=
 			</data>
 		</dict>
 		<key>Modules/flutter_tts.swiftmodule/Project/x86_64-apple-ios-simulator.swiftsourceinfo</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			cg+BvIvrETOkxUKu6RFTtTbYy8U=
+			S4tn4SPrDt+OmWUyDJSU3y8X6ws=
 			</data>
 			<key>hash2</key>
 			<data>
-			L8eyGCstEhQHOPGn6wDHg450wh3qxZAqIwrxcphnrdQ=
+			73Q0PFmmGiCtduUKIG6Y1krGT+BFcPt53vlHbB57eX4=
 			</data>
 		</dict>
 		<key>Modules/flutter_tts.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
@@ -129,22 +129,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			LnfKa6kztUgRMTLp6H3k1cEffqg=
+			+OHR/z+F0PbBuypPxyGafgh29Vg=
 			</data>
 			<key>hash2</key>
 			<data>
-			mg17oyQf2ZWxjUdu69b6dx2JVdnV+9QrOqGvoVdyrlI=
+			Lks50v8T+yzMsDX1kk6w5jgFrzH6dvmdS2weKMrSUIE=
 			</data>
 		</dict>
 		<key>Modules/flutter_tts.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			7plrfQwFqAOM0OPQgGQzfNmmXf0=
+			ju6Kvz1rTnpYX0vFBvs2CjA461U=
 			</data>
 			<key>hash2</key>
 			<data>
-			95+DR8UT7OvyBLXwl53bNYK3srT5pk6CiNf3bHlyKIA=
+			Cik2X/tvxKxK7YybLJRuEANHNCg3u0SmPWPh62/ItuQ=
 			</data>
 		</dict>
 		<key>Modules/flutter_tts.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
@@ -162,22 +162,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			3YtzLOW7HzsoQMnYY98qsqjX1hE=
+			OOInzLNi6CJLariB8j5BvcpVoeg=
 			</data>
 			<key>hash2</key>
 			<data>
-			nLAsfSP3DpPL/do52d7y6RByvY4tVApp541TLoE/w/A=
+			CmzokaoqfV3+IH1PUpFS5XN1L/DomKeCWPsZDdP+aR8=
 			</data>
 		</dict>
 		<key>Modules/flutter_tts.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			KKJjlTWg3JLwT2KLG54TRbWHbYs=
+			6iMfwr4aiyGHjyT5ePLe7Y2T2Y8=
 			</data>
 			<key>hash2</key>
 			<data>
-			lcz+fMoMOsHs9beWQeX1WgMUig3UesP0vGDo0c2Dhuk=
+			SjRh3jY/A7fKvdlubTjJXu/ikvyL2ZJzodeUU2JisOg=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
