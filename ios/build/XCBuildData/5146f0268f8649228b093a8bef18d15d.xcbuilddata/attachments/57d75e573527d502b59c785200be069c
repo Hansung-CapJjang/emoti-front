@@ -1,0 +1,23 @@
+{
+  'version': 0,
+  'use-external-names': 'false',
+  'case-sensitive': 'false',
+  'roots': [{
+    'type': 'directory',
+    'name': "/Users/jeongseyeon/Downloads/emoti-front-counsel-options/ios/build/Release-iphoneos/Try/Try.framework/Modules"
+    'contents': [{
+      'type': 'file',
+      'name': "module.modulemap",
+      'external-contents': "/Users/jeongseyeon/Downloads/emoti-front-counsel-options/ios/build/Pods.build/Release-iphoneos/Try.build/unextended-module.modulemap",
+    }]
+    },
+    {
+    'type': 'directory',
+    'name': "/Users/jeongseyeon/Downloads/emoti-front-counsel-options/ios/build/Release-iphoneos/Try/Try.framework/Headers"
+    'contents': [{
+      'type': 'file',
+      'name': "Try-Swift.h",
+      'external-contents': "/Users/jeongseyeon/Downloads/emoti-front-counsel-options/ios/build/Pods.build/Release-iphoneos/Try.build/unextended-interface-header.h",
+    }]
+    }]
+}

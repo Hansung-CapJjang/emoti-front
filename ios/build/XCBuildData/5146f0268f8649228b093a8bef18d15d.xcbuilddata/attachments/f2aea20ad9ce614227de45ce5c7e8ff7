@@ -1,0 +1,30 @@
+{
+  "" : {
+    "const-values" : "/Users/jeongseyeon/Downloads/emoti-front-counsel-options/ios/build/Pods.build/Release-iphoneos/flutter_tts.build/Objects-normal/arm64/flutter_tts-master.swiftconstvalues",
+    "dependencies" : "/Users/jeongseyeon/Downloads/emoti-front-counsel-options/ios/build/Pods.build/Release-iphoneos/flutter_tts.build/Objects-normal/arm64/flutter_tts-master.d",
+    "diagnostics" : "/Users/jeongseyeon/Downloads/emoti-front-counsel-options/ios/build/Pods.build/Release-iphoneos/flutter_tts.build/Objects-normal/arm64/flutter_tts-master.dia",
+    "emit-module-dependencies" : "/Users/jeongseyeon/Downloads/emoti-front-counsel-options/ios/build/Pods.build/Release-iphoneos/flutter_tts.build/Objects-normal/arm64/flutter_tts-master-emit-module.d",
+    "emit-module-diagnostics" : "/Users/jeongseyeon/Downloads/emoti-front-counsel-options/ios/build/Pods.build/Release-iphoneos/flutter_tts.build/Objects-normal/arm64/flutter_tts-master-emit-module.dia",
+    "swift-dependencies" : "/Users/jeongseyeon/Downloads/emoti-front-counsel-options/ios/build/Pods.build/Release-iphoneos/flutter_tts.build/Objects-normal/arm64/flutter_tts-master.swiftdeps"
+  },
+  "/Users/jeongseyeon/.pub-cache/hosted/pub.dev/flutter_tts-4.2.2/ios/Classes/AudioCategory.swift" : {
+    "index-unit-output-path" : "/Pods.build/Release-iphoneos/flutter_tts.build/Objects-normal/arm64/AudioCategory.o",
+    "llvm-bc" : "/Users/jeongseyeon/Downloads/emoti-front-counsel-options/ios/build/Pods.build/Release-iphoneos/flutter_tts.build/Objects-normal/arm64/AudioCategory.bc",
+    "object" : "/Users/jeongseyeon/Downloads/emoti-front-counsel-options/ios/build/Pods.build/Release-iphoneos/flutter_tts.build/Objects-normal/arm64/AudioCategory.o"
+  },
+  "/Users/jeongseyeon/.pub-cache/hosted/pub.dev/flutter_tts-4.2.2/ios/Classes/AudioCategoryOptions.swift" : {
+    "index-unit-output-path" : "/Pods.build/Release-iphoneos/flutter_tts.build/Objects-normal/arm64/AudioCategoryOptions.o",
+    "llvm-bc" : "/Users/jeongseyeon/Downloads/emoti-front-counsel-options/ios/build/Pods.build/Release-iphoneos/flutter_tts.build/Objects-normal/arm64/AudioCategoryOptions.bc",
+    "object" : "/Users/jeongseyeon/Downloads/emoti-front-counsel-options/ios/build/Pods.build/Release-iphoneos/flutter_tts.build/Objects-normal/arm64/AudioCategoryOptions.o"
+  },
+  "/Users/jeongseyeon/.pub-cache/hosted/pub.dev/flutter_tts-4.2.2/ios/Classes/AudioModes.swift" : {
+    "index-unit-output-path" : "/Pods.build/Release-iphoneos/flutter_tts.build/Objects-normal/arm64/AudioModes.o",
+    "llvm-bc" : "/Users/jeongseyeon/Downloads/emoti-front-counsel-options/ios/build/Pods.build/Release-iphoneos/flutter_tts.build/Objects-normal/arm64/AudioModes.bc",
+    "object" : "/Users/jeongseyeon/Downloads/emoti-front-counsel-options/ios/build/Pods.build/Release-iphoneos/flutter_tts.build/Objects-normal/arm64/AudioModes.o"
+  },
+  "/Users/jeongseyeon/.pub-cache/hosted/pub.dev/flutter_tts-4.2.2/ios/Classes/SwiftFlutterTtsPlugin.swift" : {
+    "index-unit-output-path" : "/Pods.build/Release-iphoneos/flutter_tts.build/Objects-normal/arm64/SwiftFlutterTtsPlugin.o",
+    "llvm-bc" : "/Users/jeongseyeon/Downloads/emoti-front-counsel-options/ios/build/Pods.build/Release-iphoneos/flutter_tts.build/Objects-normal/arm64/SwiftFlutterTtsPlugin.bc",
+    "object" : "/Users/jeongseyeon/Downloads/emoti-front-counsel-options/ios/build/Pods.build/Release-iphoneos/flutter_tts.build/Objects-normal/arm64/SwiftFlutterTtsPlugin.o"
+  }
+}

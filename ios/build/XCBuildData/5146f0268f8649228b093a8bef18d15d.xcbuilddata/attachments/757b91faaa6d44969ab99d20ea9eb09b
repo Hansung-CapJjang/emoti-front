@@ -1,0 +1,15 @@
+{
+  "" : {
+    "const-values" : "/Users/jeongseyeon/Downloads/emoti-front-counsel-options/ios/build/Pods.build/Release-iphoneos/image_gallery_saver.build/Objects-normal/arm64/image_gallery_saver-master.swiftconstvalues",
+    "dependencies" : "/Users/jeongseyeon/Downloads/emoti-front-counsel-options/ios/build/Pods.build/Release-iphoneos/image_gallery_saver.build/Objects-normal/arm64/image_gallery_saver-master.d",
+    "diagnostics" : "/Users/jeongseyeon/Downloads/emoti-front-counsel-options/ios/build/Pods.build/Release-iphoneos/image_gallery_saver.build/Objects-normal/arm64/image_gallery_saver-master.dia",
+    "emit-module-dependencies" : "/Users/jeongseyeon/Downloads/emoti-front-counsel-options/ios/build/Pods.build/Release-iphoneos/image_gallery_saver.build/Objects-normal/arm64/image_gallery_saver-master-emit-module.d",
+    "emit-module-diagnostics" : "/Users/jeongseyeon/Downloads/emoti-front-counsel-options/ios/build/Pods.build/Release-iphoneos/image_gallery_saver.build/Objects-normal/arm64/image_gallery_saver-master-emit-module.dia",
+    "swift-dependencies" : "/Users/jeongseyeon/Downloads/emoti-front-counsel-options/ios/build/Pods.build/Release-iphoneos/image_gallery_saver.build/Objects-normal/arm64/image_gallery_saver-master.swiftdeps"
+  },
+  "/Users/jeongseyeon/.pub-cache/hosted/pub.dev/image_gallery_saver-2.0.3/ios/Classes/SwiftImageGallerySaverPlugin.swift" : {
+    "index-unit-output-path" : "/Pods.build/Release-iphoneos/image_gallery_saver.build/Objects-normal/arm64/SwiftImageGallerySaverPlugin.o",
+    "llvm-bc" : "/Users/jeongseyeon/Downloads/emoti-front-counsel-options/ios/build/Pods.build/Release-iphoneos/image_gallery_saver.build/Objects-normal/arm64/SwiftImageGallerySaverPlugin.bc",
+    "object" : "/Users/jeongseyeon/Downloads/emoti-front-counsel-options/ios/build/Pods.build/Release-iphoneos/image_gallery_saver.build/Objects-normal/arm64/SwiftImageGallerySaverPlugin.o"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "" : {
+    "const-values" : "/Users/jeongseyeon/Downloads/emoti-front-counsel-options/ios/build/Pods.build/Release-iphoneos/speech_to_text.build/Objects-normal/arm64/speech_to_text-master.swiftconstvalues",
+    "dependencies" : "/Users/jeongseyeon/Downloads/emoti-front-counsel-options/ios/build/Pods.build/Release-iphoneos/speech_to_text.build/Objects-normal/arm64/speech_to_text-master.d",
+    "diagnostics" : "/Users/jeongseyeon/Downloads/emoti-front-counsel-options/ios/build/Pods.build/Release-iphoneos/speech_to_text.build/Objects-normal/arm64/speech_to_text-master.dia",
+    "emit-module-dependencies" : "/Users/jeongseyeon/Downloads/emoti-front-counsel-options/ios/build/Pods.build/Release-iphoneos/speech_to_text.build/Objects-normal/arm64/speech_to_text-master-emit-module.d",
+    "emit-module-diagnostics" : "/Users/jeongseyeon/Downloads/emoti-front-counsel-options/ios/build/Pods.build/Release-iphoneos/speech_to_text.build/Objects-normal/arm64/speech_to_text-master-emit-module.dia",
+    "swift-dependencies" : "/Users/jeongseyeon/Downloads/emoti-front-counsel-options/ios/build/Pods.build/Release-iphoneos/speech_to_text.build/Objects-normal/arm64/speech_to_text-master.swiftdeps"
+  },
+  "/Users/jeongseyeon/.pub-cache/hosted/pub.dev/speech_to_text-7.0.0/darwin/Classes/SpeechToTextPlugin.swift" : {
+    "index-unit-output-path" : "/Pods.build/Release-iphoneos/speech_to_text.build/Objects-normal/arm64/SpeechToTextPlugin.o",
+    "llvm-bc" : "/Users/jeongseyeon/Downloads/emoti-front-counsel-options/ios/build/Pods.build/Release-iphoneos/speech_to_text.build/Objects-normal/arm64/SpeechToTextPlugin.bc",
+    "object" : "/Users/jeongseyeon/Downloads/emoti-front-counsel-options/ios/build/Pods.build/Release-iphoneos/speech_to_text.build/Objects-normal/arm64/SpeechToTextPlugin.o"
+  }
+}
