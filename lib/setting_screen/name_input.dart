@@ -127,7 +127,7 @@ class _NameInputScreenState extends State<NameInputScreen>
 
               Center(
                 child: Image.asset(
-                  'assets/images/character_1.png',
+                  'assets/images/emoti_character.png',
                   width: 230,
                 ),
               ),

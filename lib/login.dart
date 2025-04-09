@@ -103,7 +103,7 @@ class _LoginScreenState extends State<LoginScreen> {
               'emoti',
               style: TextStyle(fontSize: 80, fontWeight: FontWeight.bold, fontFamily: 'Times New Roman', color: Colors.black87),
             ),
-            Image.asset('assets/images/character_1.png', width: 230),
+            Image.asset('assets/images/emoti_character.png', width: 230),
             const SizedBox(height: 40),
             const Row(
               children: [
@@ -124,17 +124,17 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 GestureDetector(
                   onTap: () => _showFloatingPage(context, "https://nid.naver.com"), // 추후 주소 수정
-                  child: Image.asset('assets/images/naverLogo.png', width: 60),
+                  child: Image.asset('assets/images/naver_logo.png', width: 60),
                 ),
                 const SizedBox(width: 20),
                 GestureDetector(
                   onTap: () => _showFloatingPage(context, "https://kauth.kakao.com/oauth/authorize"), // 추후 주소 수정
-                  child: Image.asset('assets/images/kakaotalkLogo.png', width: 60),
+                  child: Image.asset('assets/images/kakaotalk_logo.png', width: 60),
                 ),
                 const SizedBox(width: 20),
                 GestureDetector(
                   onTap: () => _showFloatingPage(context, "https://accounts.google.com"), // 추후 주소 수정
-                  child: Image.asset('assets/images/googleLogo.png', width: 60),
+                  child: Image.asset('assets/images/google_logo.png', width: 60),
                 ),
               ],
             ),
