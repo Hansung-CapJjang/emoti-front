@@ -64,7 +64,7 @@ class FirstScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFE3E7C0),
+      backgroundColor: const Color(0xFFE9EBD9),
       body: Column(
         children: [
           const SizedBox(height: 130),
@@ -115,7 +115,8 @@ class SecondScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFE3E7C0),
+      backgroundColor: const Color(0xFFE9EBD9),
+
       body: Column(
         children: [
           const SizedBox(height: 130),
