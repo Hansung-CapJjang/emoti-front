@@ -105,6 +105,10 @@ flutter:
     - assets/images/counselor3.png
     - assets/data/chat_data.json
     - assets/data/user_data.json
+    - assets/images/advisory_counselor.png
+    - assets/images/empathetic _counselor.png
+    - assets/images/humorous_counselor.png
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

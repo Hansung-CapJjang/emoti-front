@@ -161,9 +161,9 @@ class _CounselorSelectionPageState extends State<CounselorSelectionPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _buildCounselorButton('조언형', 'assets/images/counselor1.png'),
-                _buildCounselorButton('공감형', 'assets/images/counselor2.png'),
-                _buildCounselorButton('유머러스형', 'assets/images/counselor3.png'),
+                _buildCounselorButton('조언형', 'assets/images/advisory_counselor.png'),
+                _buildCounselorButton('공감형', 'assets/images/empathetic _counselor.png'),
+                _buildCounselorButton('유머러스형', 'assets/images/humorous_counselor.png'),
               ],
             ),
             const Padding(
@@ -219,7 +219,7 @@ _buildMethodButton('채팅', Image.asset('assets/images/chatcounsel.png', width:
     return Drawer(
       width: MediaQuery.of(context).size.width * 0.6,
       child: Container(
-        color: const Color(0xFFEFEFCC),
+        color: const Color(0xFFE9EBD9),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
