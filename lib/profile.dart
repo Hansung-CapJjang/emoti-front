@@ -228,8 +228,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(record['date'], style: const TextStyle(fontFamily: "DungGeunMo", fontSize: 18, color: Color.fromARGB(255, 73, 76, 57))),
-                            Image.asset(imagePath, width: 30, height: 30),
+                            Text(record['date'], style: const TextStyle(fontFamily: "DungGeunMo", fontSize: 16, color: Color.fromARGB(255, 73, 76, 57))),
+                            Image.asset(imagePath, width: 40, height: 40),
                           ],
                         ),
                       );
@@ -243,10 +243,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             begin: Alignment.centerLeft,
                             end: Alignment.centerRight,
                             colors: [
-                              const Color(0xFFDDE5B6),
-                              const Color(0xFFDDE5B6).withOpacity(0),
-                              const Color(0xFFDDE5B6).withOpacity(0),
-                              const Color(0xFFDDE5B6),
+                              const Color(0xFFE9EBD9),
+                              const Color(0xFFE9EBD9).withOpacity(0),
+                              const Color(0xFFE9EBD9).withOpacity(0),
+                              const Color(0xFFE9EBD9),
                             ],
                             stops: const [0.0, 0.1, 0.9, 1.0],
                           ),
@@ -258,6 +258,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ),
           ),
+
+          SizedBox(height: 15,),
 
           const Divider(indent: 30, endIndent: 30, thickness: 2, color: Color.fromARGB(100, 121, 138, 61)),
           Expanded(
