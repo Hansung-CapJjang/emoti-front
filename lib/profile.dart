@@ -67,7 +67,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFDDE5B6),
+      backgroundColor: const Color(0xFFE9EBD9),
       appBar: AppBar(
         automaticallyImplyLeading: false,
         surfaceTintColor: Colors.transparent,
@@ -219,7 +219,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           borderRadius: BorderRadius.circular(10),
                           boxShadow: const [
                             BoxShadow(
-                              color: Colors.black26,
+                              color: Color(0x4D7E8565),
                               blurRadius: 4,
                               offset: Offset(5, 5),
                             ),

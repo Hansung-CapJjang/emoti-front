@@ -36,7 +36,7 @@ class MainScreenState extends State<MainScreen> {
         ),
         child:  BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: const Color(0xFFDCE6B7),
+        backgroundColor: const Color(0xFFC8CDB4),
         selectedItemColor: Colors.white,
         unselectedItemColor: const Color(0xFF474C34),
         showSelectedLabels: false,
