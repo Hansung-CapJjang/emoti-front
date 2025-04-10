@@ -100,9 +100,6 @@ flutter:
     - assets/images/reflectionstamp.png
     - assets/images/chatcounsel.png
     - assets/images/voicecounsel.png
-    - assets/images/counselor1.png
-    - assets/images/counselor2.png
-    - assets/images/counselor3.png
     - assets/data/chat_data.json
     - assets/data/user_data.json
     - assets/images/advisory_counselor.png
