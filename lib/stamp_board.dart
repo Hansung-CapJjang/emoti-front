@@ -13,37 +13,36 @@ class StampBoard extends StatefulWidget {
 
 class _StampBoardState extends State<StampBoard> {
   List<int> stampCounts = [1, 3, 5, 8];
-  late PageController _pageController;
+  PageController? _pageController;
   int currentLevel = 1;
   int currentShowLevel = 1;
-  List<String> userStamps = []; // 추가
+  List<String> userStamps = [];
 
   @override
   void initState() {
     super.initState();
-    _pageController = PageController(initialPage: currentShowLevel);
-    _loadUserData(); // 추가
+    _loadUserData();
   }
 
   @override
   void dispose() {
-    _pageController.dispose();
+    _pageController?.dispose();
     super.dispose();
   }
 
   void _nextLevel() {
     if (currentShowLevel < stampCounts.length - 1) {
-      _pageController.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
+      _pageController?.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
     }
   }
 
   void _prevLevel() {
     if (currentShowLevel > 0) {
-      _pageController.previousPage(duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
+      _pageController?.previousPage(duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
     }
   }
 
-  void _loadUserData() async { // 추가
+  void _loadUserData() async {
     final userEmail = Provider.of<UserProvider>(context, listen: false).email;
     final String jsonString = await rootBundle.loadString('assets/data/user_data.json');
     final List<dynamic> jsonData = json.decode(jsonString);
@@ -57,6 +56,12 @@ class _StampBoardState extends State<StampBoard> {
       setState(() {
         currentLevel = user['level'];
         userStamps = List<String>.from(user['stamp']);
+        currentShowLevel = currentLevel;
+        _pageController = PageController(initialPage: currentShowLevel-1);
+      });
+    } else {
+      setState(() {
+        _pageController = PageController(initialPage: currentShowLevel-1);
       });
     }
   }
@@ -86,7 +91,9 @@ class _StampBoardState extends State<StampBoard> {
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.71,
                   height: 185,
-                  child: PageView.builder(
+                  child: _pageController == null
+                    ? const Center(child: CircularProgressIndicator())
+                    :PageView.builder(
                     controller: _pageController,
                     itemCount: stampCounts.length,
                     onPageChanged: (index) {
@@ -108,6 +115,9 @@ class _StampBoardState extends State<StampBoard> {
                           rows.add(List.generate(end - i, (j) => i + j));
                         }
                       }
+
+                      int startIdx = index == 0 ? 0 : stampCounts.sublist(0, index).reduce((a, b) => a + b);
+
                       return Container(
                         margin: const EdgeInsets.symmetric(vertical: 8),
                         decoration: BoxDecoration(
@@ -123,6 +133,7 @@ class _StampBoardState extends State<StampBoard> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: row.map((stampIndex) {
+                                  int absoluteIndex = startIdx + stampIndex;
                                   return Stack(
                                     alignment: Alignment.center,
                                     children: [
@@ -134,10 +145,13 @@ class _StampBoardState extends State<StampBoard> {
                                           color: Color(0xFF798063),
                                         ),
                                       ),
-                                      Image.asset(
-                                        "assets/images/stamp${(stampIndex % 5) + 1}.png",
-                                        width: 70,
-                                      ),
+                                      if (absoluteIndex < userStamps.length)
+                                        Image.asset(
+                                          _getStampImageAsset(userStamps[absoluteIndex]),
+                                          width: 70,
+                                        )
+                                      else
+                                        const SizedBox(width: 70, height: 70),
                                     ],
                                   );
                                 }).toList(),
@@ -416,4 +430,21 @@ void _showPopupDialog(BuildContext context) {
       );
     },
   );
+}
+
+String _getStampImageAsset(String stampName) {
+  switch (stampName) {
+    case '희망':
+      return 'assets/images/hopestamp.png';
+    case '용기':
+      return 'assets/images/couragestamp.png';
+    case '결단':
+      return 'assets/images/determinationstamp.png';
+    case '성찰':
+      return 'assets/images/reflectionstamp.png';
+    case '회복':
+      return 'assets/images/recoverystamp.png';
+    default:
+      return '';
+  }
 }

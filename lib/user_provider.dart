@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class UserProvider with ChangeNotifier {
   String _nickname = "";
-  String _email = "bob_the_builder@example.com";
+  String _email = "alice123@example.com";
   String _gender = "";
   List _concerns = [];
 
