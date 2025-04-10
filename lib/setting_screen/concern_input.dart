@@ -112,7 +112,7 @@ class _ConcernInputScreenState extends State<ConcernInputScreen> with SingleTick
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFE3E7C0), 
+      backgroundColor: const Color(0xFFE9EBD9),
       appBar: AppBar(
         title: const Text('세부 정보', style: TextStyle(
           fontFamily: 'DungGeunMo',color: Colors.black87)),

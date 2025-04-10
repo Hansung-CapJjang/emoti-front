@@ -202,7 +202,7 @@ class _MainContentState extends State<MainContent> {
                       // 도장판 제출 버튼 클릭 시 동작
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF798063).withOpacity(0.56), // 배경색
+                      backgroundColor: const Color.fromRGBO(110, 120, 91, 0.56),// 배경색
                       foregroundColor: const Color(0xFF454545), // 글씨색
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),
