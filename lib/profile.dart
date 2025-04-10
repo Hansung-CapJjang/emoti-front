@@ -82,12 +82,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
         centerTitle: true,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.question_mark, color: Colors.black54),
-            onPressed: () {},
-          ),
-        ],
+        // actions: [
+        //   IconButton(
+        //     icon: const Icon(Icons.question_mark, color: Colors.black54),
+        //     onPressed: () {},
+        //   ),
+        // ],
       ),
       body: Column(
         children: [
@@ -148,7 +148,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               children: [
                 const Row(
                   children: [
-                    const Padding(
+                    Padding(
                       padding: EdgeInsets.only(left: 18),
                       child: Text(
                         'Lv.1',
@@ -160,8 +160,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                       ),
                     ),
-                    const Spacer(),
-                    const Padding(
+                    Spacer(),
+                    Padding(
                       padding: EdgeInsets.only(right: 18),
                       child: Text(
                         '60%',

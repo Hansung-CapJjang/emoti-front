@@ -46,7 +46,7 @@
 		</data>
 		<key>Frameworks/App.framework/App</key>
 		<data>
-		uzv4Q8fY0u1ZpphkAo4Bh159jb8=
+		4p192mBTCTkQIyAYVE4dNbzBrjI=
 		</data>
 		<key>Frameworks/App.framework/Info.plist</key>
 		<data>
@@ -54,15 +54,15 @@
 		</data>
 		<key>Frameworks/App.framework/_CodeSignature/CodeResources</key>
 		<data>
-		DJtce6WKSCvVYyWSKYY89U05UBE=
+		wxI63LyU2LJaYJB/vYE3MhO/pyA=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.bin</key>
 		<data>
-		Vc/CgjIMlNh6AejUFtjggdDiU3Q=
+		dEE/uCT9hSaKyo2n48O5IeH3B5U=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.json</key>
 		<data>
-		5pRvxexyt0+zmN6+z0mrJTMUgpA=
+		daamkfXJyOGjFaTsBzYypPbR8qQ=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/FontManifest.json</key>
 		<data>
@@ -96,29 +96,29 @@
 		<data>
 		GvCgxGDND+uskU4vSpOsU1yesqQ=
 		</data>
+		<key>Frameworks/App.framework/flutter_assets/assets/images/baebse1_shadow.png</key>
+		<data>
+		GEQXj/qxgQQfvthY//YeewgnMDU=
+		</data>
 		<key>Frameworks/App.framework/flutter_assets/assets/images/baebse2.png</key>
 		<data>
 		BSWJaPx/BX/SXCCFiqqtIHzABIg=
+		</data>
+		<key>Frameworks/App.framework/flutter_assets/assets/images/baebse2_shadow.png</key>
+		<data>
+		GrMmYO8DWlay1dH9Ehgk0mR0mZs=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/assets/images/baebse3.png</key>
 		<data>
 		SbVJLq3UEP/TaNk9pKU91WnE49s=
 		</data>
+		<key>Frameworks/App.framework/flutter_assets/assets/images/baebse3_shadow.png</key>
+		<data>
+		HhYyRjsSYEyrX8lqMcBd9aABQxo=
+		</data>
 		<key>Frameworks/App.framework/flutter_assets/assets/images/chatcounsel.png</key>
 		<data>
 		fsr4DyC9NRsRy7FhfImvLarxHV4=
-		</data>
-		<key>Frameworks/App.framework/flutter_assets/assets/images/counselor1.png</key>
-		<data>
-		jcc74O3s3Ym/3hM9583rIvKAjgg=
-		</data>
-		<key>Frameworks/App.framework/flutter_assets/assets/images/counselor2.png</key>
-		<data>
-		Clo6gdn2xyg3IM/JCWh3o8dxS4Q=
-		</data>
-		<key>Frameworks/App.framework/flutter_assets/assets/images/counselor3.png</key>
-		<data>
-		R6dRUS8uueztud9Kpgb1/LE18Gk=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/assets/images/couragestamp.png</key>
 		<data>
@@ -206,7 +206,7 @@
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/kernel_blob.bin</key>
 		<data>
-		BaRqEoLTpsrFNbaRBMlzGb0AOgE=
+		MKIKIHTbOtCOE0mOqgCIjszQM6Y=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
 		<data>
@@ -569,7 +569,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			pl4RGd4NUaPU++Y2MvJsVKWAGA35odRchnde0HDrViA=
+			jWP8zL2GrLpkg0NfQPs5hAns2r8KvLYDUj0aSFbadQw=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/Info.plist</key>
@@ -583,21 +583,21 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			5v/L1YtvKemTAgXwVRby25N69rdvU/dcbMTmxu9Bm7c=
+			5vtm/nHg8M8evGQm52YfHvIodLeiqrVyfL6RQIq3gyw=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.bin</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			KasNwZSrDhdDt9g2uzotsS3sp4OSBn1ozyIVTOn9rKc=
+			EFnKbi9Ia9eH0IreQBNZfCnn5cdejwBuTQuOIwGdjv4=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			mplamSynU8qmdaqSRfwjYcaGPKk/8ZMYC79ocXRTdNg=
+			y3N4pD0Ibs6D2A6rXFc18kliHFe2+2SE9R21XrWJtc0=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/FontManifest.json</key>
@@ -656,11 +656,25 @@
 			h/Y097zsc+xkFtvOWYas8+HfZFjBYvJcf5+pCgC9CJ4=
 			</data>
 		</dict>
+		<key>Frameworks/App.framework/flutter_assets/assets/images/baebse1_shadow.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			TlAhDNeJ/XJmLrmqa6tWcB94kJXv2SuzYcNPi+CnUkY=
+			</data>
+		</dict>
 		<key>Frameworks/App.framework/flutter_assets/assets/images/baebse2.png</key>
 		<dict>
 			<key>hash2</key>
 			<data>
 			io0Osx6W46nwO/wUvYJH0ZguGLv9sC4LaeFQkDiDxQE=
+			</data>
+		</dict>
+		<key>Frameworks/App.framework/flutter_assets/assets/images/baebse2_shadow.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			zCBHRNVRalkDP6hJaRZ1ssdezt22/+Wnu2Gl3YNf44Q=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/assets/images/baebse3.png</key>
@@ -670,32 +684,18 @@
 			D6iSqsCbUCcgQT0+a7BcoZCKZGg8+hBIYFq0Dt1h5Rs=
 			</data>
 		</dict>
+		<key>Frameworks/App.framework/flutter_assets/assets/images/baebse3_shadow.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			FnWuYbeNwuPMiowhYm58WlUFjdsQk0yWcEVaAQaS6ZI=
+			</data>
+		</dict>
 		<key>Frameworks/App.framework/flutter_assets/assets/images/chatcounsel.png</key>
 		<dict>
 			<key>hash2</key>
 			<data>
 			INt0hn9ZzX3mzdftRfdni9YXaz9SI1jXqnWIo3O5RCc=
-			</data>
-		</dict>
-		<key>Frameworks/App.framework/flutter_assets/assets/images/counselor1.png</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			Nj3PqsQvggPhHlEL272EaOS/u2w+YmkrlHPsyfWTC5o=
-			</data>
-		</dict>
-		<key>Frameworks/App.framework/flutter_assets/assets/images/counselor2.png</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			1qqhCMoRBoWeErq9aTA5jTWdh/jtSIHGqfM657z4HSE=
-			</data>
-		</dict>
-		<key>Frameworks/App.framework/flutter_assets/assets/images/counselor3.png</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			B6ucWRIbge0chaNC2gnyLi4Ga7jQeYKWDvNiwjGNYMo=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/assets/images/couragestamp.png</key>
@@ -849,7 +849,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			pnKI+8mIa6LRN/pDa8WgAWWt0OUvkkzupW12dGbgoWA=
+			8eQvb53LR1yX5IwEMcU5mZEDirvu8PIMrx3TT93bpas=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>

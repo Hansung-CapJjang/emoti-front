@@ -22,6 +22,105 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isPetSelected = true;
   int _selectedIndex = 0; // 메인 화면: 0, 도장 화면: 1
 
+  void _showLevelDialog(BuildContext parentContext) {
+  showDialog(
+    context: parentContext,
+    builder: (BuildContext dialogContext) => AlertDialog(
+      title: const Text( 
+        '레벨 별 펫 도감',
+        style: TextStyle(fontFamily: 'DungGeunMo'),
+      ),
+      shape: RoundedRectangleBorder(
+        side: const BorderSide(color: Colors.black, width: 2),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      content: SizedBox(
+        width: double.maxFinite,
+        height: 350,
+        child: ListView(
+          scrollDirection: Axis.vertical,
+          children: [
+            _levelPetImageRow(
+              level: 1,
+              imagePath1: 'assets/images/baebse1_shadow.png',
+              imagePath2: 'assets/images/baebse1_shadow.png',
+            ),
+            _levelPetImageRow(
+              level: 2,
+              imagePath1: 'assets/images/baebse2_shadow.png',
+              imagePath2: 'assets/images/baebse2_shadow.png',
+            ),
+            _levelPetImageRow(
+              level: 3,
+              imagePath1: 'assets/images/baebse3_shadow.png',
+              imagePath2: 'assets/images/baebse3_shadow.png',
+            ),
+            _levelPetImageRow(
+              level: 4,
+              imagePath1: 'assets/images/baebse3_shadow.png',
+              imagePath2: 'assets/images/baebse3_shadow.png',
+            ),
+            _levelPetImageRow(
+              level: 5,
+              imagePath1: 'assets/images/baebse3_shadow.png',
+              imagePath2: 'assets/images/baebse3_shadow.png',
+            ),
+          ],
+        ),
+      ),
+      actions: [
+  Center( // 가운데 정렬
+    child: ElevatedButton(
+      onPressed: () => Navigator.of(dialogContext).pop(),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: const Color(0xFF798063),
+        foregroundColor: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+          side: const BorderSide(color: Colors.black, width: 1.5),
+        ),
+      ),
+      child: const Text(
+        '확인',
+        style: TextStyle(fontSize: 16, fontFamily: 'DungGeunMo'),
+      ),
+    ),
+  )
+],
+    ),
+  );
+}
+
+
+  Widget _levelPetImageRow({
+  required int level,
+  required String imagePath1,
+  required String imagePath2,
+}) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 5.0),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Text('레벨 $level',
+            style: const TextStyle(fontFamily: 'DungGeunMo', fontSize: 18)),
+        const SizedBox(height: 8),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(imagePath1, width: 80, height: 80, fit: BoxFit.contain),
+            const SizedBox(width: 20),
+            Image.asset(imagePath2, width: 80, height: 80, fit: BoxFit.contain),
+          ],
+        ),
+
+        Divider(indent: 10, endIndent: 10, thickness: 2,)
+      ],
+    ),
+  );
+}
+
+
   void _onTabTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -33,6 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
       _selectedIndex = index;
     });
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -111,12 +211,16 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ],
                   ),
-                  const Padding(
-                    padding: EdgeInsets.only(bottom: 4),
-                    child: Icon(
-                      Icons.shopping_cart,
-                      color: Colors.black45,
-                      size: 28,
+                  // 👉 수정된 부분: IconButton으로 바꾸고 onPressed에 다이얼로그 연결
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 4),
+                    child: IconButton(
+                      icon: const Icon(
+                        Icons.question_mark,
+                        color: Colors.black45,
+                        size: 25,
+                      ),
+                      onPressed: () => _showLevelDialog(context),
                     ),
                   ),
                 ],
