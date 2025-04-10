@@ -85,6 +85,9 @@ flutter:
     - assets/images/baebse1.png
     - assets/images/baebse2.png
     - assets/images/baebse3.png
+    - assets/images/baebse1_shadow.png
+    - assets/images/baebse2_shadow.png
+    - assets/images/baebse3_shadow.png
     - assets/images/egg.png
     - assets/images/emoti_character.png
     - assets/images/homeicon.png

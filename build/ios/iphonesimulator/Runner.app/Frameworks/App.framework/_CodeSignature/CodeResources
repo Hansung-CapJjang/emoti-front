@@ -10,11 +10,11 @@
 		</data>
 		<key>flutter_assets/AssetManifest.bin</key>
 		<data>
-		Vc/CgjIMlNh6AejUFtjggdDiU3Q=
+		dEE/uCT9hSaKyo2n48O5IeH3B5U=
 		</data>
 		<key>flutter_assets/AssetManifest.json</key>
 		<data>
-		5pRvxexyt0+zmN6+z0mrJTMUgpA=
+		daamkfXJyOGjFaTsBzYypPbR8qQ=
 		</data>
 		<key>flutter_assets/FontManifest.json</key>
 		<data>
@@ -48,29 +48,29 @@
 		<data>
 		GvCgxGDND+uskU4vSpOsU1yesqQ=
 		</data>
+		<key>flutter_assets/assets/images/baebse1_shadow.png</key>
+		<data>
+		GEQXj/qxgQQfvthY//YeewgnMDU=
+		</data>
 		<key>flutter_assets/assets/images/baebse2.png</key>
 		<data>
 		BSWJaPx/BX/SXCCFiqqtIHzABIg=
+		</data>
+		<key>flutter_assets/assets/images/baebse2_shadow.png</key>
+		<data>
+		GrMmYO8DWlay1dH9Ehgk0mR0mZs=
 		</data>
 		<key>flutter_assets/assets/images/baebse3.png</key>
 		<data>
 		SbVJLq3UEP/TaNk9pKU91WnE49s=
 		</data>
+		<key>flutter_assets/assets/images/baebse3_shadow.png</key>
+		<data>
+		HhYyRjsSYEyrX8lqMcBd9aABQxo=
+		</data>
 		<key>flutter_assets/assets/images/chatcounsel.png</key>
 		<data>
 		fsr4DyC9NRsRy7FhfImvLarxHV4=
-		</data>
-		<key>flutter_assets/assets/images/counselor1.png</key>
-		<data>
-		jcc74O3s3Ym/3hM9583rIvKAjgg=
-		</data>
-		<key>flutter_assets/assets/images/counselor2.png</key>
-		<data>
-		Clo6gdn2xyg3IM/JCWh3o8dxS4Q=
-		</data>
-		<key>flutter_assets/assets/images/counselor3.png</key>
-		<data>
-		R6dRUS8uueztud9Kpgb1/LE18Gk=
 		</data>
 		<key>flutter_assets/assets/images/couragestamp.png</key>
 		<data>
@@ -158,7 +158,7 @@
 		</data>
 		<key>flutter_assets/kernel_blob.bin</key>
 		<data>
-		BaRqEoLTpsrFNbaRBMlzGb0AOgE=
+		MKIKIHTbOtCOE0mOqgCIjszQM6Y=
 		</data>
 		<key>flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
 		<data>
@@ -179,14 +179,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			KasNwZSrDhdDt9g2uzotsS3sp4OSBn1ozyIVTOn9rKc=
+			EFnKbi9Ia9eH0IreQBNZfCnn5cdejwBuTQuOIwGdjv4=
 			</data>
 		</dict>
 		<key>flutter_assets/AssetManifest.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			mplamSynU8qmdaqSRfwjYcaGPKk/8ZMYC79ocXRTdNg=
+			y3N4pD0Ibs6D2A6rXFc18kliHFe2+2SE9R21XrWJtc0=
 			</data>
 		</dict>
 		<key>flutter_assets/FontManifest.json</key>
@@ -245,11 +245,25 @@
 			h/Y097zsc+xkFtvOWYas8+HfZFjBYvJcf5+pCgC9CJ4=
 			</data>
 		</dict>
+		<key>flutter_assets/assets/images/baebse1_shadow.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			TlAhDNeJ/XJmLrmqa6tWcB94kJXv2SuzYcNPi+CnUkY=
+			</data>
+		</dict>
 		<key>flutter_assets/assets/images/baebse2.png</key>
 		<dict>
 			<key>hash2</key>
 			<data>
 			io0Osx6W46nwO/wUvYJH0ZguGLv9sC4LaeFQkDiDxQE=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/images/baebse2_shadow.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			zCBHRNVRalkDP6hJaRZ1ssdezt22/+Wnu2Gl3YNf44Q=
 			</data>
 		</dict>
 		<key>flutter_assets/assets/images/baebse3.png</key>
@@ -259,32 +273,18 @@
 			D6iSqsCbUCcgQT0+a7BcoZCKZGg8+hBIYFq0Dt1h5Rs=
 			</data>
 		</dict>
+		<key>flutter_assets/assets/images/baebse3_shadow.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			FnWuYbeNwuPMiowhYm58WlUFjdsQk0yWcEVaAQaS6ZI=
+			</data>
+		</dict>
 		<key>flutter_assets/assets/images/chatcounsel.png</key>
 		<dict>
 			<key>hash2</key>
 			<data>
 			INt0hn9ZzX3mzdftRfdni9YXaz9SI1jXqnWIo3O5RCc=
-			</data>
-		</dict>
-		<key>flutter_assets/assets/images/counselor1.png</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			Nj3PqsQvggPhHlEL272EaOS/u2w+YmkrlHPsyfWTC5o=
-			</data>
-		</dict>
-		<key>flutter_assets/assets/images/counselor2.png</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			1qqhCMoRBoWeErq9aTA5jTWdh/jtSIHGqfM657z4HSE=
-			</data>
-		</dict>
-		<key>flutter_assets/assets/images/counselor3.png</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			B6ucWRIbge0chaNC2gnyLi4Ga7jQeYKWDvNiwjGNYMo=
 			</data>
 		</dict>
 		<key>flutter_assets/assets/images/couragestamp.png</key>
@@ -438,7 +438,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			pnKI+8mIa6LRN/pDa8WgAWWt0OUvkkzupW12dGbgoWA=
+			8eQvb53LR1yX5IwEMcU5mZEDirvu8PIMrx3TT93bpas=
 			</data>
 		</dict>
 		<key>flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
