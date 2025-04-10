@@ -1,0 +1,1 @@
+ /Users/hongserin/Downloads/emoti-front-color-update/.dart_tool/flutter_build/eeeb080ecde9647ca8d2679695ea95b5/native_assets.json: 

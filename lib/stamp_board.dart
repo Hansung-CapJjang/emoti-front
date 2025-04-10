@@ -69,7 +69,7 @@ class _StampBoardState extends State<StampBoard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFDCE6B7),
+      backgroundColor: const Color(0xFFE9EBD9),
       body: Column(
         children: [
           const SizedBox(height: 30),
