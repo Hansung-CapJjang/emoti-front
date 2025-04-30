@@ -170,17 +170,18 @@ class _MainContentState extends State<MainContent> {
               ),
 
               // 캐릭터 이미지 위치 조정
+              const SizedBox(height: 20,),
               Align(
                 alignment: Alignment.center,
                 child: Transform.translate(
                   offset: const Offset(0, -10),
                   child: Image.asset(
                     characterIamgePath,
-                    width: 230,
+                    width: 200,
                   ),
                 ),
               ),
-
+              const SizedBox(height: 20,),
               Transform.translate(
                 offset: const Offset(120, -80),
                 child: GestureDetector(
