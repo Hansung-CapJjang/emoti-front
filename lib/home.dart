@@ -42,31 +42,34 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             _levelPetImageRow(
               level: 1,
-              imagePath1: 'assets/images/baebse1_shadow.png',
-              imagePath2: 'assets/images/baebse1_shadow.png',
+              imagePath1: 'assets/images/egg_shadow.png',
+              imagePath2: 'assets/images/egg_shadow.png',
             ),
             _levelPetImageRow(
               level: 2,
-              imagePath1: 'assets/images/baebse2_shadow.png',
-              imagePath2: 'assets/images/baebse2_shadow.png',
+              imagePath1: 'assets/images/baebse1_shadow.png',
+              imagePath2: 'assets/images/penguin1_shadow.png',
             ),
             _levelPetImageRow(
               level: 3,
-              imagePath1: 'assets/images/baebse3_shadow.png',
-              imagePath2: 'assets/images/baebse3_shadow.png',
+              imagePath1: 'assets/images/baebse2_shadow.png',
+              imagePath2: 'assets/images/penguin2_shadow.png',
             ),
             _levelPetImageRow(
               level: 4,
               imagePath1: 'assets/images/baebse3_shadow.png',
-              imagePath2: 'assets/images/baebse3_shadow.png',
+              imagePath2: 'assets/images/penguin3_shadow.png',
             ),
             _levelPetImageRow(
               level: 5,
-              imagePath1: 'assets/images/baebse3_shadow.png',
-              imagePath2: 'assets/images/baebse3_shadow.png',
+              imagePath1: 'assets/images/baebse4_shadow.png',
+              imagePath2: 'assets/images/penguin4_shadow.png',
             ),
+            
           ],
+          
         ),
+        
       ),
       actions: [
   Center( // 가운데 정렬
@@ -91,7 +94,6 @@ class _HomeScreenState extends State<HomeScreen> {
   );
 }
 
-
   Widget _levelPetImageRow({
   required int level,
   required String imagePath1,
@@ -113,8 +115,8 @@ class _HomeScreenState extends State<HomeScreen> {
             Image.asset(imagePath2, width: 80, height: 80, fit: BoxFit.contain),
           ],
         ),
-
-        Divider(indent: 10, endIndent: 10, thickness: 2,)
+        const SizedBox(height: 10),
+        const Divider(indent: 10, endIndent: 10, thickness: 2,)
       ],
     ),
   );
