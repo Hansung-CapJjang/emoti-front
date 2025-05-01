@@ -38,7 +38,7 @@
 		</data>
 		<key>Modules/kakao_flutter_sdk_common.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		NFh36Ts6YoZiAvCHLPV46WjH3e4=
+		IPDmXwuK+0NgSsQMzPnLs8/HyQk=
 		</data>
 		<key>Modules/kakao_flutter_sdk_common.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -50,7 +50,7 @@
 		</data>
 		<key>Modules/kakao_flutter_sdk_common.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		BpysyNsJbCarrFBLlyHWqV54VJ4=
+		xjCK0rO4glAUJLhKVc58MJw335w=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -120,7 +120,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			Hqrc6HLVjNeZy7hQtziePJuq1VWKBu/BedS1KNUwB7s=
+			0GLUAN/q2yRszJpbvAqHXLzTKiPrKnw2n2o8KnfpYak=
 			</data>
 		</dict>
 		<key>Modules/kakao_flutter_sdk_common.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
@@ -141,7 +141,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			EEH37KOvtj7SgRGfs83wUSwXGyiWnSct0DxcjfZECnc=
+			PBC8kD0vWcHxJftl8quBPe6U9PB7KBUje6n215Q7Ggw=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

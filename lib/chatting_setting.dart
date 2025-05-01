@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'user_provider.dart';
 import 'voice_chat.dart';
 import 'text_chat.dart';
+import 'counsel_confirm_dialog.dart';
 
 class CounselorSelectionPage extends StatefulWidget {
   @override
@@ -186,15 +187,30 @@ _buildMethodButton('채팅', Image.asset('assets/images/chatcounsel.png', width:
             Center(
               child: ElevatedButton(
                 onPressed: () {
-                  final screen = selectedMethod == 'voice'
-                      ? VoiceChatScreen(counselorType: selectedCounselor)
-                      : TextChatScreen(counselorType: selectedCounselor);
+  showDialog(
+    context: context,
+    builder: (context) {
+      return ConfirmDialog(
+        counselorType: selectedCounselor,
+        method: selectedMethod,
+        onConfirm: () {
+          Navigator.pop(context); // 다이얼로그 닫기
+          final screen = selectedMethod == 'voice'
+              ? VoiceChatScreen(counselorType: selectedCounselor)
+              : TextChatScreen(counselorType: selectedCounselor);
 
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => screen),
-                  );
-                },
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => screen),
+          );
+        },
+        onCancel: () {
+          Navigator.pop(context); // 다이얼로그 닫기
+        },
+      );
+    },
+  );
+},
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromARGB(255, 110, 120, 91),
                   padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 13),
