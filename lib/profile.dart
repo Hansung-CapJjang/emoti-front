@@ -66,6 +66,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProvider>(context);
+
+    final List<int> stampCounts = [1, 3, 5, 8];
+final int level = user.level;
+final int totalStamps = user.stamp.length;
+final int maxStampsThisLevel = stampCounts[level - 1];
+
+final int filledStampsThisLevel = () {
+  if (level == 1) return totalStamps;
+  final prevSum = stampCounts.sublist(0, level - 1).reduce((a, b) => a + b);
+  return (totalStamps - prevSum).clamp(0, maxStampsThisLevel);
+}();
+
+final String stampProgressText = '$filledStampsThisLevel/$maxStampsThisLevel';
+
+
+
     return Scaffold(
       backgroundColor: const Color(0xFFE9EBD9),
       appBar: AppBar(
@@ -131,10 +148,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         )
                       ],
                     ),
-                    const Text(
-                      '도장판 5/10',
-                      style: TextStyle(fontFamily: 'DungGeunMo', fontSize: 14, color: Colors.black54),
-                    ),
+                    Text(
+  '도장 현황 $stampProgressText',
+  style: const TextStyle(
+    fontFamily: 'DungGeunMo',
+    fontSize: 14,
+    color: Colors.black54,
+  ),
+),
+
                   ],
                 )
               ],

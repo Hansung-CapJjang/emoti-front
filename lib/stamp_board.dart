@@ -53,17 +53,25 @@ class _StampBoardState extends State<StampBoard> {
     );
 
     if (user.isNotEmpty) {
-      setState(() {
-        currentLevel = user['level'];
-        userStamps = List<String>.from(user['stamp']);
-        currentShowLevel = currentLevel;
-        _pageController = PageController(initialPage: currentShowLevel-1);
-      });
-    } else {
-      setState(() {
-        _pageController = PageController(initialPage: currentShowLevel-1);
-      });
-    }
+  final userProvider = Provider.of<UserProvider>(context, listen: false);
+
+  setState(() {
+    currentLevel = user['level'];
+    userStamps = List<String>.from(user['stamp']);
+    currentShowLevel = currentLevel;
+    _pageController = PageController(initialPage: currentShowLevel - 1);
+
+    // 이 안에 있어도 되고 밖으로 빼도 됨 (setState는 UI만 바꿈)
+    userProvider.updateLevel(currentLevel);
+    userProvider.updateStamp(userStamps);
+  });
+} else {
+  setState(() {
+    _pageController = PageController(initialPage: currentShowLevel - 1);
+  });
+}
+
+
   }
 
   @override
@@ -397,6 +405,7 @@ void _showPopupDialog(BuildContext context) {
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
+                  fontFamily: 'DungGeunMo',
                 ),
               ),
               const SizedBox(height: 8),
