@@ -177,6 +177,7 @@ class _TextChatScreenState extends State<TextChatScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFFE9EBD9),
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: Text(
