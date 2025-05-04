@@ -18,6 +18,9 @@ class MainContent extends StatefulWidget {
 }
 
 class _MainContentState extends State<MainContent> {
+  final List<int> stampCounts = [1, 3, 5, 8]; // 레벨별 필요 도장 수
+double characterProgress = 0.0;             // 퍼센트 저장용
+
   // 랜덤 문구 리스트
   final List<String> speechTexts = [
     "How can I help you?",
@@ -46,20 +49,22 @@ class _MainContentState extends State<MainContent> {
     );
 
     if (user.isNotEmpty) {
-      setState(() {
-        if (user['level'] == 1) {
-          pet = 'Egg';
-          level = user['level'];
-          characterIamgePath = 'assets/images/egg.png';
-        } else if (user['level'] != 1) { // else
-          pet = user['pet'];
-          level = user['level'];
-          String imageName = '${pet == "뱁새" ? "baebse" : "penguin"}${level-1}.png'; //'baebse1.png';
-          characterIamgePath = 'assets/images/$imageName';
-        }
-      });
-    }
+      int stampCount = List<String>.from(user['stamp']).length;
+      int userLevel = user['level'];
+      int maxStampForLevel = stampCounts[userLevel - 1];
+      int prevSum = userLevel == 1 ? 0 : stampCounts.sublist(0, userLevel - 1).reduce((a, b) => a + b);
+      int currentLevelStamps = stampCount - prevSum;
+      double progressPercent = (currentLevelStamps / maxStampForLevel).clamp(0.0, 1.0);
+
+    setState(() {
+      level = userLevel;
+      pet = userLevel == 1 ? 'Egg' : user['pet'];
+      String imageName = '${pet == "뱁새" ? "baebse" : "penguin"}${level - 1}.png';
+      characterIamgePath = 'assets/images/$imageName';
+      characterProgress = progressPercent;
+    });
   }
+}
 
   @override
   void initState() {
@@ -74,6 +79,7 @@ class _MainContentState extends State<MainContent> {
 
   @override
   Widget build(BuildContext context) {
+    double barWidth = MediaQuery.of(context).size.width * 0.7;
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -120,14 +126,16 @@ class _MainContentState extends State<MainContent> {
                           alignment: Alignment.centerLeft,
                           children: [
                             Container(
+                              width: barWidth,
                               height: 14,
                               decoration: BoxDecoration(
                                 color: const Color(0xFF798063).withOpacity(0.56),
                                 borderRadius: BorderRadius.circular(7),
                               ),
                             ),
+
                             Container(
-                              width: MediaQuery.of(context).size.width * 0.42,
+                              width: barWidth * characterProgress,
                               height: 14,
                               decoration: BoxDecoration(
                                 color: const Color(0xFF56644B),
@@ -138,14 +146,15 @@ class _MainContentState extends State<MainContent> {
                         ),
                       ),
                       const SizedBox(width: 10),
-                      const Text(
-                        '60%',
+                      Text(
+                        '${(characterProgress * 100).round()}%',
                         style: TextStyle(
-                          fontSize: 20,
-                          fontFamily: 'DungGeunMo',
-                          color: Color(0xFF5A6140),
+                        fontSize: 20,
+                        fontFamily: 'DungGeunMo',
+                        color: Color(0xFF5A6140),
                         ),
                       ),
+
                     ],
                   ),
                 ),

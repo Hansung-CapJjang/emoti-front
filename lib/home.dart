@@ -72,24 +72,24 @@ class _HomeScreenState extends State<HomeScreen> {
         
       ),
       actions: [
-  Center( // 가운데 정렬
-    child: ElevatedButton(
-      onPressed: () => Navigator.of(dialogContext).pop(),
-      style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xFF798063),
-        foregroundColor: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-          side: const BorderSide(color: Colors.black, width: 1.5),
-        ),
-      ),
-      child: const Text(
-        '확인',
-        style: TextStyle(fontSize: 16, fontFamily: 'DungGeunMo'),
-      ),
-    ),
-  )
-],
+        Center( // 가운데 정렬
+          child: ElevatedButton(
+            onPressed: () => Navigator.of(dialogContext).pop(),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFF798063),
+              foregroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+                side: const BorderSide(color: Colors.black, width: 1.5),
+              ),
+            ),
+           child: const Text(
+              '확인',
+              style: TextStyle(fontSize: 16, fontFamily: 'DungGeunMo'),
+            ),
+          ),
+        )
+      ],
     ),
   );
 }

@@ -69,17 +69,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final user = Provider.of<UserProvider>(context);
 
     final List<int> stampCounts = [1, 3, 5, 8];
-final int level = user.level;
-final int totalStamps = user.stamp.length;
-final int maxStampsThisLevel = stampCounts[level - 1];
+    final int level = user.level;
+    final int totalStamps = user.stamp.length;
 
-final int filledStampsThisLevel = () {
-  if (level == 1) return totalStamps;
-  final prevSum = stampCounts.sublist(0, level - 1).reduce((a, b) => a + b);
-  return (totalStamps - prevSum).clamp(0, maxStampsThisLevel);
-}();
+    final int maxStampsThisLevel = stampCounts[level - 1];
 
-final String stampProgressText = '$filledStampsThisLevel/$maxStampsThisLevel';
+    final int filledStampsThisLevel = () {
+      if (level == 1) return totalStamps;
+      final prevSum = stampCounts.sublist(0, level - 1).reduce((a, b) => a + b);
+      return (totalStamps - prevSum).clamp(0, maxStampsThisLevel);
+    }();
+
+    final String stampProgressText = '$filledStampsThisLevel/$maxStampsThisLevel';
+
+    final double progressPercent =
+      maxStampsThisLevel > 0 ? filledStampsThisLevel / maxStampsThisLevel : 0.0;
+    final String percentText = '${(progressPercent * 100).round()}%';
 
 
 
@@ -148,14 +153,14 @@ final String stampProgressText = '$filledStampsThisLevel/$maxStampsThisLevel';
                         )
                       ],
                     ),
-                    Text(
-  '도장 현황 $stampProgressText',
-  style: const TextStyle(
-    fontFamily: 'DungGeunMo',
-    fontSize: 14,
-    color: Colors.black54,
-  ),
-),
+                        Text(
+                          '도장 현황 $stampProgressText',
+                          style: const TextStyle(
+                            fontFamily: 'DungGeunMo',
+                            fontSize: 14,
+                            color: Colors.black54,
+                          ),
+                        ),
 
                   ],
                 )
@@ -168,12 +173,12 @@ final String stampProgressText = '$filledStampsThisLevel/$maxStampsThisLevel';
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const Row(
+                Row(
                   children: [
                     Padding(
                       padding: EdgeInsets.only(left: 18),
                       child: Text(
-                        'Lv.1',
+                        'Lv.$level',
                         style: TextStyle(
                           fontFamily: 'DungGeunMo',
                           fontSize: 17,
@@ -186,7 +191,7 @@ final String stampProgressText = '$filledStampsThisLevel/$maxStampsThisLevel';
                     Padding(
                       padding: EdgeInsets.only(right: 18),
                       child: Text(
-                        '60%',
+                        percentText, // ← 이건 맞는 코드입니다
                         style: TextStyle(
                           fontFamily: 'DungGeunMo',
                           fontSize: 17,
@@ -194,16 +199,18 @@ final String stampProgressText = '$filledStampsThisLevel/$maxStampsThisLevel';
                           color: Color.fromARGB(255, 87, 99, 43),
                         ),
                       ),
+
+
                     ),
                   ],
                 ),
                 const SizedBox(height: 5),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: const SizedBox(
+                  child: SizedBox(
                     width: 300,
                     child: LinearProgressIndicator(
-                      value: 0.6,
+                      value: progressPercent,
                       minHeight: 15,
                       backgroundColor: Color.fromARGB(136, 119, 137, 60),
                       color: Color.fromARGB(255, 66, 75, 34),

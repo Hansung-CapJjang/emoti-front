@@ -15,10 +15,8 @@ class GenderInputScreen extends StatefulWidget {
 
 class _GenderInputScreenState extends State<GenderInputScreen> {
 
-// 성별 정보 저장하고 고민 세부 사항 설정 페이지로 이동
-void _selectGenderAndProceed(String gender) { // async {
-    // await _sendDataToServer(context.watch<UserProvider>().nickname, gender); // 서버로 이름 + 성별 저장
-    // ConcernInputScreen으로 이동할 때 name과 gender 함께 전달
+
+void _selectGenderAndProceed(String gender) {
     Provider.of<UserProvider>(navigatorKey.currentContext!, listen: false).updateGender(gender);
     Navigator.push(
       context,
@@ -29,13 +27,13 @@ void _selectGenderAndProceed(String gender) { // async {
   }
 
   Future<void> _sendDataToServer(String name, String gender) async {
-    const String apiUrl = ''; // 
+    const String apiUrl = '';  
 
     try {
       final response = await http.post(
         Uri.parse(apiUrl),
         headers: {"Content-Type": "application/json"},
-        body: jsonEncode({"name": name, "gender": gender}), // JSON으로 전송
+        body: jsonEncode({"name": name, "gender": gender}), 
       );
 
       if (response.statusCode == 200) {
