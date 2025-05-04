@@ -26,7 +26,7 @@ class ConfirmDialog extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            '$counselorType ${method == 'voice' ? '채팅 상담으로' : '음성 상담으로'} \n진행하시겠습니까?',
+            '$counselorType ${method == 'voice' ? '음성 상담으로' : '채팅 상담으로'} \n진행하시겠습니까?',
             textAlign: TextAlign.center,
             style: const TextStyle(
               fontFamily: 'DungGeunMo',

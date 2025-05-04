@@ -42,7 +42,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     super.initState();
     notificationService = NotificationService();
     _loadChatHistory();
+    _loadUserData(); // ← 이 줄이 꼭 있어야 사용자 데이터가 반영됩니다.
   }
+
 
   Future<void> _loadChatHistory() async {
     final String jsonString = await rootBundle.loadString('assets/data/chat_data.json');
@@ -63,6 +65,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
       chatRecords = records;
     });
   }
+
+  Future<void> _loadUserData() async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    final String jsonString = await rootBundle.loadString('assets/data/user_data.json');
+    final List<dynamic> jsonData = json.decode(jsonString);
+
+    final user = jsonData.cast<Map<String, dynamic>>().firstWhere(
+      (u) => u['email'] == userProvider.email,
+      orElse: () => {},
+    );
+
+  if (user.isNotEmpty) {
+    userProvider.updateGender(user['gender']);
+    userProvider.updateConcerns(List<String>.from(user['concerns']));
+    userProvider.updateLevel(user['level']);
+    userProvider.updateStamp(List<String>.from(user['stamp']));
+  }
+}
+
+
 
   @override
   Widget build(BuildContext context) {
