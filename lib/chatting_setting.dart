@@ -179,7 +179,7 @@ class _CounselorSelectionPageState extends State<CounselorSelectionPage> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 _buildMethodButton('음성', Image.asset('assets/images/voicecounsel.png', width: 24, height: 24), 'voice'),
-_buildMethodButton('채팅', Image.asset('assets/images/chatcounsel.png', width: 24, height: 24), 'chat'),
+                _buildMethodButton('채팅', Image.asset('assets/images/chatcounsel.png', width: 24, height: 24), 'chat'),
 
               ],
             ),
@@ -187,30 +187,30 @@ _buildMethodButton('채팅', Image.asset('assets/images/chatcounsel.png', width:
             Center(
               child: ElevatedButton(
                 onPressed: () {
-  showDialog(
-    context: context,
-    builder: (context) {
-      return ConfirmDialog(
-        counselorType: selectedCounselor,
-        method: selectedMethod,
-        onConfirm: () {
-          Navigator.pop(context); // 다이얼로그 닫기
-          final screen = selectedMethod == 'voice'
-              ? VoiceChatScreen(counselorType: selectedCounselor)
-              : TextChatScreen(counselorType: selectedCounselor);
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return ConfirmDialog(
+                        counselorType: selectedCounselor,
+                        method: selectedMethod,
+                        onConfirm: () {
+                          Navigator.pop(context); // 다이얼로그 닫기
+                          final screen = selectedMethod == 'voice'
+                          ? VoiceChatScreen(counselorType: selectedCounselor)
+                          : TextChatScreen(counselorType: selectedCounselor);
 
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => screen),
-          );
-        },
-        onCancel: () {
-          Navigator.pop(context); // 다이얼로그 닫기
-        },
-      );
-    },
-  );
-},
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => screen),
+                          );
+                        },
+                      onCancel: () {
+                        Navigator.pop(context); // 다이얼로그 닫기
+                      },
+                    );
+                  },
+                );
+              },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromARGB(255, 110, 120, 91),
                   padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 13),
