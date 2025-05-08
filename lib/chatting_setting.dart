@@ -403,4 +403,3 @@ class ChatHistoryDetailScreen extends StatelessWidget {
     );
   }
 }
-
