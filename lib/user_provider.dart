@@ -1,14 +1,17 @@
+import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
 
 class UserProvider with ChangeNotifier {
-  // --- Private 상태 변수들 ---
   String _nickname = "";
   String _email = "alice123@example.com";
   String _gender = "";
   List _concerns = [];
 
-  int _level = 1; // 도장판 레벨
-  List<String> _stamp = []; // 도장 리스트
+  int _level = 1;
+  List<String> _stamp = [];
 
   // --- Getter ---
   String get nickname => _nickname;
@@ -56,5 +59,87 @@ class UserProvider with ChangeNotifier {
   void updateStamp(List<String> newStamp) {
     _stamp = newStamp;
     notifyListeners();
+  }
+
+  void addStamp(String newStamp) {
+    _stamp.add(newStamp);
+    notifyListeners();
+  }
+
+  /// ✅ JSON 저장
+  Future<void> saveUserData() async {
+    try {
+      final directory = await getApplicationDocumentsDirectory();
+      final file = File('${directory.path}/user_data.json');
+
+      String jsonString;
+      if (await file.exists()) {
+        jsonString = await file.readAsString();
+      } else {
+        jsonString = await rootBundle.loadString('assets/data/user_data.json');
+      }
+
+      List<dynamic> jsonData = json.decode(jsonString);
+
+      final userIndex = jsonData.indexWhere((u) => u['email'] == _email);
+
+      if (userIndex != -1) {
+        jsonData[userIndex]['nickname'] = _nickname;
+        jsonData[userIndex]['gender'] = _gender;
+        jsonData[userIndex]['concerns'] = _concerns;
+        jsonData[userIndex]['level'] = _level;
+        jsonData[userIndex]['stamp'] = _stamp;
+      } else {
+        jsonData.add({
+          'email': _email,
+          'nickname': _nickname,
+          'gender': _gender,
+          'concerns': _concerns,
+          'level': _level,
+          'stamp': _stamp,
+        });
+      }
+
+      await file.writeAsString(json.encode(jsonData));
+    } catch (e) {
+      if (kDebugMode) {
+        print('❗ saveUserData 에러: $e');
+      }
+    }
+  }
+
+  /// ✅ JSON 로드
+  Future<void> loadUserData() async {
+    try {
+      final directory = await getApplicationDocumentsDirectory();
+      final file = File('${directory.path}/user_data.json');
+
+      String jsonString;
+      if (await file.exists()) {
+        jsonString = await file.readAsString();
+      } else {
+        jsonString = await rootBundle.loadString('assets/data/user_data.json');
+      }
+
+      List<dynamic> jsonData = json.decode(jsonString);
+
+      final user = jsonData.cast<Map<String, dynamic>>().firstWhere(
+        (u) => u['email'] == _email,
+        orElse: () => {},
+      );
+
+      if (user.isNotEmpty) {
+        _nickname = user['nickname'] ?? "";
+        _gender = user['gender'] ?? "";
+        _concerns = user['concerns'] ?? [];
+        _level = user['level'] ?? 1;
+        _stamp = List<String>.from(user['stamp'] ?? []);
+        notifyListeners();
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('❗ loadUserData 에러: $e');
+      }
+    }
   }
 }
