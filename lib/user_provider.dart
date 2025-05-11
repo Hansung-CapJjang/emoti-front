@@ -9,6 +9,9 @@ class UserProvider with ChangeNotifier {
   String _email = "alice123@example.com";
   String _gender = "";
   List _concerns = [];
+  String _pet = "Egg"; // 기본값은 필요에 따라 설정
+String get pet => _pet;
+
 
   int _level = 1;
   List<String> _stamp = [];
@@ -20,6 +23,8 @@ class UserProvider with ChangeNotifier {
   List get concerns => _concerns;
   int get level => _level;
   List<String> get stamp => _stamp;
+
+  
 
   // --- 전체 사용자 정보 설정 ---
   void setUser(String newNickname, String newEmail, String newGender, List newConcerns) {
@@ -65,6 +70,12 @@ class UserProvider with ChangeNotifier {
     _stamp.add(newStamp);
     notifyListeners();
   }
+
+  void updatePet(String newPet) {
+  _pet = newPet;
+  notifyListeners();
+}
+
 
   /// ✅ JSON 저장
   Future<void> saveUserData() async {

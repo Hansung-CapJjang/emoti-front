@@ -9,6 +9,8 @@ import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'home_speech_bubble.dart';
+import 'package:flutter_application_1/user_provider.dart';
+
 
 class MainContent extends StatefulWidget {
   const MainContent({super.key});
@@ -49,21 +51,25 @@ double characterProgress = 0.0;             // 퍼센트 저장용
     );
 
     if (user.isNotEmpty) {
-      int stampCount = List<String>.from(user['stamp']).length;
-      int userLevel = user['level'];
-      int maxStampForLevel = stampCounts[userLevel - 1];
-      int prevSum = userLevel == 1 ? 0 : stampCounts.sublist(0, userLevel - 1).reduce((a, b) => a + b);
-      int currentLevelStamps = stampCount - prevSum;
-      double progressPercent = (currentLevelStamps / maxStampForLevel).clamp(0.0, 1.0);
+  int stampCount = List<String>.from(user['stamp']).length;
+  int userLevel = user['level'];
+  int maxStampForLevel = stampCounts[userLevel - 1];
+  int prevSum = userLevel == 1 ? 0 : stampCounts.sublist(0, userLevel - 1).reduce((a, b) => a + b);
+  int currentLevelStamps = stampCount - prevSum;
+  double progressPercent = (currentLevelStamps / maxStampForLevel).clamp(0.0, 1.0);
 
-    setState(() {
-      level = userLevel;
-      pet = userLevel == 1 ? 'Egg' : user['pet'];
-      String imageName = '${pet == "뱁새" ? "baebse" : "penguin"}${level - 1}.png';
-      characterIamgePath = 'assets/images/$imageName';
-      characterProgress = progressPercent;
-    });
-  }
+  // ✅ 여기 한 줄 추가!
+  Provider.of<UserProvider>(context, listen: false).updateStamp(List<String>.from(user['stamp']));
+
+  setState(() {
+    level = userLevel;
+    pet = userLevel == 1 ? 'Egg' : user['pet'];
+    String imageName = '${pet == "뱁새" ? "baebse" : "penguin"}${level - 1}.png';
+    characterIamgePath = 'assets/images/$imageName';
+    characterProgress = progressPercent;
+  });
+}
+
 }
 
   @override
@@ -76,6 +82,47 @@ double characterProgress = 0.0;             // 퍼센트 저장용
       setState(() {});
     });
   }
+
+  void _showEvolutionDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext dialogContext) {
+      return AlertDialog(
+        title: const Text("펫이 진화했습니다!"),
+        content: const Text("축하합니다! 다음 레벨로 진화했어요 🐣"),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(dialogContext).pop();
+
+              setState(() {
+                
+                level += 1;
+                int prevSum = level == 1 ? 0 : stampCounts.sublist(0, level - 1).reduce((a, b) => a + b);
+                int maxStamps = stampCounts[level - 1];
+                int ownedStamps = Provider.of<UserProvider>(context, listen: false).stamp.length;
+                double newProgress = ((ownedStamps - prevSum) / maxStamps).clamp(0.0, 1.0);
+                characterProgress = newProgress;
+
+                pet = pet == 'Egg' && level == 2 ? '뱁새' : pet;
+
+                String imageName = '${pet == "뱁새" ? "baebse" : "penguin"}${level - 1}.png';
+                characterIamgePath = 'assets/images/$imageName';
+              });
+              Provider.of<UserProvider>(context, listen: false).updateLevel(level);
+              Provider.of<UserProvider>(context, listen: false).updatePet(pet);
+              Provider.of<UserProvider>(context, listen: false).saveUserData();
+
+            },
+            child: const Text("확인"),
+          ),
+        ],
+      );
+    },
+  );
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -204,31 +251,41 @@ double characterProgress = 0.0;             // 퍼센트 저장용
                 ),
               ),
               // 캐릭터 아래 여백
-              Center(
-                child: Transform.translate(
-                  offset: const Offset(0, -60),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      // 도장판 제출 버튼 클릭 시 동작
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color.fromRGBO(110, 120, 91, 0.56),// 배경색
-                      foregroundColor: const Color(0xFF454545), // 글씨색
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
+            Center(
+              child: Transform.translate( // ✅ child: 키워드 추가
+                offset: const Offset(0, -60),
+                child: Consumer<UserProvider>(
+                  builder: (context, userProvider, _) {
+                    int level = userProvider.level;
+                    int totalStamps = userProvider.stamp.length;
+                    int requiredStamps = stampCounts.sublist(0, level).reduce((a, b) => a + b);
+                    bool canEvolve = totalStamps >= requiredStamps && level < stampCounts.length + 1;
+
+                    return ElevatedButton(
+                      onPressed: canEvolve
+                      ? () {
+                        _showEvolutionDialog(context);
+                      }
+                      : null,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color.fromRGBO(110, 120, 91, 0.56),
+                        foregroundColor: const Color(0xFF454545),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        minimumSize: const Size(150, 45),
                       ),
-                      minimumSize: const Size(150, 45), // 버튼 크기 유지
-                    ),
-                    child: const Text(
-                      '도장판 제출',
-                      style: TextStyle(
-                        fontFamily: 'DungGeunMo',
-                        fontSize: 18,
+                      child: const Text(
+                        '도장판 제출',
+                        style: TextStyle(fontFamily: 'DungGeunMo', fontSize: 18),
                       ),
-                    ),
-                  ),
+                    );
+                  },
                 ),
               ),
+            ),
+
+
     
               // 아이콘 위치 조정 가능
               Transform.translate(
