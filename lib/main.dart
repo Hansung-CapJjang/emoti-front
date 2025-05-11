@@ -2,10 +2,10 @@ import 'login.dart';
 import 'main_screen.dart';
 import 'stamp_board.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-
-void main() {
-  runApp(MyApp(isLoggedIn: false));
+void main() async {
+  await dotenv.load(fileName: ".env");
 }
 
 class MyApp extends StatelessWidget {

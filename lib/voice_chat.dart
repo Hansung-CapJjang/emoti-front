@@ -3,10 +3,15 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
-import 'package:flutter_tts/flutter_tts.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
-import 'user_provider.dart'; // ← 경로 확인
+import 'user_provider.dart';
+import 'package:just_audio/just_audio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+final _audioPlayer = AudioPlayer();
+final pollyUrl = dotenv.env['POLLY_API_URL']!; // main.dart 연결 시 사용 가능
+final apiKey = dotenv.env['OPENAI_KEY']!;
 
 class VoiceChatScreen extends StatefulWidget {
   final String counselorType;
@@ -22,7 +27,6 @@ class _VoiceChatScreenState extends State<VoiceChatScreen> {
   bool isSpeaking = false;
   String recognizedText = "";
   late stt.SpeechToText _speech;
-  late FlutterTts _flutterTts;
   Timer? _timer;
   int _elapsedSeconds = 0;
   List<Map<String, dynamic>> _messages = [];
@@ -31,8 +35,6 @@ class _VoiceChatScreenState extends State<VoiceChatScreen> {
   void initState() {
     super.initState();
     _speech = stt.SpeechToText();
-    _flutterTts = FlutterTts();
-    _configureTTS();
     _startTimer();
     _fetchInitialBotMessage(); // 첫 메시지 API 호출
   }
@@ -110,22 +112,28 @@ class _VoiceChatScreenState extends State<VoiceChatScreen> {
     super.dispose();
   }
 
-  void _configureTTS() async {
-    await _flutterTts.setLanguage("ko-KR");
-    await _flutterTts.setSpeechRate(0.5);
-    await _flutterTts.setVolume(1.0);
-    await _flutterTts.setPitch(1.0);
-    _flutterTts.setCompletionHandler(() {
-      setState(() {
-        isSpeaking = false;
-      });
-    });
-  }
+  Future<void> _speakMessage(String message) async {
+  setState(() => isSpeaking = true);
+  try {
+    final response = await http.post(
+      Uri.parse(pollyUrl), // ← 스프링부트 API 주소
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({'text': message}),
+    );
 
-  void _speakMessage(String message) async {
-    setState(() => isSpeaking = true);
-    await _flutterTts.speak(message);
+    if (response.statusCode == 200) {
+      final url = jsonDecode(response.body)['url'];
+      await _audioPlayer.setUrl(url);
+      await _audioPlayer.play();
+    } else {
+      print('Polly 호출 실패: ${response.statusCode}');
+    }
+  } catch (e) {
+    print('Polly 예외 발생: $e');
+  } finally {
+    setState(() => isSpeaking = false);
   }
+}
 
   void _startTimer() {
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
@@ -186,7 +194,6 @@ class _VoiceChatScreenState extends State<VoiceChatScreen> {
 
     final systemPrompt = _generateSystemPrompt(widget.counselorType, userName, userGender, userConcern);
 
-    const apiKey = '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';
     const apiUrl = 'https://api.openai.com/v1/chat/completions';
 
     final headers = {
@@ -240,7 +247,7 @@ class _VoiceChatScreenState extends State<VoiceChatScreen> {
   }
 
   Future<String> _evaluateFinalStampWithGPT() async {
-    const apiKey = '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';
+
     const apiUrl = 'https://api.openai.com/v1/chat/completions';
 
     final headers = {
