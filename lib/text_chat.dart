@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'user_provider.dart'; // ← 경로 확인
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+// var apiKey = OPENAI_KEY;
+final apiKey = dotenv.env['OPENAI_KEY']!; // main 실행 전제 하에
 
 class TextChatScreen extends StatefulWidget {
   final String counselorType;
@@ -153,7 +157,6 @@ class _TextChatScreenState extends State<TextChatScreen> {
 
     final systemPrompt = _generateSystemPrompt(widget.counselorType, userName, userGender, userConcern);
 
-    const apiKey = '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';
     const apiUrl = 'https://api.openai.com/v1/chat/completions';
 
     final headers = {
@@ -187,7 +190,6 @@ class _TextChatScreenState extends State<TextChatScreen> {
   }
 
   Future<String> _evaluateFinalStampWithGPT() async {
-    const apiKey = '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';
     const apiUrl = 'https://api.openai.com/v1/chat/completions';
 
     final headers = {
