@@ -42,29 +42,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
     super.initState();
     notificationService = NotificationService();
     _loadChatHistory();
-    _loadUserData(); // ← 이 줄이 꼭 있어야 사용자 데이터가 반영됩니다.
+    _loadUserData(); 
   }
 
 
   Future<void> _loadChatHistory() async {
+    final userEmail = Provider.of<UserProvider>(context, listen: false).email; 
     final String jsonString = await rootBundle.loadString('assets/data/chat_data.json');
     final List<dynamic> jsonData = json.decode(jsonString);
 
-    final records = jsonData.map<Map<String, dynamic>>((item) {
+    final records = jsonData
+    .where((item) => item['email'] == userEmail)
+    .map<Map<String, dynamic>>((item) {
       final timestamp = DateTime.parse(item['timestamp']);
       final formattedDate = '${timestamp.month}/${timestamp.day}';
       final stamp = item['stamp'] ?? '희망';
 
-      return {
-        'date': formattedDate,
-        'stamp': stamp,
-      };
-    }).toList();
+    return {
+      'date': formattedDate,
+      'stamp': stamp,
+    };
+  }).toList();
 
-    setState(() {
-      chatRecords = records;
-    });
-  }
+  setState(() {
+    chatRecords = records; 
+  });
+}
+
 
   Future<void> _loadUserData() async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
@@ -183,7 +187,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             color: Colors.black54,
                           ),
                         ),
-
                   ],
                 )
               ],

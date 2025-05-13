@@ -32,7 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     super.initState();
     _controller = WebViewController()
-      ..setJavaScriptMode(JavaScriptMode.unrestricted) // JavaScript 활성화
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..loadRequest(Uri.parse("https://flutter.dev"));
   }
 
@@ -58,8 +58,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     ..setNavigationDelegate(
                       NavigationDelegate(
                         onPageFinished: (String url) {
-                          if (url.contains("callback_url")) {  // 로그인 성공 여부 확인 (콜백 URL)
-                            Navigator.pop(context);  // 다이얼로그 닫기
+                          if (url.contains("callback_url")) {
+                            Navigator.pop(context);
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(builder: (context) => const FirstScreen()),
@@ -85,29 +85,96 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  Widget _buildLoginButton({
+  required VoidCallback onTap,
+  required String imagePath,
+  required String label,
+  required Color backgroundColor,
+  required Color labelColor,
+}) {
+  return GestureDetector(
+    onTap: onTap,
+    child: Container(
+      margin: const EdgeInsets.symmetric(vertical: 7),
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      decoration: BoxDecoration(
+        color: backgroundColor,
+        borderRadius: BorderRadius.circular(7),
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 4,
+            offset: Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 15.0),
+              child: Image.asset(imagePath, width: 32, height: 32),
+            ),
+          ),
+          Center(
+            child: Text(
+              label,
+              style: TextStyle(
+                fontSize: 16,
+                fontFamily: 'DungGeunMo',
+                color: labelColor,
+              ),
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFE9EBD9),
+      backgroundColor: const Color.fromARGB(255, 248, 255, 237), // const Color(0xFFE9EBD9),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Spacer(),
-            const Text(
-              '마음을 위로하는 AI 상담 어플',
-              style: TextStyle(fontSize: 20, fontFamily: 'DungGeunMo', color: Colors.black87),
+            const Spacer(flex: 1),
+            const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.only(left: 20.0, bottom: 8.0),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Image.asset('assets/images/emoti_character.png', width: 130),
+                    const SizedBox(height: 12),
+                    const Text(
+                      ' 환영합니다',
+                      style: TextStyle(
+                        fontSize: 40,
+                        fontFamily: 'DungGeunMo',
+                      ),
+                    ),
+                    const Text(
+                      '   마음을 위로하는 AI 상담 어플입니다',
+                      style: TextStyle(
+                        fontSize: 17,
+                        fontFamily: 'DungGeunMo',
+                        color: Color.fromARGB(221, 33, 33, 33),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
-            const Text(
-              'emoti',
-              style: TextStyle(fontSize: 80, fontWeight: FontWeight.bold, fontFamily: 'Times New Roman', color: Colors.black87),
-            ),
-            Image.asset('assets/images/emoti_character.png', width: 230),
-            const SizedBox(height: 40),
+            const SizedBox(height: 80),
             const Row(
               children: [
-                Expanded(child: Divider(color: Colors.grey, thickness: 2, indent: 20, endIndent: 10)),
+                Expanded(child: Divider(color: Colors.grey, thickness: 2, indent: 40, endIndent: 10)),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 10),
                   child: Text(
@@ -115,28 +182,39 @@ class _LoginScreenState extends State<LoginScreen> {
                     style: TextStyle(fontSize: 16, fontFamily: 'DungGeunMo', color: Colors.black54),
                   ),
                 ),
-                Expanded(child: Divider(color: Colors.grey, thickness: 2, indent: 10, endIndent: 20)),
+                Expanded(child: Divider(color: Colors.grey, thickness: 2, indent: 10, endIndent: 40)),
               ],
             ),
-            const SizedBox(height: 40),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                GestureDetector(
-                  onTap: () => _showFloatingPage(context, "https://nid.naver.com"), // 추후 주소 수정
-                  child: Image.asset('assets/images/naver_logo.png', width: 60),
-                ),
-                const SizedBox(width: 20),
-                GestureDetector(
-                  onTap: () => _showFloatingPage(context, "https://kauth.kakao.com/oauth/authorize"), // 추후 주소 수정
-                  child: Image.asset('assets/images/kakaotalk_logo.png', width: 60),
-                ),
-                const SizedBox(width: 20),
-                GestureDetector(
-                  onTap: () => _showFloatingPage(context, "https://accounts.google.com"), // 추후 주소 수정
-                  child: Image.asset('assets/images/google_logo.png', width: 60),
-                ),
-              ],
+            const SizedBox(height: 30),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 40),
+              child: Column(
+                children: [
+                  _buildLoginButton(
+                    onTap: () => _showFloatingPage(context, "https://nid.naver.com"),
+                    imagePath: 'assets/images/naver_logo.png',
+                    label: '네이버로 시작하기',
+                    backgroundColor: const Color(0xFF03C75B),
+                    labelColor: Colors.white,
+                  ),
+                  _buildLoginButton(
+                    onTap: () => _showFloatingPage(context, "https://kauth.kakao.com/oauth/authorize"),
+                    imagePath: 'assets/images/kakaotalk_logo.png',
+                    label: '카카오로 시작하기',
+                    backgroundColor: Colors.yellow,
+                    labelColor: Colors.black,
+                  ),
+                  _buildLoginButton(
+                    onTap: () => _showFloatingPage(context, "https://accounts.google.com"),
+                    imagePath: 'assets/images/google_logo.png',
+                    label: '구글로 시작하기',
+                    backgroundColor: Colors.white,
+                    labelColor: Colors.black,
+                  ),
+                  const SizedBox(height: 10),
+                  const Text('� 본 어플은 별도의 회원 가입이 필요없어요!', style: TextStyle(color: const Color.fromARGB(221, 65, 65, 65),)), // fontFamily: 'DungGeunMo'),)
+                ],
+              ),
             ),
             const Spacer(),
           ],
