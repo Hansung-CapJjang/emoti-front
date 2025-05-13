@@ -103,6 +103,7 @@ class _NameInputScreenState extends State<NameInputScreen>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const ProgressBar(progress: 0.2),
               const SizedBox(height: 30),
               const Text(
                 '이름을 입력해주세요.',

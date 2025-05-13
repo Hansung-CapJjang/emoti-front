@@ -10,8 +10,6 @@ import 'package:just_audio/just_audio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 final _audioPlayer = AudioPlayer();
-final pollyUrl = dotenv.env['POLLY_API_URL']!; // main.dart 연결 시 사용 가능
-final apiKey = dotenv.env['OPENAI_KEY']!;
 
 class VoiceChatScreen extends StatefulWidget {
   final String counselorType;
@@ -198,7 +196,7 @@ class _VoiceChatScreenState extends State<VoiceChatScreen> {
 
     final headers = {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer $apiKey',
+      'Authorization': 'Bearer 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',
     };
 
     final body = jsonEncode({
@@ -285,8 +283,14 @@ class _VoiceChatScreenState extends State<VoiceChatScreen> {
   void _showEndDialog() async {
     final resultStamp = await _evaluateFinalStampWithGPT();
 
-    Provider.of<UserProvider>(context, listen: false)
-        .updateStamp([...Provider.of<UserProvider>(context, listen: false).stamp, resultStamp]);
+   final userProvider = Provider.of<UserProvider>(context, listen: false);
+
+// 1. 도장 추가
+userProvider.updateStamp([...userProvider.stamp, resultStamp]);
+
+// 2. JSON에 저장
+await userProvider.saveUserData();
+
 
     showDialog(
       context: context,

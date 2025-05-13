@@ -5,9 +5,6 @@ import 'package:provider/provider.dart';
 import 'user_provider.dart'; // ← 경로 확인
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-// var apiKey = OPENAI_KEY;
-final apiKey = dotenv.env['OPENAI_KEY']!; // main 실행 전제 하에
-
 class TextChatScreen extends StatefulWidget {
   final String counselorType;
 
