@@ -58,49 +58,55 @@ class _CounselorSelectionPageState extends State<CounselorSelectionPage> {
     });
   }
 
-  Widget _buildCounselorButton(String label, String imagePath) {
-    bool isSelected = selectedCounselor == label;
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          selectedCounselor = label;
-        });
-      },
-      child: Container(
-        width: 100,
-        padding: const EdgeInsets.symmetric(vertical: 20),
-        decoration: BoxDecoration(
-          color: Colors.transparent,
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(
-            color: isSelected ? const Color.fromARGB(255, 110, 120, 91) : Colors.white54,
-            width: 3,
-          ),
-        ),
-        child: Column(
-          children: [
-            CircleAvatar(
-              radius: 30,
-              backgroundImage: AssetImage(imagePath),
-              backgroundColor: Colors.white,
-            ),
-            const SizedBox(height: 10),
-            Text(
-              label,
-              style: const TextStyle(
-                fontFamily: 'DungGeunMo',
-                fontSize: 14,
-                color: Colors.black,
-              ),
-            ),
-          ],
+Widget _buildCounselorButton(String label, String imagePath) {
+  bool isSelected = selectedCounselor == label;
+  return GestureDetector(
+    onTap: () {
+      setState(() {
+        selectedCounselor = label;
+      });
+    },
+    child: Container(
+      width: 100,
+      padding: const EdgeInsets.symmetric(vertical: 20),
+      decoration: BoxDecoration(
+        color: isSelected 
+            ? const Color(0xFFDDE3CB) 
+            : Colors.transparent,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: isSelected 
+              ? const Color.fromARGB(255, 110, 120, 91)
+              : Colors.white54,
+          width: 3,
         ),
       ),
-    );
-  }
+      child: Column(
+        children: [
+          CircleAvatar(
+            radius: 30,
+            backgroundImage: AssetImage(imagePath),
+            backgroundColor: Colors.white,
+          ),
+          const SizedBox(height: 10),
+          Text(
+            label,
+            style: const TextStyle(
+              fontFamily: 'DungGeunMo',
+              fontSize: 14,
+              color: Colors.black,
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
 
-  Widget _buildMethodButton(String label, Widget iconWidget, String value) {
+
+Widget _buildMethodButton(String label, Widget iconWidget, String value) {
   bool isSelected = selectedMethod == value;
+
   return GestureDetector(
     onTap: () {
       setState(() {
@@ -111,9 +117,13 @@ class _CounselorSelectionPageState extends State<CounselorSelectionPage> {
       padding: const EdgeInsets.all(35),
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: isSelected ? const Color(0xFFF1F3E5) : const Color(0xFFF1F3E5),
+        color: isSelected 
+            ? const Color(0xFFDDE3CB)  // ✅ 선택된 상태일 때 배경색 적용
+            : const Color(0xFFF1F3E5), // 기본 배경색
         border: Border.all(
-          color: isSelected ? const Color.fromARGB(255, 110, 120, 91) : Colors.white,
+          color: isSelected 
+              ? const Color.fromARGB(255, 110, 120, 91)
+              : Colors.white,
           width: 3,
         ),
       ),
@@ -125,6 +135,7 @@ class _CounselorSelectionPageState extends State<CounselorSelectionPage> {
     ),
   );
 }
+
 
   @override
   Widget build(BuildContext context) {
@@ -162,8 +173,8 @@ class _CounselorSelectionPageState extends State<CounselorSelectionPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _buildCounselorButton('조언형', 'assets/images/advisory_counselor.png'),
                 _buildCounselorButton('공감형', 'assets/images/empathetic _counselor.png'),
+                _buildCounselorButton('조언형', 'assets/images/advisory_counselor.png'),
                 _buildCounselorButton('유머러스형', 'assets/images/humorous_counselor.png'),
               ],
             ),
@@ -178,9 +189,8 @@ class _CounselorSelectionPageState extends State<CounselorSelectionPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                _buildMethodButton('음성', Image.asset('assets/images/voicecounsel.png', width: 24, height: 24), 'voice'),
                 _buildMethodButton('채팅', Image.asset('assets/images/chatcounsel.png', width: 24, height: 24), 'chat'),
-
+                _buildMethodButton('음성', Image.asset('assets/images/voicecounsel.png', width: 24, height: 24), 'voice'),
               ],
             ),
             const Spacer(),
