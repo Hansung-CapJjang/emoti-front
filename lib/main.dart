@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
         '/main': (context) => MainScreen(),
         '/login': (context) => LoginScreen(),
         '/stampBoard': (context) => StampBoard(),
-        '/splash': (context) => const SplashLogoScreen(),
+        '/splash': (context) => const SplashScreen(), // ✅ 올바른 클래스 이름
       },
     );
   }

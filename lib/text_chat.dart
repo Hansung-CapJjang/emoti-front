@@ -4,6 +4,14 @@ import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'user_provider.dart'; // ← 경로 확인
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter/services.dart'; // ← 이거 꼭 있어야 함
+
+
+final pollyUrl = 'http://your-server-ip:8080/tts'; // 예시
+
+// final apiKey = dotenv.env['OPENAI_KEY']!;
+const String apiKey = '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'; // 테스트용 키 직접 삽입
+
 
 class TextChatScreen extends StatefulWidget {
   final String counselorType;
@@ -336,23 +344,33 @@ class _TextChatScreenState extends State<TextChatScreen> {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+@override
+Widget build(BuildContext context) {
+  return AnnotatedRegion<SystemUiOverlayStyle>(
+    value: SystemUiOverlayStyle.dark.copyWith(
+      statusBarColor: const Color(0xFFE9EBD9), // ✅ 상태바 색 고정
+      statusBarIconBrightness: Brightness.dark,
+    ),
+    child: Scaffold(
+      // ✅ extendBodyBehindAppBar 제거 or 유지 가능 (선택)
       backgroundColor: const Color(0xFFE9EBD9),
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.transparent,
+        backgroundColor: const Color(0xFFE9EBD9), // ✅ 앱바 배경색과 통일
         elevation: 0,
+        centerTitle: true,
         title: Text(
           '(${widget.counselorType}) 상담 중',
-          style: const TextStyle(fontFamily: 'DungGeunMo', color: Colors.black),
+          style: const TextStyle(
+            fontFamily: 'DungGeunMo',
+            color: Colors.black,
+          ),
         ),
-        centerTitle: true,
+        // ❌ 아래 라인 삭제 (AnnotatedRegion이 대체함)
+        // systemOverlayStyle: ...
       ),
       body: Column(
         children: [
-          const SizedBox(height: 10),
           Expanded(
             child: ListView(
               controller: _scrollController,
@@ -365,8 +383,11 @@ class _TextChatScreenState extends State<TextChatScreen> {
           _buildInputBar(),
         ],
       ),
-    );
-  }
+    ),
+  );
+}
+
+
 
   Widget _buildMessageBubble(String message, bool isUser) {
     return Align(
@@ -485,4 +506,3 @@ class _TextChatScreenState extends State<TextChatScreen> {
     );
   }
 }
-

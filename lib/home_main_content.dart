@@ -124,193 +124,192 @@ double characterProgress = 0.0;             // 퍼센트 저장용
 }
 
 
-  @override
-  Widget build(BuildContext context) {
-    double barWidth = MediaQuery.of(context).size.width * 0.7;
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          const SizedBox(height: 5),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+@override
+Widget build(BuildContext context) {
+  double barWidth = MediaQuery.of(context).size.width * 0.7;
+
+  return Scaffold(
+    backgroundColor: const Color(0xFFE9EBD9),
+    body: SafeArea( 
+      child: SingleChildScrollView( 
+        physics: const NeverScrollableScrollPhysics(),
+        child: Column(
+          children: [
+            const SizedBox(height: 5),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          'Lv.$level',
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.normal,
+                            fontFamily: 'DungGeunMo',
+                            color: const Color(0xFF414728).withOpacity(0.64),
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Text(
+                          pet,
+                          style: const TextStyle(
+                            fontSize: 32,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'DungGeunMo',
+                            color: Color(0xFF414728),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 15),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Stack(
+                            alignment: Alignment.centerLeft,
+                            children: [
+                              Container(
+                                width: barWidth,
+                                height: 14,
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFF798063).withOpacity(0.56),
+                                  borderRadius: BorderRadius.circular(7),
+                                ),
+                              ),
+                              Container(
+                                width: barWidth * characterProgress,
+                                height: 14,
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFF56644B),
+                                  borderRadius: BorderRadius.circular(7),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Text(
+                          '${(characterProgress * 100).round()}%',
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontFamily: 'DungGeunMo',
+                            color: Color(0xFF5A6140),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 30),
+                ],
+              ),
+            ),
+            Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        'Lv.$level',
-                        style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.normal,
-                          fontFamily: 'DungGeunMo',
-                          color: const Color(0xFF414728).withOpacity(0.64),
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      Text(
-                        pet,
-                        style: const TextStyle(
-                          fontSize: 32,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'DungGeunMo',
-                          color: Color(0xFF414728),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 15),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Stack(
-                          alignment: Alignment.centerLeft,
-                          children: [
-                            Container(
-                              width: barWidth,
-                              height: 14,
-                              decoration: BoxDecoration(
-                                color: const Color(0xFF798063).withOpacity(0.56),
-                                borderRadius: BorderRadius.circular(7),
-                              ),
-                            ),
-
-                            Container(
-                              width: barWidth * characterProgress,
-                              height: 14,
-                              decoration: BoxDecoration(
-                                color: const Color(0xFF56644B),
-                                borderRadius: BorderRadius.circular(7),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      Text(
-                        '${(characterProgress * 100).round()}%',
-                        style: TextStyle(
-                        fontSize: 20,
-                        fontFamily: 'DungGeunMo',
-                        color: Color(0xFF5A6140),
-                        ),
-                      ),
-
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 30),
-              ],
-            ),
-          ),
-          Column(
-            children: [ 
-              Align(
-                alignment: Alignment.topCenter, // 중앙 정렬
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                  alignment: Alignment.center, // 중앙 정렬
-                  constraints: BoxConstraints(
-                    maxWidth: MediaQuery.of(context).size.width * 0.9,
-                  ),
-                  child: SpeechBubble(
-                    text: randomSpeechText, // 랜덤 문구 적용
-                  ),
-                ),
-              ),
-
-              // 캐릭터 이미지 위치 조정
-              const SizedBox(height: 20,),
-              Align(
-                alignment: Alignment.center,
-                child: Transform.translate(
-                  offset: const Offset(0, -10),
-                  child: Image.asset(
-                    characterIamgePath,
-                    width: 200,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20,),
-              Transform.translate(
-                offset: const Offset(120, -80),
-                child: GestureDetector(
-                  onTap: () async {
-                    await _saveCharacterImageToGallery(context, characterIamgePath); // context 전달
-                  },
-                  child: Image.asset(
-                    'assets/images/download.png',
-                    width: 100,
-                  ),
-                ),
-              ),
-              // 캐릭터 아래 여백
-            Center(
-              child: Transform.translate( // ✅ child: 키워드 추가
-                offset: const Offset(0, -60),
-                child: Consumer<UserProvider>(
-                  builder: (context, userProvider, _) {
-                    int level = userProvider.level;
-                    int totalStamps = userProvider.stamp.length;
-                    int requiredStamps = stampCounts.sublist(0, level).reduce((a, b) => a + b);
-                    bool canEvolve = totalStamps >= requiredStamps && level < stampCounts.length + 1;
-
-                    return ElevatedButton(
-                      onPressed: canEvolve
-                      ? () {
-                        _showEvolutionDialog(context);
-                      }
-                      : null,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color.fromRGBO(110, 120, 91, 0.56),
-                        foregroundColor: const Color(0xFF454545),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        minimumSize: const Size(150, 45),
-                      ),
-                      child: const Text(
-                        '도장판 제출',
-                        style: TextStyle(fontFamily: 'DungGeunMo', fontSize: 18),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ),
-
-
-    
-              // 아이콘 위치 조정 가능
-              Transform.translate(
-                offset: const Offset(120, -95),
-                child: GestureDetector(
-                  onTap: () {
-                    _showPopupDialog(context); // 팝업 호출
-                  },
+                Align(
+                  alignment: Alignment.topCenter,
                   child: Container(
-                    color: Colors.transparent, // 터치 영역 확보
-                    child: Image.asset(
-                      'assets/images/informationicon.png',
-                      width: 17,
-                      height: 17,
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                    alignment: Alignment.center,
+                    constraints: BoxConstraints(
+                      maxWidth: MediaQuery.of(context).size.width * 0.9,
+                    ),
+                    child: SpeechBubble(
+                      text: randomSpeechText,
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 30),
-        ],
+                const SizedBox(height: 20),
+                Align(
+                  alignment: Alignment.center,
+                  child: Transform.translate(
+                    offset: const Offset(0, -10),
+                    child: Image.asset(
+                      characterIamgePath,
+                      width: 200,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Transform.translate(
+                  offset: const Offset(120, -80),
+                  child: GestureDetector(
+                    onTap: () async {
+                      await _saveCharacterImageToGallery(context, characterIamgePath);
+                    },
+                    child: Image.asset(
+                      'assets/images/download.png',
+                      width: 100,
+                    ),
+                  ),
+                ),
+                Center(
+                  child: Transform.translate(
+                    offset: const Offset(0, -60),
+                    child: Consumer<UserProvider>(
+                      builder: (context, userProvider, _) {
+                        int level = userProvider.level;
+                        int totalStamps = userProvider.stamp.length;
+                        int requiredStamps = stampCounts.sublist(0, level).reduce((a, b) => a + b);
+                        bool canEvolve = totalStamps >= requiredStamps && level < stampCounts.length + 1;
+
+                        return ElevatedButton(
+                          onPressed: canEvolve
+                              ? () {
+                                  _showEvolutionDialog(context);
+                                }
+                              : null,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color.fromRGBO(110, 120, 91, 0.56),
+                            foregroundColor: const Color(0xFF454545),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            minimumSize: const Size(150, 45),
+                          ),
+                          child: const Text(
+                            '도장판 제출',
+                            style: TextStyle(fontFamily: 'DungGeunMo', fontSize: 18),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+                Transform.translate(
+                  offset: const Offset(120, -95),
+                  child: GestureDetector(
+                    onTap: () {
+                      _showPopupDialog(context);
+                    },
+                    child: Container(
+                      color: Colors.transparent,
+                      child: Image.asset(
+                        'assets/images/informationicon.png',
+                        width: 17,
+                        height: 17,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 30),
+          ],
+        ),
       ),
-    );
-  }
+    ),
+  );
+}
+
 }
 
 // 이미지를 갤러리에 저장하는 함수
