@@ -118,8 +118,8 @@ Widget _buildMethodButton(String label, Widget iconWidget, String value) {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: isSelected 
-            ? const Color(0xFFDDE3CB)  // ✅ 선택된 상태일 때 배경색 적용
-            : const Color(0xFFF1F3E5), // 기본 배경색
+            ? const Color(0xFFDDE3CB)  
+            : const Color(0xFFF1F3E5), 
         border: Border.all(
           color: isSelected 
               ? const Color.fromARGB(255, 110, 120, 91)
@@ -150,7 +150,7 @@ Widget _buildMethodButton(String label, Widget iconWidget, String value) {
         iconTheme: const IconThemeData(color: Colors.black),
         actions: [
   Padding(
-    padding: const EdgeInsets.only(right: 16.0), // 원하는 만큼 여백 설정
+    padding: const EdgeInsets.only(right: 16.0), 
     child: Builder(
       builder: (context) => IconButton(
         icon: const Icon(Icons.menu, size: 30, color: Colors.black),

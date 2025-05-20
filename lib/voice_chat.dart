@@ -9,10 +9,6 @@ import 'user_provider.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-final pollyUrl = 'http://your-server-ip:8080/tts'; // 예시
-
-// final apiKey = dotenv.env['OPENAI_KEY']!;
-const String apiKey = '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'; // 테스트용 키 직접 삽입
 final _audioPlayer = AudioPlayer();
 
 class VoiceChatScreen extends StatefulWidget {

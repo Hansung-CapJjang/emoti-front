@@ -2,15 +2,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
-import 'user_provider.dart'; // ← 경로 확인
+import 'user_provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter/services.dart'; // ← 이거 꼭 있어야 함
+import 'package:flutter/services.dart'; 
 
 
-final pollyUrl = 'http://your-server-ip:8080/tts'; // 예시
-
-// final apiKey = dotenv.env['OPENAI_KEY']!;
-const String apiKey = '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'; // 테스트용 키 직접 삽입
 
 
 class TextChatScreen extends StatefulWidget {
@@ -348,17 +344,16 @@ class _TextChatScreenState extends State<TextChatScreen> {
 Widget build(BuildContext context) {
   return AnnotatedRegion<SystemUiOverlayStyle>(
     value: SystemUiOverlayStyle.dark.copyWith(
-      statusBarColor: const Color(0xFFE9EBD9), // ✅ 상태바 색 고정
+      statusBarColor: const Color(0xFFE9EBD9),
       statusBarIconBrightness: Brightness.dark,
     ),
     child: Scaffold(
-      // ✅ extendBodyBehindAppBar 제거 or 유지 가능 (선택)
       backgroundColor: const Color(0xFFE9EBD9),
       appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: const Color(0xFFE9EBD9), // ✅ 앱바 배경색과 통일
+        backgroundColor: const Color(0xFFE9EBD9),
+        foregroundColor: Colors.black,
         elevation: 0,
-        centerTitle: true,
+        scrolledUnderElevation: 0,
         title: Text(
           '(${widget.counselorType}) 상담 중',
           style: const TextStyle(
@@ -366,8 +361,6 @@ Widget build(BuildContext context) {
             color: Colors.black,
           ),
         ),
-        // ❌ 아래 라인 삭제 (AnnotatedRegion이 대체함)
-        // systemOverlayStyle: ...
       ),
       body: Column(
         children: [
@@ -375,6 +368,7 @@ Widget build(BuildContext context) {
             child: ListView(
               controller: _scrollController,
               padding: const EdgeInsets.all(12),
+              physics: const BouncingScrollPhysics(),
               children: _messages
                   .map((m) => _buildMessageBubble(m['text'], m['isUser']))
                   .toList(),
@@ -386,6 +380,7 @@ Widget build(BuildContext context) {
     ),
   );
 }
+
 
 
 
