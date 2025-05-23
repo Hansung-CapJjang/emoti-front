@@ -51,26 +51,25 @@ double characterProgress = 0.0;             // 퍼센트 저장용
     );
 
     if (user.isNotEmpty) {
-  int stampCount = List<String>.from(user['stamp']).length;
-  int userLevel = user['level'];
-  int maxStampForLevel = stampCounts[userLevel - 1];
-  int prevSum = userLevel == 1 ? 0 : stampCounts.sublist(0, userLevel - 1).reduce((a, b) => a + b);
-  int currentLevelStamps = stampCount - prevSum;
-  double progressPercent = (currentLevelStamps / maxStampForLevel).clamp(0.0, 1.0);
+      int stampCount = List<String>.from(user['stamp']).length;
+      int userLevel = user['level'];
+      int maxStampForLevel = stampCounts[userLevel - 1];
+      int prevSum = userLevel == 1 ? 0 : stampCounts.sublist(0, userLevel - 1).reduce((a, b) => a + b);
+      int currentLevelStamps = stampCount - prevSum;
+      double progressPercent = (currentLevelStamps / maxStampForLevel).clamp(0.0, 1.0);
 
-  // ✅ 여기 한 줄 추가!
-  Provider.of<UserProvider>(context, listen: false).updateStamp(List<String>.from(user['stamp']));
+  
+      Provider.of<UserProvider>(context, listen: false).updateStamp(List<String>.from(user['stamp']));
 
-  setState(() {
-    level = userLevel;
-    pet = userLevel == 1 ? 'Egg' : user['pet'];
-    String imageName = '${pet == "뱁새" ? "baebse" : "penguin"}${level - 1}.png';
-    characterIamgePath = 'assets/images/$imageName';
-    characterProgress = progressPercent;
-  });
-}
-
-}
+      setState(() {
+        level = userLevel;
+        pet = userLevel == 1 ? 'Egg' : user['pet'];
+        String imageName = '${pet == "뱁새" ? "baebse" : "penguin"}${level - 1}.png';
+        characterIamgePath = 'assets/images/$imageName';
+        characterProgress = progressPercent;
+      });
+    }
+  }
 
   @override
   void initState() {
@@ -315,7 +314,7 @@ Widget build(BuildContext context) {
 // 이미지를 갤러리에 저장하는 함수
 Future<void> _saveCharacterImageToGallery(BuildContext context, String characterIamgePath) async {
   try {
-    // 권한 요청 (Android 13 이상 및 iOS 대응)
+    // 권한 요청
     if (Platform.isAndroid) {
       if (await Permission.storage.request().isDenied ||
           await Permission.photos.request().isDenied) {
