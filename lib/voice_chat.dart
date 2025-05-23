@@ -9,6 +9,7 @@ import 'user_provider.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
+
 final _audioPlayer = AudioPlayer();
 
 class VoiceChatScreen extends StatefulWidget {
@@ -196,8 +197,9 @@ class _VoiceChatScreenState extends State<VoiceChatScreen> {
 
     final headers = {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer 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',
+      'Authorization': 'Bearer ${dotenv.env['OPENAI_API_KEY']}',
     };
+
 
     final body = jsonEncode({
       'model': 'gpt-3.5-turbo',
@@ -250,8 +252,9 @@ class _VoiceChatScreenState extends State<VoiceChatScreen> {
 
     final headers = {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer $apiKey',
+      'Authorization': 'Bearer ${dotenv.env['OPENAI_API_KEY']}',
     };
+
 
     final analysisPrompt =
         '너는 심리 상담 대화 분석가야. 이 대화를 보고 사용자에게 줄 감정 도장을 결정해. 희망, 용기, 결단, 성찰, 회복 중 하나만 정확히 답해. 다른 설명 없이 단어 하나로만 답해.';

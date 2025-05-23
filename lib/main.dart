@@ -1,25 +1,44 @@
-import 'login.dart';
-import 'main_screen.dart';
-import 'stamp_board.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/login.dart';
+import 'package:flutter_application_1/main_screen.dart';
+import 'package:flutter_application_1/stamp_board.dart';
+import 'package:flutter_application_1/setting_screen/splash_logo.dart';
+import 'package:flutter_application_1/user_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'setting_screen/splash_logo.dart'; 
+import 'package:flutter_localizations/flutter_localizations.dart'; 
+
 
 void main() async {
-  await dotenv.load(fileName: ".env");
+  WidgetsFlutterBinding.ensureInitialized();
+  try {
+    await dotenv.load(fileName: ".env");
+    print('✅ .env 로딩 완료');
+  } catch (e) {
+    print('❌ .env 로딩 실패: $e');
+  }
+
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => UserProvider()),
+      ],
+      child: const EmotiApp(),
+    ),
+  );
 }
 
-class MyApp extends StatelessWidget {
-  final bool isLoggedIn;
 
-  const MyApp({super.key, required this.isLoggedIn});
+class EmotiApp extends StatelessWidget {
+  const EmotiApp({super.key});
 
   @override
   Widget build(BuildContext context) {
+    print('📦 EmotiApp build 실행됨');
+
     return MaterialApp(
       title: 'Emoti',
-      debugShowCheckedModeBanner: false, 
-
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: 'DungGeunMo',
         scaffoldBackgroundColor: const Color(0xFFEEEEEE),
@@ -29,22 +48,21 @@ class MyApp extends StatelessWidget {
           headlineLarge: TextStyle(color: Color(0XFF776767)),
         ),
       ),
-
-      locale: const Locale('ko'), 
-      supportedLocales: const [
-        Locale('ko'), 
-        Locale('en'), 
-      ],
-
-      // 기본 화면 설정 (로그인 여부에 따라 변경)
-      initialRoute: isLoggedIn ? '/main' : '/login',
-
-     
-      routes: {
-        '/main': (context) => MainScreen(),
-        '/login': (context) => LoginScreen(),
-        '/stampBoard': (context) => StampBoard(),
-        '/splash': (context) => const SplashScreen(), // ✅ 올바른 클래스 이름
+    locale: const Locale('ko'),
+    supportedLocales: const [
+      Locale('ko'),
+      Locale('en'),
+    ],
+    localizationsDelegates: const [ 
+      GlobalMaterialLocalizations.delegate,
+      GlobalWidgetsLocalizations.delegate,
+      GlobalCupertinoLocalizations.delegate,
+    ],
+    initialRoute: '/splash',
+    routes: {
+    '/main': (context) => MainScreen(),
+    '/login': (context) => const LoginScreen(),
+    '/splash': (context) => const SplashScreen(),
       },
     );
   }

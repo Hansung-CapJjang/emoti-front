@@ -1,22 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/setting_screen/first_intro.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart'; 
 
 void main() {
   runApp(const EmotiApp());
 }
 
-class EmotiApp extends StatelessWidget {
-  const EmotiApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: LoginScreen(),
-    );
-  }
-}
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -57,15 +47,18 @@ class _LoginScreenState extends State<LoginScreen> {
                   controller: dialogController
                     ..setNavigationDelegate(
                       NavigationDelegate(
-                        onPageFinished: (String url) {
+                        onPageFinished: (String url) async {
                           if (url.contains("callback_url")) {
+                            final prefs = await SharedPreferences.getInstance(); //로그인 상태 저장
+                            await prefs.setBool('isLoggedIn', true); //로그인 완료 표시
+
                             Navigator.pop(context);
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(builder: (context) => const FirstScreen()),
                             );
                           }
-                        },
+                        }
                       ),
                     ),
                 ),

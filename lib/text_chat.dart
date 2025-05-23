@@ -7,8 +7,6 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/services.dart'; 
 
 
-
-
 class TextChatScreen extends StatefulWidget {
   final String counselorType;
 
@@ -161,9 +159,10 @@ class _TextChatScreenState extends State<TextChatScreen> {
     const apiUrl = 'https://api.openai.com/v1/chat/completions';
 
     final headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $apiKey',
-    };
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer ${dotenv.env['OPENAI_API_KEY']}',
+  };
+
 
     final body = jsonEncode({
       'model': 'gpt-3.5-turbo',
@@ -195,8 +194,9 @@ class _TextChatScreenState extends State<TextChatScreen> {
 
     final headers = {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer $apiKey',
+      'Authorization': 'Bearer ${dotenv.env['OPENAI_API_KEY']}',
     };
+
 
     final analysisPrompt =
         '너는 심리 상담 대화 분석가야. 이 전체적인 대화의 맥락을 보고 사용자에게 줄 감정 도장을 결정해. "희망", "용기", "결단", "성찰", "회복" 중 하나만 정확히 답해. 다른 설명 없이 단어 하나로만 답해.';

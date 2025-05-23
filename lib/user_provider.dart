@@ -9,8 +9,8 @@ class UserProvider with ChangeNotifier {
   String _email = "alice123@example.com";
   String _gender = "";
   List _concerns = [];
-  String _pet = "Egg"; // 기본값은 필요에 따라 설정
-String get pet => _pet;
+  String _pet = "Egg"; 
+  String get pet => _pet;
 
 
   int _level = 1;
@@ -119,7 +119,7 @@ String get pet => _pet;
     }
   }
 
-  /// ✅ JSON 로드
+  
   Future<void> loadUserData() async {
     try {
       final directory = await getApplicationDocumentsDirectory();
