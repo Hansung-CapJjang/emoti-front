@@ -15,7 +15,6 @@ class GenderInputScreen extends StatefulWidget {
 
 class _GenderInputScreenState extends State<GenderInputScreen> {
 
-
 void _selectGenderAndProceed(String gender) {
     Provider.of<UserProvider>(navigatorKey.currentContext!, listen: false).updateGender(gender);
     Navigator.push(
@@ -67,7 +66,7 @@ void _selectGenderAndProceed(String gender) {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ProgressBar(progress: 0.5),
+            const ProgressBar(progress: 0.5),
             const SizedBox(height: 30),
             const Text(
               '성별을 선택 해주세요.',
@@ -95,7 +94,6 @@ void _selectGenderAndProceed(String gender) {
             GenderButton(label: '여성', onTap: () => _selectGenderAndProceed('여성')),
             const SizedBox(height: 15),
             GenderButton(label: '기타', onTap: () => _selectGenderAndProceed('기타')),
-
             const Spacer(flex: 1),
           ],
         ),

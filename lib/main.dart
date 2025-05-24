@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/login.dart';
 import 'package:flutter_application_1/main_screen.dart';
-import 'package:flutter_application_1/stamp_board.dart';
 import 'package:flutter_application_1/setting_screen/splash_logo.dart';
 import 'package:flutter_application_1/user_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart'; 
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,7 +26,6 @@ void main() async {
   );
 }
 
-
 class EmotiApp extends StatelessWidget {
   const EmotiApp({super.key});
 
@@ -48,21 +45,21 @@ class EmotiApp extends StatelessWidget {
           headlineLarge: TextStyle(color: Color(0XFF776767)),
         ),
       ),
-    locale: const Locale('ko'),
-    supportedLocales: const [
-      Locale('ko'),
-      Locale('en'),
-    ],
-    localizationsDelegates: const [ 
-      GlobalMaterialLocalizations.delegate,
-      GlobalWidgetsLocalizations.delegate,
-      GlobalCupertinoLocalizations.delegate,
-    ],
-    initialRoute: '/splash',
-    routes: {
-    '/main': (context) => MainScreen(),
-    '/login': (context) => const LoginScreen(),
-    '/splash': (context) => const SplashScreen(),
+      locale: const Locale('ko'),
+      supportedLocales: const [
+        Locale('ko'),
+        Locale('en'),
+      ],
+      localizationsDelegates: const [ 
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      initialRoute: '/splash',
+      routes: {
+        '/main': (context) => MainScreen(),
+        '/login': (context) => const LoginScreen(),
+        '/splash': (context) => const SplashScreen(),
       },
     );
   }

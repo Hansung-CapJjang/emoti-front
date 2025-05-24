@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../login.dart';
-import 'package:shared_preferences/shared_preferences.dart'; 
-import '../home.dart'; 
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_application_1/user_provider.dart'; 
 import 'package:provider/provider.dart'; 
 import '../main_screen.dart'; 
@@ -60,8 +59,8 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   // 로그인 여부
   Future.delayed(const Duration(seconds: 2), () async {
     final prefs = await SharedPreferences.getInstance();
-    final isLoggedIn = prefs.getBool('isLoggedIn') ?? true; // 가정
-    final email = prefs.getString('email') ?? "emoti.com"; // 가정
+    final isLoggedIn = prefs.getBool('isLoggedIn') ?? true; // 가정 - 수정
+    final email = prefs.getString('email') ?? "emoti.com"; // 가정 - 수정
 
     if (mounted && isLoggedIn && email.isNotEmpty) {
       final userProvider = Provider.of<UserProvider>(context, listen: false);
@@ -83,7 +82,6 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
     );
   });
 }
-
 
   @override
   void dispose() {

@@ -162,7 +162,6 @@ class SecondScreen extends StatelessWidget {
   }
 }
 
-
 class ProgressBar extends StatefulWidget {
   final double progress; 
 

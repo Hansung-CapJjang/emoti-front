@@ -7,7 +7,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/services.dart'; 
 
 final apiKey = dotenv.env['OPENAI_API_KEY'] ?? '';
-final llamaApiUrl = 'https://ce75-113-198-83-196.ngrok-free.app/generate';
+const llamaApiUrl = 'https://ce75-113-198-83-196.ngrok-free.app/generate';
 
 class TextChatScreen extends StatefulWidget {
   final String counselorType;
@@ -31,82 +31,82 @@ class _TextChatScreenState extends State<TextChatScreen> {
   }
 
   void _showEndDialog(BuildContext context) {
-  Future.delayed(Duration(milliseconds: 100), () {
-    showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (BuildContext dialogContext) {
-        return AlertDialog(
-          backgroundColor: Colors.transparent,
-          contentPadding: EdgeInsets.zero,
-          content: Container(
-            width: MediaQuery.of(context).size.width * 0.8,
-            padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: Colors.black, width: 2),
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Text(
-                  '상담을 종료하시겠습니까?',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'DungGeunMo',
+    Future.delayed(Duration(milliseconds: 100), () {
+      showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (BuildContext dialogContext) {
+          return AlertDialog(
+            backgroundColor: Colors.transparent,
+            contentPadding: EdgeInsets.zero,
+            content: Container(
+              width: MediaQuery.of(context).size.width * 0.8,
+              padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Colors.black, width: 2),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text(
+                    '상담을 종료하시겠습니까?',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'DungGeunMo',
+                    ),
                   ),
-                ),
-                const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () => Navigator.pop(dialogContext),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.grey[400],
-                        foregroundColor: Colors.black,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                          side: const BorderSide(color: Colors.black, width: 1.5),
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () => Navigator.pop(dialogContext),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.grey[400],
+                          foregroundColor: Colors.black,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            side: const BorderSide(color: Colors.black, width: 1.5),
+                          ),
+                        ),
+                        child: const Text(
+                          "아니오",
+                          style: TextStyle(fontSize: 16, fontFamily: 'DungGeunMo'),
                         ),
                       ),
-                      child: const Text(
-                        "아니오",
-                        style: TextStyle(fontSize: 16, fontFamily: 'DungGeunMo'),
+                      const SizedBox(width: 12),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(dialogContext);        // 첫 번째 팝업 닫기
+                          _showFinalStampDialog();             // 도장 결과 팝업 띄우기!
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF798063),
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            side: const BorderSide(color: Colors.black, width: 1.5),
+                          ),
+                        ),
+                        child: const Text(
+                          "예",
+                          style: TextStyle(fontSize: 16, fontFamily: 'DungGeunMo'),
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: 12),
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop(dialogContext);        // 첫 번째 팝업 닫기
-                        _showFinalStampDialog();             // 도장 결과 팝업 띄우기!
-                      },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF798063),
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      side: const BorderSide(color: Colors.black, width: 1.5),
-                      ),
-                    ),
-                    child: const Text(
-                      "예",
-                      style: TextStyle(fontSize: 16, fontFamily: 'DungGeunMo'),
-                    ),
-                    ),
-
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        );
-      },
-    );
-  });
+          );
+        },
+      );
+    }
+  );
 }
 
 // 상담 시 첫 메세지
@@ -209,39 +209,41 @@ $tonePrompt
 }
 
 void _fetchInitialBotMessage() async {
+    
+  setState(() {
+    _isBotTyping = true;
+    _messages.add({'text': '작성 중...', 'isUser': false});
+  });
+    
+  _scrollToBottom();
+
+  try {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    final userName = userProvider.nickname;
+    final userConcern = userProvider.concerns.join(', ');
+
+    final initialMessage = _generateInitialMessage(
+      widget.counselorType,
+      userName,
+      userConcern,
+    );
+
     setState(() {
-      _isBotTyping = true;
-      _messages.add({'text': '작성 중...', 'isUser': false});
+      _messages.removeWhere((m) => m['text'] == '작성 중...');
+      _messages.add({'text': initialMessage, 'isUser': false});
+      _isBotTyping = false;
+    });
+
+    _scrollToBottom();
+  } catch (e) {
+    setState(() {
+      _messages.removeWhere((m) => m['text'] == '작성 중...');
+      _messages.add({'text': '⚠️ 오류 발생: $e', 'isUser': false});
+      _isBotTyping = false;
     });
     _scrollToBottom();
-
-    try {
-      final userProvider = Provider.of<UserProvider>(context, listen: false);
-      final userName = userProvider.nickname;
-      final userConcern = userProvider.concerns.join(', ');
-
-      final initialMessage = _generateInitialMessage(
-        widget.counselorType,
-        userName,
-        userConcern,
-      );
-
-      setState(() {
-        _messages.removeWhere((m) => m['text'] == '작성 중...');
-        _messages.add({'text': initialMessage, 'isUser': false});
-        _isBotTyping = false;
-      });
-
-      _scrollToBottom();
-    } catch (e) {
-      setState(() {
-        _messages.removeWhere((m) => m['text'] == '작성 중...');
-        _messages.add({'text': '⚠️ 오류 발생: $e', 'isUser': false});
-        _isBotTyping = false;
-      });
-      _scrollToBottom();
-    }
   }
+}
 
 String _generateSystemPrompt(String counselorType, String name, String gender, String concern) {
   switch (counselorType) {
@@ -288,37 +290,40 @@ $name 님은 $gender이며, 주된 고민은 '$concern' 입니다.
 }
 
 Future<String> _fetchLlamaReply(String userMessage) async {
-    final userProvider = Provider.of<UserProvider>(context, listen: false);
-    final userName = userProvider.nickname;
-    final userGender = userProvider.gender;
-    final userConcern = userProvider.concerns.isNotEmpty ? userProvider.concerns.first : "없음";
 
-    final headers = {'Content-Type': 'application/json'};
+  final userProvider = Provider.of<UserProvider>(context, listen: false);
+  final userName = userProvider.nickname;
+  final userGender = userProvider.gender;
+  final userConcern = userProvider.concerns.isNotEmpty ? userProvider.concerns.first : "없음";
 
-    final history = _messages
-        .where((m) => m['text'] != '작성 중...')
-        .map((m) => (m['isUser'] ? "내담자: ${m['text']}" : "상담사: ${m['text']}"))
-        .toList();
+  final headers = {'Content-Type': 'application/json'};
 
-    final body = jsonEncode({
-      'name': userName,
-      'gender': userGender,
-      'issue': userConcern,
-      'counselor_type': widget.counselorType,
-      'history': history,
-      'user_message': userMessage,
-    });
+  final history = _messages
+      .where((m) => m['text'] != '작성 중...')
+      .map((m) => (m['isUser'] ? "내담자: ${m['text']}" : "상담사: ${m['text']}"))
+      .toList();
 
-    final response = await http.post(Uri.parse(llamaApiUrl), headers: headers, body: body);
-    if (response.statusCode == 200) {
-      final data = jsonDecode(utf8.decode(response.bodyBytes));
-      return data['output'].trim();
-    } else {
-      throw Exception('FastAPI 호출 실패: ${response.statusCode}');
-    }
+  final body = jsonEncode({
+    'name': userName,
+    'gender': userGender,
+    'issue': userConcern,
+    'counselor_type': widget.counselorType,
+    'history': history,
+    'user_message': userMessage,
+  });
+
+  final response = await http.post(Uri.parse(llamaApiUrl), headers: headers, body: body);
+    
+  if (response.statusCode == 200) {
+    final data = jsonDecode(utf8.decode(response.bodyBytes));
+    return data['output'].trim();
+  } else {
+    throw Exception('FastAPI 호출 실패: ${response.statusCode}');
   }
+}
 
 Future<String> _fetchGPTResponse(String userMessage) async {
+
   final userProvider = Provider.of<UserProvider>(context, listen: false);
   final userName = userProvider.nickname;
   final userGender = userProvider.gender;
@@ -359,72 +364,73 @@ Future<String> _fetchGPTResponse(String userMessage) async {
 }
 
 Future<String> _evaluateFinalStampWithGPT() async {
-    const apiUrl = 'https://api.openai.com/v1/chat/completions';
 
-    final headers = {
-      'Content-Type': 'application/json',
-      // 'Authorization': 'Bearer ${dotenv.env['OPENAI_API_KEY']}', 수정필요
-      'Authorization': 'Bearer $apiKey',
-    };
+  const apiUrl = 'https://api.openai.com/v1/chat/completions';
 
-    final analysisPrompt =
-        '너는 심리 상담 대화 분석가야. 이 전체적인 대화의 맥락을 보고 사용자에게 줄 감정 도장을 결정해. "희망", "용기", "결단", "성찰", "회복" 중 하나만 정확히 답해. 다른 설명 없이 단어 하나로만 답해.';
+  final headers = {
+    'Content-Type': 'application/json',
+    // 'Authorization': 'Bearer ${dotenv.env['OPENAI_API_KEY']}', 수정필요
+    'Authorization': 'Bearer $apiKey',
+  };
 
-    final body = jsonEncode({
-      'model': 'gpt-3.5-turbo',
-      'messages': [
-        {'role': 'system', 'content': analysisPrompt},
-        ..._messages.where((m) => m['text'] != '작성 중...').map((m) => {
-          'role': m['isUser'] ? 'user' : 'assistant',
-          'content': m['text'],
-        }),
-        {'role': 'user', 'content': '이 대화에서 사용자에게 부여할 감정 도장은 무엇입니까? "희망", "용기", "결단", "성찰", "회복" 중 하나로만 답해.'},
-      ],
-    });
+  const analysisPrompt =
+    '너는 심리 상담 대화 분석가야. 이 전체적인 대화의 맥락을 보고 사용자에게 줄 감정 도장을 결정해. "희망", "용기", "결단", "성찰", "회복" 중 하나만 정확히 답해. 다른 설명 없이 단어 하나로만 답해.';
 
-    final response = await http.post(Uri.parse(apiUrl), headers: headers, body: body);
+  final body = jsonEncode({
+    'model': 'gpt-3.5-turbo',
+    'messages': [
+      {'role': 'system', 'content': analysisPrompt},
+      ..._messages.where((m) => m['text'] != '작성 중...').map((m) => {
+        'role': m['isUser'] ? 'user' : 'assistant',
+        'content': m['text'],
+      }),
+      {'role': 'user', 'content': '이 대화에서 사용자에게 부여할 감정 도장은 무엇입니까? "희망", "용기", "결단", "성찰", "회복" 중 하나로만 답해.'},
+    ],
+  });
 
-    if (response.statusCode == 200) {
-      final decoded = utf8.decode(response.bodyBytes);
-      final data = jsonDecode(decoded);
+  final response = await http.post(Uri.parse(apiUrl), headers: headers, body: body);
 
-      final reply = data['choices'][0]['message']['content'].trim();
-      return reply;
-    } else {
-      throw Exception('API 호출 실패: ${response.statusCode}');
-    }
+  if (response.statusCode == 200) {
+    final decoded = utf8.decode(response.bodyBytes);
+    final data = jsonDecode(decoded);
+
+    final reply = data['choices'][0]['message']['content'].trim();
+    return reply;
+  } else {
+    throw Exception('API 호출 실패: ${response.statusCode}');
   }
+}
 
 void _sendMessage(String text) async {
-    if (text.trim().isEmpty) return;
+  if (text.trim().isEmpty) return;
+
+  setState(() {
+    _messages.add({'text': text, 'isUser': true});
+    _isBotTyping = true;
+    _messages.add({'text': '작성 중...', 'isUser': false});
+    _controller.clear();
+  });
+  _scrollToBottom();
+
+  try {
+    final llamaReply = await _fetchLlamaReply(text);
+    final refinedReply = await _refineWithGPT(llamaReply, text);
 
     setState(() {
-      _messages.add({'text': text, 'isUser': true});
-      _isBotTyping = true;
-      _messages.add({'text': '작성 중...', 'isUser': false});
-      _controller.clear();
+      _messages.removeWhere((m) => m['text'] == '작성 중...');
+      _messages.add({'text': refinedReply, 'isUser': false});
+      _isBotTyping = false;
     });
     _scrollToBottom();
-
-    try {
-      final llamaReply = await _fetchLlamaReply(text);
-      final refinedReply = await _refineWithGPT(llamaReply, text);
-
-      setState(() {
-        _messages.removeWhere((m) => m['text'] == '작성 중...');
-        _messages.add({'text': refinedReply, 'isUser': false});
-        _isBotTyping = false;
-      });
-      _scrollToBottom();
-    } catch (e) {
-      setState(() {
-        _messages.removeWhere((m) => m['text'] == '작성 중...');
-        _messages.add({'text': '⚠️ 오류 발생: $e', 'isUser': false});
-        _isBotTyping = false;
-      });
-      _scrollToBottom();
-    }
+  } catch (e) {
+    setState(() {
+      _messages.removeWhere((m) => m['text'] == '작성 중...');
+      _messages.add({'text': '⚠️ 오류 발생: $e', 'isUser': false});
+      _isBotTyping = false;
+    });
+    _scrollToBottom();
   }
+}
 
 // 도장 획득 불가할 시 나타나는 팝업창
 void _showAlert(String message) {
@@ -519,7 +525,6 @@ void _showAlert(String message) {
   );
 }
 
-
 void _showFinalStampDialog() async {
   final userProvider = Provider.of<UserProvider>(context, listen: false);
 
@@ -529,7 +534,7 @@ void _showFinalStampDialog() async {
     return;
   }
 
-  // 조건 2: meaningful한 대화가 이루어졌는지 확인 (예: 최소 6개 이상)
+  // 조건 2: meaningful한 대화가 이루어졌는지 확인 (최소 6개 이상)
   final messageCount = _messages.where((m) => m['text'] != '작성 중...').length;
   if (messageCount < 6) {
     _showAlert("상담 내용이 너무 짧아서\n도장을 받을 수 없어요.\n그래도 종료하실 건가요?");
