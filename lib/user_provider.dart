@@ -55,85 +55,84 @@ void addTodayStamp(String stampValue) {
   notifyListeners();
 }
 
+// --- 개별 속성 업데이트 ---
+void updateNickname(String newNickname) {
+  _nickname = newNickname;
+  notifyListeners();
+}
 
-  // --- 개별 속성 업데이트 ---
-  void updateNickname(String newNickname) {
-    _nickname = newNickname;
-    notifyListeners();
-  }
+void updateEmail(String newEmail) {
+  _email = newEmail;
+  notifyListeners();
+}
 
-  void updateEmail(String newEmail) {
-    _email = newEmail;
-    notifyListeners();
-  }
+void updateGender(String newGender) {
+  _gender = newGender;
+  notifyListeners();
+}
 
-  void updateGender(String newGender) {
-    _gender = newGender;
-    notifyListeners();
-  }
+void updateConcerns(List newConcerns) {
+  _concerns = newConcerns;
+  notifyListeners();
+}
 
-  void updateConcerns(List newConcerns) {
-    _concerns = newConcerns;
-    notifyListeners();
-  }
+void updateLevel(int newLevel) {
+  _level = newLevel;
+  notifyListeners();
+}
 
-  void updateLevel(int newLevel) {
-    _level = newLevel;
-    notifyListeners();
-  }
+// 단순 도장 추가 - 필요없으면 지울 것
+void addStamp(String newStamp) {
+  _stamp.add(newStamp);
+  notifyListeners();
+}
 
-  // 단순 도장 추가 - 필요없으면 지울 것
-  void addStamp(String newStamp) {
-    _stamp.add(newStamp);
-    notifyListeners();
-  }
-
-  void updatePet(String newPet) {
+void updatePet(String newPet) {
   _pet = newPet;
   notifyListeners();
 }
 
-  // JSON 저장
-  Future<void> saveUserData() async {
-    try {
-      final directory = await getApplicationDocumentsDirectory();
-      final file = File('${directory.path}/user_data.json');
+// JSON 저장
+Future<void> saveUserData() async {
+  try {
+    final directory = await getApplicationDocumentsDirectory();
+    final file = File('${directory.path}/user_data.json');
 
-      String jsonString;
-      if (await file.exists()) {
-        jsonString = await file.readAsString();
-      } else {
-        jsonString = await rootBundle.loadString('assets/data/user_data.json');
-      }
+    String jsonString;
+    if (await file.exists()) {
+      jsonString = await file.readAsString();
+    } else {
+      jsonString = await rootBundle.loadString('assets/data/user_data.json');
+    }
 
-      List<dynamic> jsonData = json.decode(jsonString);
+    List<dynamic> jsonData = json.decode(jsonString);
 
-      final userIndex = jsonData.indexWhere((u) => u['email'] == _email);
+    final userIndex = jsonData.indexWhere((u) => u['email'] == _email);
 
-      if (userIndex != -1) {
-        jsonData[userIndex]['nickname'] = _nickname;
-        jsonData[userIndex]['gender'] = _gender;
-        jsonData[userIndex]['concerns'] = _concerns;
-        jsonData[userIndex]['level'] = _level;
-        jsonData[userIndex]['stamp'] = _stamp;
-      } else {
-        jsonData.add({
-          'email': _email,
-          'nickname': _nickname,
-          'gender': _gender,
-          'concerns': _concerns,
-          'level': _level,
-          'stamp': _stamp,
-        });
-      }
+    if (userIndex != -1) {
+      jsonData[userIndex]['nickname'] = _nickname;
+      jsonData[userIndex]['gender'] = _gender;
+      jsonData[userIndex]['concerns'] = _concerns;
+      jsonData[userIndex]['level'] = _level;
+      jsonData[userIndex]['stamp'] = _stamp;
+    } else {
+      jsonData.add({
+        'email': _email,
+        'nickname': _nickname,
+        'gender': _gender,
+        'concerns': _concerns,
+        'level': _level,
+        'stamp': _stamp,
+      });
+    }
 
-      await file.writeAsString(json.encode(jsonData));
-    } catch (e) {
+    await file.writeAsString(json.encode(jsonData));
+  } catch (e) {
       if (kDebugMode) {
         print('❗ saveUserData 에러: $e');
-      }
     }
   }
+}
   
   Future<void> loadUserData() async {
     try {

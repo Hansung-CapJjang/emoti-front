@@ -34,7 +34,7 @@ class _ConcernInputScreenState extends State<ConcernInputScreen> with SingleTick
         "세연",                          // newNickname
         "seyeon@example.com",           // newEmail
         "여성",                          // newGender
-        ["스트레스", "진로 고민"],        // newConcerns
+        ["스트레스", "진로 고민"],          // newConcerns
       );
     });
 
@@ -78,7 +78,6 @@ class _ConcernInputScreenState extends State<ConcernInputScreen> with SingleTick
     }
   });
 }
-
   // Future<void> _saveUserData() async {
   //   const String apiUrl = '';
 
@@ -179,7 +178,7 @@ class _ConcernInputScreenState extends State<ConcernInputScreen> with SingleTick
                 );
               }).toList(),
             ),
-            const SizedBox(height: 10,),
+            const SizedBox(height: 10),
             if (_isOverLimit)
               Transform.translate(
                 offset: Offset(_shakeAnimation.value - 4, 0),

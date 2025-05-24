@@ -70,8 +70,6 @@ class _StampBoardState extends State<StampBoard> {
     _pageController = PageController(initialPage: currentShowLevel - 1);
   });
 }
-
-
   }
 
   @override
@@ -386,15 +384,15 @@ void _showPopupDialog(BuildContext context) {
     barrierDismissible: true, // 팝업 바깥 클릭 시 닫기
     builder: (BuildContext dialogContext) {
       return AlertDialog(
-        backgroundColor: Colors.transparent, // 배경 투명 처리
-        contentPadding: EdgeInsets.zero, // 기본 패딩 제거
+        backgroundColor: Colors.transparent, 
+        contentPadding: EdgeInsets.zero,
         content: Container(
-          width: MediaQuery.of(context).size.width * 0.8, // 팝업 크기 조정
+          width: MediaQuery.of(context).size.width * 0.8, 
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
             color: Colors.white, // 팝업 배경색
-            borderRadius: BorderRadius.circular(10), // 모서리 둥글게
-            border: Border.all(color: Colors.black, width: 2), // 검은 테두리 추가
+            borderRadius: BorderRadius.circular(10), 
+            border: Border.all(color: Colors.black, width: 2), 
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -419,10 +417,10 @@ void _showPopupDialog(BuildContext context) {
               ),
               const SizedBox(height: 12),
               ElevatedButton(
-                onPressed: () => Navigator.of(dialogContext).pop(), // 팝업 닫기
+                onPressed: () => Navigator.of(dialogContext).pop(),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF798063), // 배경색
-                  foregroundColor: Colors.white, // 글씨색
+                  backgroundColor: const Color(0xFF798063),
+                  foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                     side: const BorderSide(color: Colors.black, width: 1.5),

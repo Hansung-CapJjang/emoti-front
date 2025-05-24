@@ -7,7 +7,6 @@ void main() {
   runApp(const EmotiApp());
 }
 
-
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 

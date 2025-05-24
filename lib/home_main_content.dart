@@ -9,8 +9,6 @@ import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'home_speech_bubble.dart';
-import 'package:flutter_application_1/user_provider.dart';
-
 
 class MainContent extends StatefulWidget {
   const MainContent({super.key});
@@ -20,8 +18,9 @@ class MainContent extends StatefulWidget {
 }
 
 class _MainContentState extends State<MainContent> {
+
   final List<int> stampCounts = [1, 3, 5, 8]; // 레벨별 필요 도장 수
-double characterProgress = 0.0;             // 퍼센트 저장용
+  double characterProgress = 0.0;             // 퍼센트 저장용
 
   // 랜덤 문구 리스트
   final List<String> speechTexts = [
@@ -58,7 +57,6 @@ double characterProgress = 0.0;             // 퍼센트 저장용
       int currentLevelStamps = stampCount - prevSum;
       double progressPercent = (currentLevelStamps / maxStampForLevel).clamp(0.0, 1.0);
 
-  
       Provider.of<UserProvider>(context, listen: false).updateStamp(List<String>.from(user['stamp']));
 
       setState(() {
@@ -83,45 +81,41 @@ double characterProgress = 0.0;             // 퍼센트 저장용
   }
 
   void _showEvolutionDialog(BuildContext context) {
-  showDialog(
-    context: context,
-    barrierDismissible: false,
-    builder: (BuildContext dialogContext) {
-      return AlertDialog(
-        title: const Text("펫이 진화했습니다!"),
-        content: const Text("축하합니다! 다음 레벨로 진화했어요 🐣"),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(dialogContext).pop();
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          title: const Text("펫이 진화했습니다!"),
+          content: const Text("축하합니다! 다음 레벨로 진화했어요 🐣"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(dialogContext).pop();
+                setState(() { 
+                  level += 1;
+                  int prevSum = level == 1 ? 0 : stampCounts.sublist(0, level - 1).reduce((a, b) => a + b);
+                  int maxStamps = stampCounts[level - 1];
+                  int ownedStamps = Provider.of<UserProvider>(context, listen: false).stamp.length;
+                  double newProgress = ((ownedStamps - prevSum) / maxStamps).clamp(0.0, 1.0);
+                  characterProgress = newProgress;
 
-              setState(() {
-                
-                level += 1;
-                int prevSum = level == 1 ? 0 : stampCounts.sublist(0, level - 1).reduce((a, b) => a + b);
-                int maxStamps = stampCounts[level - 1];
-                int ownedStamps = Provider.of<UserProvider>(context, listen: false).stamp.length;
-                double newProgress = ((ownedStamps - prevSum) / maxStamps).clamp(0.0, 1.0);
-                characterProgress = newProgress;
+                  pet = pet == 'Egg' && level == 2 ? '뱁새' : pet;
 
-                pet = pet == 'Egg' && level == 2 ? '뱁새' : pet;
-
-                String imageName = '${pet == "뱁새" ? "baebse" : "penguin"}${level - 1}.png';
-                characterIamgePath = 'assets/images/$imageName';
-              });
-              Provider.of<UserProvider>(context, listen: false).updateLevel(level);
-              Provider.of<UserProvider>(context, listen: false).updatePet(pet);
-              Provider.of<UserProvider>(context, listen: false).saveUserData();
-
-            },
-            child: const Text("확인"),
-          ),
-        ],
-      );
-    },
-  );
-}
-
+                  String imageName = '${pet == "뱁새" ? "baebse" : "penguin"}${level - 1}.png';
+                  characterIamgePath = 'assets/images/$imageName';
+                });
+                Provider.of<UserProvider>(context, listen: false).updateLevel(level);
+                Provider.of<UserProvider>(context, listen: false).updatePet(pet);
+                Provider.of<UserProvider>(context, listen: false).saveUserData();
+              },
+              child: const Text("확인"),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
 @override
 Widget build(BuildContext context) {
@@ -308,10 +302,9 @@ Widget build(BuildContext context) {
     ),
   );
 }
-
 }
 
-// 이미지를 갤러리에 저장하는 함수
+// 이미지를 갤러리에 저장
 Future<void> _saveCharacterImageToGallery(BuildContext context, String characterIamgePath) async {
   try {
     // 권한 요청

@@ -45,7 +45,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _loadUserData(); 
   }
 
-
   Future<void> _loadChatHistory() async {
     final userEmail = Provider.of<UserProvider>(context, listen: false).email; 
     final String jsonString = await rootBundle.loadString('assets/data/chat_data.json');
@@ -69,7 +68,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   });
 }
 
-
   Future<void> _loadUserData() async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     final String jsonString = await rootBundle.loadString('assets/data/user_data.json');
@@ -87,8 +85,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     userProvider.updateStamp(List<String>.from(user['stamp']));
   }
 }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -112,8 +108,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
       maxStampsThisLevel > 0 ? filledStampsThisLevel / maxStampsThisLevel : 0.0;
     final String percentText = '${(progressPercent * 100).round()}%';
 
-
-
     return Scaffold(
       backgroundColor: const Color(0xFFE9EBD9),
       appBar: AppBar(
@@ -130,12 +124,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
         centerTitle: true,
-        // actions: [
-        //   IconButton(
-        //     icon: const Icon(Icons.question_mark, color: Colors.black54),
-        //     onPressed: () {},
-        //   ),
-        // ],
       ),
       body: Column(
         children: [
@@ -201,10 +189,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Row(
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(left: 18),
+                      padding: const EdgeInsets.only(left: 18),
                       child: Text(
                         'Lv.$level',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontFamily: 'DungGeunMo',
                           fontSize: 17,
                           fontWeight: FontWeight.normal,
@@ -212,20 +200,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                       ),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     Padding(
-                      padding: EdgeInsets.only(right: 18),
+                      padding: const EdgeInsets.only(right: 18),
                       child: Text(
                         percentText, // ← 이건 맞는 코드입니다
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontFamily: 'DungGeunMo',
                           fontSize: 17,
                           fontWeight: FontWeight.normal,
                           color: Color.fromARGB(255, 87, 99, 43),
                         ),
                       ),
-
-
                     ),
                   ],
                 ),
@@ -237,8 +223,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: LinearProgressIndicator(
                       value: progressPercent,
                       minHeight: 15,
-                      backgroundColor: Color.fromARGB(136, 119, 137, 60),
-                      color: Color.fromARGB(255, 66, 75, 34),
+                      backgroundColor: const Color.fromARGB(136, 119, 137, 60),
+                      color: const Color.fromARGB(255, 66, 75, 34),
                     ),
                   ),
                 ),
@@ -312,9 +298,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ),
           ),
-
-          SizedBox(height: 15,),
-
+          const SizedBox(height: 15,),
           const Divider(indent: 30, endIndent: 30, thickness: 2, color: Color.fromARGB(100, 121, 138, 61)),
           Expanded(
             child: ListView(

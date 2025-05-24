@@ -72,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
         
       ),
       actions: [
-        Center( // 가운데 정렬
+        Center(
           child: ElevatedButton(
             onPressed: () => Navigator.of(dialogContext).pop(),
             style: ElevatedButton.styleFrom(
@@ -122,7 +122,6 @@ class _HomeScreenState extends State<HomeScreen> {
   );
 }
 
-
   void _onTabTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -135,14 +134,13 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFE9EBD9),
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        surfaceTintColor: Colors.transparent, // 색이 변하지 않음
+        surfaceTintColor: Colors.transparent,
         backgroundColor: Colors.transparent,
         elevation: 0,
         toolbarHeight: 100,
@@ -213,7 +211,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ],
                   ),
-                  // 👉 수정된 부분: IconButton으로 바꾸고 onPressed에 다이얼로그 연결
+                  // IconButton으로 바꾸고 onPressed에 다이얼로그 연결
                   Padding(
                     padding: const EdgeInsets.only(bottom: 4),
                     child: IconButton(
@@ -243,7 +241,7 @@ class _HomeScreenState extends State<HomeScreen> {
         transitionBuilder: (Widget child, Animation<double> animation) {
           return SlideTransition(
             position: Tween<Offset>(
-              begin: const Offset(1, 0), // 오른쪽에서 등장
+              begin: const Offset(1, 0),
               end: Offset.zero,
             ).animate(animation),
             child: child,

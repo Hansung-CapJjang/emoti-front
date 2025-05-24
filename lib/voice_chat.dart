@@ -12,7 +12,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 final _audioPlayer = AudioPlayer();
 final apiKey = dotenv.env['OPENAI_API_KEY'] ?? '';
 final pollyUrl = dotenv.env['POLLY_API_URL'] ?? '';
-final llamaApiUrl = 'https://ce75-113-198-83-196.ngrok-free.app/generate';
+const llamaApiUrl = 'https://ce75-113-198-83-196.ngrok-free.app/generate';
 
 class VoiceChatScreen extends StatefulWidget {
   final String counselorType;
@@ -48,7 +48,7 @@ void _initializeSpeech() async {
   _speechAvailable = await _speech.initialize();
 }
 
-  @override
+@override
 void dispose() {
   _audioPlayer.dispose();
   _speech.stop();
@@ -56,18 +56,17 @@ void dispose() {
   super.dispose();
 }
 
-  void _startTimer() {
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      setState(() => _elapsedSeconds++);
-    });
-  }
+void _startTimer() {
+  _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+    setState(() => _elapsedSeconds++);
+  });
+}
 
-  String _formatTime(int seconds) {
-    final minutes = (seconds ~/ 60).toString().padLeft(2, '0');
-    final secs = (seconds % 60).toString().padLeft(2, '0');
-    return "$minutes:$secs";
-  }
-
+String _formatTime(int seconds) {
+  final minutes = (seconds ~/ 60).toString().padLeft(2, '0');
+  final secs = (seconds % 60).toString().padLeft(2, '0');
+  return "$minutes:$secs";
+}
 
 void _startListening() async {
   if (_speech.isListening || isSpeaking || !_speechAvailable) return; // 중복 방지 - 음성 출력 중에는 마이크를 켜지 못하도록
@@ -92,51 +91,51 @@ void _startListening() async {
   }
 }
 
-  void _stopListening() {
-    _speech.stop();
-    setState(() => isListening = false);
-    if (recognizedText.trim().isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("말씀이 인식되지 않았어요.")),
-      );
-      return;
-    }
-
-    final text = recognizedText.trim(); // 저장해두고
-    recognizedText = ""; // 리셋
-
-    _sendMessage(text);
+void _stopListening() {
+  _speech.stop();
+  setState(() => isListening = false);
+  if (recognizedText.trim().isEmpty) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text("말씀이 인식되지 않았어요.")),
+    );
+    return;
   }
 
-  Future<void> _speakMessage(String message) async {
-    setState(() => isSpeaking = true);
-    try {
-      final response = await http.post(
-        Uri.parse(pollyUrl),
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({'text': message}),
-      );
+  final text = recognizedText.trim(); // 저장해두고
+  recognizedText = ""; // 리셋
 
-      if (response.statusCode == 200) {
-        final json = jsonDecode(response.body);
-        final url = json['url'];
-        if (_audioPlayer.playing) await _audioPlayer.stop();
-        if (url == null || url.toString().isEmpty) {
-          throw Exception("TTS 응답에 유효한 URL이 없습니다.");
-        }
-        await _audioPlayer.setUrl(url);
-        await _audioPlayer.play();
-      } else {
-        throw Exception("TTS 서버 오류: ${response.statusCode}");
+  _sendMessage(text);
+}
+
+Future<void> _speakMessage(String message) async {
+  setState(() => isSpeaking = true);
+  try {
+    final response = await http.post(
+      Uri.parse(pollyUrl),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({'text': message}),
+    );
+
+    if (response.statusCode == 200) {
+      final json = jsonDecode(response.body);
+      final url = json['url'];
+      if (_audioPlayer.playing) await _audioPlayer.stop();
+      if (url == null || url.toString().isEmpty) {
+        throw Exception("TTS 응답에 유효한 URL이 없습니다.");
       }
-    } catch (e) {
+      await _audioPlayer.setUrl(url);
+      await _audioPlayer.play();
+    } else {
+      throw Exception("TTS 서버 오류: ${response.statusCode}");
+    }
+  } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Polly 오류: $e')),
       );
-    } finally {
+  } finally {
       setState(() => isSpeaking = false);
-    }
   }
+}
 
 Future<String> _fetchLlamaReply(String userMessage) async {
   final userProvider = Provider.of<UserProvider>(context, listen: false);
@@ -168,8 +167,7 @@ Future<String> _fetchLlamaReply(String userMessage) async {
   }
 }
 
-
-  Future<String> _refineWithGPT(String llamaReply, String userMessage) async {
+Future<String> _refineWithGPT(String llamaReply, String userMessage) async {
   String _truncateToThreeSentences(String text) {
     final sentences = text.split(RegExp(r'(?<=[.!?])\s+'));
     if (sentences.length <= 3) return text;
@@ -289,43 +287,43 @@ $name 님은 $gender이며, 주된 고민은 '$concern' 입니다.
   }
 }
 
-  Future<void> _fetchInitialBotMessage() async {
-    final userProvider = Provider.of<UserProvider>(context, listen: false);
-    final userName = userProvider.nickname;
-    final userConcerns = userProvider.concerns.join(', ');
-    final initialMessage = _generateInitialMessage(widget.counselorType, userName, userConcerns);
+Future<void> _fetchInitialBotMessage() async {
+  final userProvider = Provider.of<UserProvider>(context, listen: false);
+  final userName = userProvider.nickname;
+  final userConcerns = userProvider.concerns.join(', ');
+  final initialMessage = _generateInitialMessage(widget.counselorType, userName, userConcerns);
 
-    setState(() {
-      _messages.add({'text': initialMessage, 'isUser': false});
-    });
-    await _speakMessage(initialMessage);
-  }
+  setState(() {
+    _messages.add({'text': initialMessage, 'isUser': false});
+  });
+  await _speakMessage(initialMessage);
+}
 
-  void _sendMessage(String text) async {
+void _sendMessage(String text) async {
 
-    if (_audioPlayer.playing) await _audioPlayer.stop();
+  if (_audioPlayer.playing) await _audioPlayer.stop();
 
-    setState(() {
-      _isLoading = true;
-      _messages.add({'text': text, 'isUser': true});
-    });
+  setState(() {
+    _isLoading = true;
+    _messages.add({'text': text, 'isUser': true});
+  });
 
-    try {
-    final llamaReply = await _fetchLlamaReply(text);
-    final refinedReply = await _refineWithGPT(llamaReply, text);
+  try {
+  final llamaReply = await _fetchLlamaReply(text);
+  final refinedReply = await _refineWithGPT(llamaReply, text);
 
-    setState(() {
-      _messages.add({'text': refinedReply, 'isUser': false});
-    });
-    await _speakMessage(refinedReply);
+  setState(() {
+    _messages.add({'text': refinedReply, 'isUser': false});
+  });
+  await _speakMessage(refinedReply);
   } catch (e) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('응답 오류: $e')));
   } finally {
     setState(() => _isLoading = false);
   }
-  }
+}
 
-  void _showConfirmEndDialog() {
+void _showConfirmEndDialog() {
   showDialog(
     context: context,
     barrierDismissible: true,
@@ -369,7 +367,7 @@ $name 님은 $gender이며, 주된 고민은 '$concern' 입니다.
                   ElevatedButton(
                     onPressed: () {
                       Navigator.pop(dialogContext); // 확인 팝업 닫기
-                      _showFinalStampDialog();             // 도장 팝업 띄우기
+                      _showFinalStampDialog();      // 도장 팝업 띄우기
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF798063),
@@ -391,43 +389,43 @@ $name 님은 $gender이며, 주된 고민은 '$concern' 입니다.
   );
 }
 
-  Future<String> _evaluateFinalStampWithGPT() async {
+Future<String> _evaluateFinalStampWithGPT() async {
 
-    const apiUrl = 'https://api.openai.com/v1/chat/completions';
+  const apiUrl = 'https://api.openai.com/v1/chat/completions';
 
-    final headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $apiKey',
-    };
+  final headers = {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer $apiKey',
+  };
 
-    final analysisPrompt =
-        '너는 심리 상담 대화 분석가야. 이 대화를 보고 사용자에게 줄 감정 도장을 결정해. 희망, 용기, 결단, 성찰, 회복 중 하나만 정확히 답해. 다른 설명 없이 단어 하나로만 답해.';
+  const analysisPrompt =
+    '너는 심리 상담 대화 분석가야. 이 대화를 보고 사용자에게 줄 감정 도장을 결정해. 희망, 용기, 결단, 성찰, 회복 중 하나만 정확히 답해. 다른 설명 없이 단어 하나로만 답해.';
 
-    final body = jsonEncode({
-      'model': 'gpt-3.5-turbo',
-      'messages': [
-        {'role': 'system', 'content': analysisPrompt},
-        ..._messages.map((m) => {
-          'role': m['isUser'] ? 'user' : 'assistant',
-          'content': m['text'],
-        }),
-        {'role': 'user', 'content': '이 대화에서 사용자에게 부여할 감정 도장은 무엇입니까? 희망, 용기, 결단, 성찰, 회복 중 하나로만 답하시오.'},
-      ],
-    });
+  final body = jsonEncode({
+    'model': 'gpt-3.5-turbo',
+    'messages': [
+      {'role': 'system', 'content': analysisPrompt},
+      ..._messages.map((m) => {
+        'role': m['isUser'] ? 'user' : 'assistant',
+        'content': m['text'],
+      }),
+      {'role': 'user', 'content': '이 대화에서 사용자에게 부여할 감정 도장은 무엇입니까? 희망, 용기, 결단, 성찰, 회복 중 하나로만 답하시오.'},
+    ],
+  });
 
-    final response = await http.post(Uri.parse(apiUrl), headers: headers, body: body);
+  final response = await http.post(Uri.parse(apiUrl), headers: headers, body: body);
 
-    if (response.statusCode == 200) {
-      final decoded = utf8.decode(response.bodyBytes);
-      final data = jsonDecode(decoded);
-      final reply = data['choices'][0]['message']['content'].trim();
-      return reply;
-    } else {
+  if (response.statusCode == 200) {
+    final decoded = utf8.decode(response.bodyBytes);
+    final data = jsonDecode(decoded);
+    final reply = data['choices'][0]['message']['content'].trim();
+    return reply;
+  } else {
       throw Exception('API 호출 실패: ${response.statusCode}');
-    }
   }
+}
 
-  void _showEndDialog(BuildContext context) {
+void _showEndDialog(BuildContext context) {
   Future.delayed(Duration(milliseconds: 100), () {
     showDialog(
       context: context,
@@ -481,20 +479,19 @@ $name 님은 $gender이며, 주된 고민은 '$concern' 입니다.
                         Navigator.pop(dialogContext);        // 첫 번째 팝업 닫기
                         _showFinalStampDialog();             // 도장 결과 팝업 띄우기!
                       },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF798063),
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      side: const BorderSide(color: Colors.black, width: 1.5),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF798063),
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        side: const BorderSide(color: Colors.black, width: 1.5),
+                        ),
+                      ),
+                      child: const Text(
+                        "예",
+                        style: TextStyle(fontSize: 16, fontFamily: 'DungGeunMo'),
                       ),
                     ),
-                    child: const Text(
-                      "예",
-                      style: TextStyle(fontSize: 16, fontFamily: 'DungGeunMo'),
-                    ),
-                    ),
-
                   ],
                 ),
               ],
@@ -749,7 +746,7 @@ void _showFinalStampDialog() async {
             ),
           ),
           if (_isLoading)
-  const Padding(
+    const Padding(
     padding: EdgeInsets.symmetric(vertical: 20),
     child: CircularProgressIndicator(),
   ),

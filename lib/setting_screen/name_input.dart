@@ -193,9 +193,7 @@ class _NameInputScreenState extends State<NameInputScreen>
                   ),
                 ),
               ),
-
               const SizedBox(height: 50), // 키보드로 가려지는 것 방지
-
               // 다음 버튼
                 Center(
                 child: SizedBox(

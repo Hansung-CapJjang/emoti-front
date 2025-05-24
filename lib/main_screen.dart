@@ -46,7 +46,7 @@ class MainScreenState extends State<MainScreen> {
         items: [
           BottomNavigationBarItem(
             icon: ImageIcon(
-              AssetImage('assets/images/homeicon.png'),
+              const AssetImage('assets/images/homeicon.png'),
               size: 40,
               color: _currentIndex == 0 ? const Color(0xFF474C34) : Colors.grey,
             ),
@@ -54,7 +54,7 @@ class MainScreenState extends State<MainScreen> {
           ),
           BottomNavigationBarItem(
             icon: ImageIcon(
-              AssetImage('assets/images/messageicon.png'),
+              const AssetImage('assets/images/messageicon.png'),
               size: 40,
               color: _currentIndex == 1 ? const Color(0xFF474C34) : Colors.grey,
             ),
@@ -62,7 +62,7 @@ class MainScreenState extends State<MainScreen> {
           ),
           BottomNavigationBarItem(
             icon: ImageIcon(
-              AssetImage('assets/images/usericon.png'),
+              const AssetImage('assets/images/usericon.png'),
               size: 40,
               color: _currentIndex == 2 ? const Color(0xFF474C34) : Colors.grey,
             ),
