@@ -27,6 +27,17 @@ class _ConcernInputScreenState extends State<ConcernInputScreen> with SingleTick
   @override
   void initState() {
     super.initState();
+
+    // context 안전하게 사용
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<UserProvider>(context, listen: false).setUser(
+        "세연",                          // newNickname
+        "seyeon@example.com",           // newEmail
+        "여성",                          // newGender
+        ["스트레스", "진로 고민"],        // newConcerns
+      );
+    });
+
     _controller = AnimationController(
       duration: const Duration(milliseconds: 400),
       vsync: this,
@@ -94,7 +105,8 @@ class _ConcernInputScreenState extends State<ConcernInputScreen> with SingleTick
 
   void _onNextPressed() {
     if (_selectedConcerns.isNotEmpty) {
-      Provider.of<UserProvider>(navigatorKey.currentContext!, listen: false).updateConcerns(_selectedConcerns.toList());
+      // Provider.of<UserProvider>(navigatorKey.currentContext!, listen: false).updateConcerns(_selectedConcerns.toList());
+      Provider.of<UserProvider>(context, listen: false).updateConcerns(_selectedConcerns.toList());
       // _saveUserData();
       
       if (widget.isEdit) {
