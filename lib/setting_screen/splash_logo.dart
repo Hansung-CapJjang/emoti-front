@@ -17,7 +17,6 @@ void main() {
   );
 }
 
-
 class EmotiApp extends StatelessWidget {
   const EmotiApp({super.key});
 
@@ -34,9 +33,6 @@ class EmotiApp extends StatelessWidget {
     );
   }
 }
-
-
-
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -61,11 +57,11 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   _fadeAnimation = Tween<double>(begin: 0, end: 1).animate(_fadeController);
   _fadeController.forward();
 
-  //로그인여부
+  // 로그인 여부
   Future.delayed(const Duration(seconds: 2), () async {
     final prefs = await SharedPreferences.getInstance();
-    final isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
-    final email = prefs.getString('email') ?? "";
+    final isLoggedIn = prefs.getBool('isLoggedIn') ?? true; // 가정
+    final email = prefs.getString('email') ?? "emoti.com"; // 가정
 
     if (mounted && isLoggedIn && email.isNotEmpty) {
       final userProvider = Provider.of<UserProvider>(context, listen: false);

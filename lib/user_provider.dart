@@ -12,7 +12,6 @@ class UserProvider with ChangeNotifier {
   String _pet = "Egg"; 
   String get pet => _pet;
 
-
   int _level = 1;
   List<String> _stamp = [];
 
@@ -24,8 +23,6 @@ class UserProvider with ChangeNotifier {
   int get level => _level;
   List<String> get stamp => _stamp;
 
-  
-
   // --- 전체 사용자 정보 설정 ---
   void setUser(String newNickname, String newEmail, String newGender, List newConcerns) {
     _nickname = newNickname;
@@ -34,6 +31,30 @@ class UserProvider with ChangeNotifier {
     _concerns = newConcerns;
     notifyListeners();
   }
+
+  // 오늘 도장을 받은 적 있는지 확인
+  bool hasReceivedStampToday() {
+  final today = DateTime.now();
+  return _stamp.any((s) {
+    final parts = s.split('|');
+    if (parts.length != 2) return false;
+    return parts[0] == '${today.year}-${today.month}-${today.day}';
+  });
+}
+
+void updateStamp(List<String> newStampList) {
+  _stamp = newStampList;
+  notifyListeners();
+}
+
+// 날짜 포함해서 도장 추가 (하루 1회 제한용)
+void addTodayStamp(String stampValue) {
+  final today = DateTime.now();
+  final stampEntry = '${today.year}-${today.month}-${today.day}|$stampValue';
+  _stamp.add(stampEntry);
+  notifyListeners();
+}
+
 
   // --- 개별 속성 업데이트 ---
   void updateNickname(String newNickname) {
@@ -61,11 +82,7 @@ class UserProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void updateStamp(List<String> newStamp) {
-    _stamp = newStamp;
-    notifyListeners();
-  }
-
+  // 단순 도장 추가 - 필요없으면 지울 것
   void addStamp(String newStamp) {
     _stamp.add(newStamp);
     notifyListeners();
@@ -76,8 +93,7 @@ class UserProvider with ChangeNotifier {
   notifyListeners();
 }
 
-
-  /// ✅ JSON 저장
+  // JSON 저장
   Future<void> saveUserData() async {
     try {
       final directory = await getApplicationDocumentsDirectory();
@@ -118,7 +134,6 @@ class UserProvider with ChangeNotifier {
       }
     }
   }
-
   
   Future<void> loadUserData() async {
     try {
