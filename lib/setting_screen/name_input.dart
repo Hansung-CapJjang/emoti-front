@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
 import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'first_intro.dart';
-import 'gender_input.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_application_1/setting_screen/first_intro.dart';
+import 'package:flutter_application_1/setting_screen/gender_input.dart';
+import 'package:flutter_application_1/provider/user_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_application_1/user_provider.dart';
+import 'package:http/http.dart' as http;
 
 class NameInputScreen extends StatefulWidget {
   final bool isEdit;
@@ -15,33 +15,31 @@ class NameInputScreen extends StatefulWidget {
   _NameInputScreenState createState() => _NameInputScreenState();
 }
 
-class _NameInputScreenState extends State<NameInputScreen>
-    with SingleTickerProviderStateMixin {
-
+class _NameInputScreenState extends State<NameInputScreen> with SingleTickerProviderStateMixin {
   final TextEditingController _controller = TextEditingController();
   bool _isButtonEnabled = false;
   bool _showWarning = false;
   late AnimationController _animationController;
   late Animation<double> _shakeAnimation;
 
-  // 서버로 이름 전송
+  // 이름 서버 전송
   Future<void> _sendNameToServer(String name) async {
-    const String apiUrl = ''; // Spring Boot 서버 주소
+    const String apiUrl = ''; // TODO: 서버 주소 입력
 
     try {
       final response = await http.post(
         Uri.parse(apiUrl),
         headers: {"Content-Type": "application/json"},
-        body: jsonEncode({"name": name}), // JSON 변환
+        body: jsonEncode({"name": name}),
       );
 
       if (response.statusCode == 200) {
-        print("이름이 성공적으로 저장되었습니다!");
+        print("✅ 이름 저장 성공");
       } else {
-        print("서버 오류 발생: ${response.body}");
+        print("❗ 서버 오류: ${response.body}");
       }
     } catch (e) {
-      print("네트워크 오류: $e");
+      print("❗ 네트워크 오류: $e");
     }
   }
 
@@ -134,7 +132,6 @@ class _NameInputScreenState extends State<NameInputScreen>
               ),
               const SizedBox(height: 20),
 
-              // 이름 입력 필드
               AnimatedBuilder(
                 animation: _shakeAnimation,
                 builder: (context, child) {
@@ -174,7 +171,6 @@ class _NameInputScreenState extends State<NameInputScreen>
                 },
               ),
 
-              // 경고 메시지
               AnimatedOpacity(
                 opacity: _showWarning ? 1.0 : 0.0,
                 duration: const Duration(milliseconds: 300),
@@ -193,29 +189,34 @@ class _NameInputScreenState extends State<NameInputScreen>
                   ),
                 ),
               ),
-              const SizedBox(height: 50), // 키보드로 가려지는 것 방지
-              // 다음 버튼
-                Center(
+
+              const SizedBox(height: 50),
+
+              Center(
                 child: SizedBox(
                   width: 180,
                   height: 50,
                   child: ElevatedButton(
                     onPressed: _isButtonEnabled
-                    ? () {
-                      String name = _controller.text.trim();
-                      Provider.of<UserProvider>(navigatorKey.currentContext!, listen: false).updateNickname(name);
-                      _sendNameToServer(name);
-                      if (widget.isEdit) {
-                        Navigator.pop(context);
-                      }
-                      else {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const GenderInputScreen()));
-                      }
-                    }
-                    : null,
+                        ? () {
+                            final name = _controller.text.trim();
+                            final userProvider = Provider.of<UserProvider>(context, listen: false);
+
+                            userProvider.updateNickname(name);
+                            _sendNameToServer(name);
+
+                            if (widget.isEdit) {
+                              Navigator.pop(context);
+                            } else {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const GenderInputScreen(),
+                                ),
+                              );
+                            }
+                          }
+                        : null,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF5A5F3C),
                       foregroundColor: Colors.white,
@@ -230,6 +231,7 @@ class _NameInputScreenState extends State<NameInputScreen>
                   ),
                 ),
               ),
+
               const SizedBox(height: 20),
             ],
           ),

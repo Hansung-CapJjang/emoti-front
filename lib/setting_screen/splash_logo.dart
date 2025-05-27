@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_application_1/user_provider.dart'; 
+import 'package:flutter_application_1/provider/user_provider.dart'; 
 import 'package:provider/provider.dart'; 
 import '../main_screen.dart'; 
 
@@ -57,21 +57,23 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   _fadeController.forward();
 
   // 로그인 여부
-  Future.delayed(const Duration(seconds: 2), () async {
-    final prefs = await SharedPreferences.getInstance();
-    final isLoggedIn = prefs.getBool('isLoggedIn') ?? true; // 가정 - 수정
-    final email = prefs.getString('email') ?? "emoti.com"; // 가정 - 수정
+Future.delayed(const Duration(seconds: 2), () async {
+  final prefs = await SharedPreferences.getInstance();
+  final isLoggedIn = prefs.getBool('isLoggedIn') ?? false; // 기본값: false
+  final userId = prefs.getString('userId') ?? ""; // email → userId
 
-    if (mounted && isLoggedIn && email.isNotEmpty) {
-      final userProvider = Provider.of<UserProvider>(context, listen: false);
-      userProvider.updateEmail(email);
-      await userProvider.loadUserData();
-    }
+  if (mounted && isLoggedIn && userId.isNotEmpty) {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    userProvider.setId(userId); // setEmail → setId
+    await userProvider.loadUserData(); // userId 기반 데이터 불러오기
+  }
 
-    Widget nextScreen = isLoggedIn ? MainScreen() : const LoginScreen();
+  Widget nextScreen = (isLoggedIn && userId.isNotEmpty)
+      ? MainScreen()
+      : const LoginScreen();
 
-    Navigator.pushReplacement(
-      context,
+  Navigator.pushReplacement(
+    context,
       PageRouteBuilder(
         transitionDuration: const Duration(milliseconds: 800),
         pageBuilder: (_, __, ___) => nextScreen,

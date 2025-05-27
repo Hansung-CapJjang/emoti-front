@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:flutter/services.dart';
-import 'package:flutter_application_1/user_provider.dart';
+import 'package:flutter_application_1/provider/user_provider.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:math';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
@@ -18,11 +18,14 @@ class MainContent extends StatefulWidget {
 }
 
 class _MainContentState extends State<MainContent> {
+  final List<int> stampCounts = [1, 3, 5, 8];
+  double characterProgress = 0.0;
+  late String randomSpeechText;
 
-  final List<int> stampCounts = [1, 3, 5, 8]; // 레벨별 필요 도장 수
-  double characterProgress = 0.0;             // 퍼센트 저장용
+  String characterIamgePath = 'assets/images/egg.png';
+  String pet = 'Egg';
+  int level = 1;
 
-  // 랜덤 문구 리스트
   final List<String> speechTexts = [
     "How can I help you?",
     "I'm here for you!",
@@ -32,22 +35,16 @@ class _MainContentState extends State<MainContent> {
     "Hi~"
   ];
 
-  // 랜덤 문구를 저장할 변수
-  late String randomSpeechText;
-
-  String characterIamgePath = 'assets/images/egg.png';
-  String pet = "Egg";
-  int level = 1;
-
   Future<void> _getLoadData() async {
-    final userEmail = Provider.of<UserProvider>(context, listen: false).email;
+    final userId = Provider.of<UserProvider>(context, listen: false).id;
     final String jsonString = await rootBundle.loadString('assets/data/user_data.json');
     final List<dynamic> jsonData = json.decode(jsonString);
 
-    final user = jsonData.cast<Map<String, dynamic>>().firstWhere(
-      (u) => u['email'] == userEmail,
-      orElse: () => {},
-    );
+    
+final user = jsonData.cast<Map<String, dynamic>>().firstWhere(
+  (u) => u['id'] == userId,
+  orElse: () => {},
+);
 
     if (user.isNotEmpty) {
       int stampCount = List<String>.from(user['stamp']).length;
@@ -92,7 +89,7 @@ class _MainContentState extends State<MainContent> {
             TextButton(
               onPressed: () {
                 Navigator.of(dialogContext).pop();
-                setState(() { 
+                setState(() {
                   level += 1;
                   int prevSum = level == 1 ? 0 : stampCounts.sublist(0, level - 1).reduce((a, b) => a + b);
                   int maxStamps = stampCounts[level - 1];
@@ -101,7 +98,6 @@ class _MainContentState extends State<MainContent> {
                   characterProgress = newProgress;
 
                   pet = pet == 'Egg' && level == 2 ? '뱁새' : pet;
-
                   String imageName = '${pet == "뱁새" ? "baebse" : "penguin"}${level - 1}.png';
                   characterIamgePath = 'assets/images/$imageName';
                 });

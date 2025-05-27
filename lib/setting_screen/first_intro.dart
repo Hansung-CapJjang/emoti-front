@@ -1,39 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/user_provider.dart';
 import 'package:provider/provider.dart';
-import 'name_input.dart';
+import 'package:flutter_application_1/provider/user_provider.dart';
 import 'package:flutter_application_1/notification_service.dart';
+import 'package:flutter_application_1/setting_screen/name_input.dart';
 
-final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await NotificationService().initialize();
-
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => UserProvider()),
-      ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        navigatorKey: navigatorKey, // navigatorKey 설정
-        home: EmotiApp(),
-      ),
-    ),
-  );
-}
-
-class EmotiApp extends StatelessWidget {
-  const EmotiApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: FirstScreen(),
-    );
-  }
 }
 
 void navigateWithAnimation(BuildContext context, Widget nextScreen) {
@@ -116,7 +90,6 @@ class SecondScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFE9EBD9),
-
       body: Column(
         children: [
           const SizedBox(height: 130),
@@ -163,7 +136,7 @@ class SecondScreen extends StatelessWidget {
 }
 
 class ProgressBar extends StatefulWidget {
-  final double progress; 
+  final double progress; // 0.0 ~ 1.0
 
   const ProgressBar({super.key, required this.progress});
 
@@ -183,7 +156,6 @@ class _ProgressBarState extends State<ProgressBar> with SingleTickerProviderStat
       vsync: this,
     );
     _animation = Tween<double>(begin: 0, end: widget.progress).animate(_controller);
-
     _controller.forward();
   }
 

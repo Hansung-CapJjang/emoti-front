@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/login.dart';
-import 'package:flutter_application_1/setting_screen/concern_input.dart';
-import 'package:flutter_application_1/setting_screen/name_input.dart';
+import 'login.dart';
+import 'setting_screen/concern_input.dart';
+import 'setting_screen/name_input.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_application_1/user_provider.dart';
-import 'package:flutter_application_1/notification_service.dart';
+import 'dto/chat_dto.dart';
+import 'provider/user_provider.dart';
+import 'notification_service.dart';
 import 'dart:convert';
-import 'package:flutter/services.dart';
+import 'main.dart';
+import 'package:http/http.dart' as http;
 
 void main() {
   runApp(const MyApp());
@@ -35,56 +38,37 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool isOn = false;
   bool isExpanded = false;
   late NotificationService notificationService;
-  List<Map<String, dynamic>> chatRecords = [];
+  List<ChatDTO> chatRecords = [];
 
   @override
   void initState() {
     super.initState();
     notificationService = NotificationService();
-    _loadChatHistory();
-    _loadUserData(); 
+    _loadChatData();
   }
 
-  Future<void> _loadChatHistory() async {
-    final userEmail = Provider.of<UserProvider>(context, listen: false).email; 
-    final String jsonString = await rootBundle.loadString('assets/data/chat_data.json');
-    final List<dynamic> jsonData = json.decode(jsonString);
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _loadChatData();
+  }
 
-    final records = jsonData
-    .where((item) => item['email'] == userEmail)
-    .map<Map<String, dynamic>>((item) {
-      final timestamp = DateTime.parse(item['timestamp']);
-      final formattedDate = '${timestamp.month}/${timestamp.day}';
-      final stamp = item['stamp'] ?? '희망';
-
-    return {
-      'date': formattedDate,
-      'stamp': stamp,
-    };
-  }).toList();
-
-  setState(() {
-    chatRecords = records; 
-  });
-}
-
-  Future<void> _loadUserData() async {
+  Future<void> _loadChatData() async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
-    final String jsonString = await rootBundle.loadString('assets/data/user_data.json');
-    final List<dynamic> jsonData = json.decode(jsonString);
+    final userId = userProvider.id;
 
-    final user = jsonData.cast<Map<String, dynamic>>().firstWhere(
-      (u) => u['email'] == userProvider.email,
-      orElse: () => {},
+    final response = await http.get(
+      Uri.parse('https://www.emoti.kr/chats/get/user?userId=$userId'),
     );
 
-  if (user.isNotEmpty) {
-    userProvider.updateGender(user['gender']);
-    userProvider.updateConcerns(List<String>.from(user['concerns']));
-    userProvider.updateLevel(user['level']);
-    userProvider.updateStamp(List<String>.from(user['stamp']));
+    if (response.statusCode == 200) {
+      final List<dynamic> data = jsonDecode(response.body);
+      chatRecords = data.map((e) => ChatDTO.fromJson(e)).toList();
+      setState(() {});
+    } else {
+      print("채팅 기록 로딩 실패: ${response.statusCode}");
+    }
   }
-}
 
   @override
   Widget build(BuildContext context) {
@@ -92,13 +76,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     final List<int> stampCounts = [1, 3, 5, 8];
     final int level = user.level;
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
     final int totalStamps = user.stamp.length;
 
     final int maxStampsThisLevel = stampCounts[level - 1];
 
     final int filledStampsThisLevel = () {
       if (level == 1) return totalStamps;
-      final prevSum = stampCounts.sublist(0, level - 1).reduce((a, b) => a + b);
+      final prevSum = level > 0 ? stampCounts.sublist(0, level - 1).reduce((a, b) => a + b) : 0;
       return (totalStamps - prevSum).clamp(0, maxStampsThisLevel);
     }();
 
@@ -167,14 +152,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         )
                       ],
                     ),
-                        Text(
-                          '도장 현황 $stampProgressText',
-                          style: const TextStyle(
-                            fontFamily: 'DungGeunMo',
-                            fontSize: 14,
-                            color: Colors.black54,
-                          ),
-                        ),
+                    Text(
+                      '도장 현황 $stampProgressText',
+                      style: const TextStyle(
+                        fontFamily: 'DungGeunMo',
+                        fontSize: 14,
+                        color: Colors.black54,
+                      ),
+                    ),
                   ],
                 )
               ],
@@ -204,7 +189,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Padding(
                       padding: const EdgeInsets.only(right: 18),
                       child: Text(
-                        percentText, // ← 이건 맞는 코드입니다
+                        percentText,
                         style: const TextStyle(
                           fontFamily: 'DungGeunMo',
                           fontSize: 17,
@@ -250,7 +235,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         '성찰': 'assets/images/reflectionstamp.png',
                         '용기': 'assets/images/couragestamp.png',
                       };
-                      final imagePath = imageMap[record['stamp']] ?? 'assets/images/hopestamp.png';
+                      final imagePath = imageMap[record.stamp] ?? 'assets/images/hopestamp.png';
                       return Container(
                         width: 100,
                         margin: const EdgeInsets.symmetric(horizontal: 5),
@@ -268,7 +253,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(record['date'], style: const TextStyle(fontFamily: "DungGeunMo", fontSize: 16, color: Color.fromARGB(255, 73, 76, 57))),
+                            Text(DateFormat('MM/dd').format(record.timestamp), style: const TextStyle(fontFamily: "DungGeunMo", fontSize: 16, color: Color.fromARGB(255, 73, 76, 57))),
                             Image.asset(imagePath, width: 40, height: 40),
                           ],
                         ),
@@ -337,7 +322,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const ConcernInputScreen(isEdit: true),
+                    builder: (context) => ConcernInputScreen(isEdit: true),
                   ),
                 );
               },
@@ -345,11 +330,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ],
         ],
       ),
-      onTap: () {
-        setState(() {
-          isExpanded = !isExpanded;
-        });
-      },
+onTap: () {
+  setState(() {
+    isExpanded = !isExpanded; // 고민 리스트 열고 닫기만 처리
+  });
+},
     );
   }
 
@@ -382,21 +367,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildLogoutItem(IconData icon, String title) {
-    return ListTile(
-      contentPadding: const EdgeInsets.only(left: 40, right: 20),
-      leading: Icon(icon, color: Colors.black54),
-      title: Text(title, style: const TextStyle(fontFamily: 'DungGeunMo', fontSize: 16)),
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => LoginScreen(),
-          ),
-        );
-      },
-    );
-  }
+Widget _buildLogoutItem(IconData icon, String title) {
+  return ListTile(
+    contentPadding: const EdgeInsets.only(left: 40, right: 20),
+    leading: Icon(icon, color: Colors.black54),
+    title: Text(title, style: const TextStyle(fontFamily: 'DungGeunMo', fontSize: 16)),
+onTap: () async {
+  final userProvider = Provider.of<UserProvider>(context, listen: false);
+
+  shouldHandleInitialLink = false; // 🚫 초기 딥링크 무시
+  userProvider.clear();
+
+  await Navigator.pushAndRemoveUntil(
+    context,
+    MaterialPageRoute(builder: (_) => const LoginScreen()),
+    (route) => false,
+  );
+},
+
+  );
+}
+
 
   Widget _buildToggleMenuItem(String title, IconData icon) {
     return ListTile(
@@ -424,15 +415,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildDeleteItem(String title) {
-    return ListTile(
-      contentPadding: const EdgeInsets.only(left: 40, right: 20),
-      title: Text(title, style: const TextStyle(fontFamily: 'DungGeunMo', fontSize: 16, color: Colors.grey)),
-      onTap: () {
-        _showConfirmDialog(context);
-      },
-    );
-  }
+Widget _buildDeleteItem(String title) {
+  return ListTile(
+    contentPadding: const EdgeInsets.only(left: 40, right: 20),
+    title: Text(
+      title,
+      style: const TextStyle(
+        fontFamily: 'DungGeunMo',
+        fontSize: 16,
+        color: Colors.grey,
+      ),
+    ),
+    onTap: () {
+      _showConfirmDialog(context); // 다이얼로그만 열기
+    },
+  );
+}
+
 
   void _showConfirmDialog(BuildContext context) {
     showDialog(
@@ -483,12 +482,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     const SizedBox(width: 12),
                     ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         Navigator.pop(dialogContext);
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(builder: (context) => LoginScreen()),
-                        );
+
+                        final userProvider = Provider.of<UserProvider>(context, listen: false);
+                        final userId = userProvider.id;
+
+                        try {
+                          final response = await http.delete(
+                            Uri.parse('https://www.emoti.kr/users?id=$userId'),
+                          );
+
+                          if (response.statusCode == 204) {
+                            userProvider.clear();
+                            shouldHandleInitialLink = false;
+                            Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(builder: (_) => const LoginScreen()),
+                              (route) => false,
+                            );
+                          } else {
+                            _showErrorSnackBar(context, '탈퇴에 실패했습니다.');
+                          }
+                        } catch (e) {
+                          _showErrorSnackBar(context, '네트워크 오류가 발생했습니다.');
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF798063),
@@ -510,6 +528,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         );
       },
+    );
+  }
+
+  void _showErrorSnackBar(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
     );
   }
 }

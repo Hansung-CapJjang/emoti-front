@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_application_1/user_provider.dart';
+import 'provider/user_provider.dart';
 import 'package:provider/provider.dart';
 
 class StampBoard extends StatefulWidget {
@@ -30,6 +30,12 @@ class _StampBoardState extends State<StampBoard> {
     super.dispose();
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _loadUserData();
+  }
+
   void _nextLevel() {
     if (currentShowLevel < stampCounts.length - 1) {
       _pageController?.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
@@ -42,34 +48,14 @@ class _StampBoardState extends State<StampBoard> {
     }
   }
 
-  void _loadUserData() async {
-    final userEmail = Provider.of<UserProvider>(context, listen: false).email;
-    final String jsonString = await rootBundle.loadString('assets/data/user_data.json');
-    final List<dynamic> jsonData = json.decode(jsonString);
-
-    final user = jsonData.cast<Map<String, dynamic>>().firstWhere(
-      (u) => u['email'] == userEmail,
-      orElse: () => {},
-    );
-
-    if (user.isNotEmpty) {
-  final userProvider = Provider.of<UserProvider>(context, listen: false);
-
-  setState(() {
-    currentLevel = user['level'];
-    userStamps = List<String>.from(user['stamp']);
-    currentShowLevel = currentLevel;
-    _pageController = PageController(initialPage: currentShowLevel - 1);
-
-    // 이 안에 있어도 되고 밖으로 빼도 됨 (setState는 UI만 바꿈)
-    userProvider.updateLevel(currentLevel);
-    userProvider.updateStamp(userStamps);
-  });
-} else {
-  setState(() {
-    _pageController = PageController(initialPage: currentShowLevel - 1);
-  });
-}
+  void _loadUserData() {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    setState(() {
+      currentLevel = userProvider.level;
+      currentShowLevel = userProvider.level;
+      userStamps = userProvider.stamp;
+      _pageController = PageController(initialPage: currentShowLevel - 1);
+    });
   }
 
   @override
@@ -280,14 +266,7 @@ class _StampBoardState extends State<StampBoard> {
           // 내 도장 리스트
           FutureBuilder<Map<String, int>>(
             future: (() async {
-              final userEmail = Provider.of<UserProvider>(context, listen: false).email;
-              final String jsonString = await rootBundle.loadString('assets/data/user_data.json');
-              final List<dynamic> jsonData = json.decode(jsonString);
-              final user = jsonData.cast<Map<String, dynamic>>().firstWhere(
-                (u) => u['email'] == userEmail,
-                orElse: () => {},
-              );
-              final List<dynamic> stamps = user['stamp'] ?? [];
+              final List<dynamic> stamps = Provider.of<UserProvider>(context, listen: false).stamp;
               final Map<String, int> stampCounts = {
                 '희망': 0,
                 '회복': 0,

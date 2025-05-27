@@ -2,10 +2,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'user_provider.dart';
+import 'package:flutter_application_1/provider/user_provider.dart';
 import 'voice_chat.dart';
 import 'text_chat.dart';
 import 'counsel_confirm_dialog.dart';
+import 'package:http/http.dart' as http;
+
 
 class CounselorSelectionPage extends StatefulWidget {
   @override
@@ -24,29 +26,58 @@ class _CounselorSelectionPageState extends State<CounselorSelectionPage> {
     _loadChatHistory();
   }
 
-  Future<void> _loadChatHistory() async {
-    final userEmail = Provider.of<UserProvider>(context, listen: false).email;
+Future<void> _loadChatHistory() async {
+  final userProvider = Provider.of<UserProvider>(context, listen: false);
+  final userId = userProvider.id;
 
+  try {
+    if (userId.isNotEmpty) {
+      // ✅ 서버에서 로드
+      final response = await http.get(
+        Uri.parse('https://www.emoti.kr/chats/get/chats?userId=$userId'),
+      );
+      if (response.statusCode == 200) {
+        final List<dynamic> data = json.decode(utf8.decode(response.bodyBytes));
+        final records = data.map<Map<String, dynamic>>((item) {
+          final timestamp = DateTime.parse(item['timestamp']);
+          final stamp = item['stamp'] ?? '희망';
+          final messages = item['messages'] ?? [];
+          final preview = messages.firstWhere(
+            (m) => m['isUser'] == true,
+            orElse: () => {'text': ''},
+          )['text'];
+
+          return {
+            'date': '${timestamp.month}월 ${timestamp.day}일',
+            'stamp': stamp,
+            'preview': preview,
+            'messages': messages,
+          };
+        }).toList();
+
+        setState(() {
+          chatRecords = records;
+        });
+        return;
+      }
+    }
+
+    // ✅ 실패하거나 userId 없음: 로컬에서 로드
     final String jsonString = await rootBundle.loadString('assets/data/chat_data.json');
     final List<dynamic> jsonData = json.decode(jsonString);
-
-    final filteredData = jsonData.where((item) => item['email'] == userEmail);
+    final filteredData = jsonData.where((item) => item['userId'] == userId);
 
     final records = filteredData.map<Map<String, dynamic>>((item) {
       final timestamp = DateTime.parse(item['timestamp']);
-      final month = timestamp.month;
-      final day = timestamp.day;
-      final formattedDate = '$month월 $day일';
       final stamp = item['stamp'] ?? '희망';
-
-      final messages = item['messages'] as List<dynamic>;
+      final messages = item['messages'];
       final preview = messages.firstWhere(
         (m) => m['isUser'] == true,
         orElse: () => {'text': ''},
       )['text'];
 
       return {
-        'date': formattedDate,
+        'date': '${timestamp.month}월 ${timestamp.day}일',
         'stamp': stamp,
         'preview': preview,
         'messages': messages,
@@ -56,7 +87,11 @@ class _CounselorSelectionPageState extends State<CounselorSelectionPage> {
     setState(() {
       chatRecords = records;
     });
+  } catch (e) {
+    print("❌ 채팅 기록 로딩 실패: $e");
   }
+}
+
 
 Widget _buildCounselorButton(String label, String imagePath) {
   bool isSelected = selectedCounselor == label;
