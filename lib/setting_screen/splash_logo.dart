@@ -46,12 +46,13 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
     super.initState();
 
     _fadeController = AnimationController(
-      duration: const Duration(milliseconds: 2000),
-      vsync: this,
-    );
+    duration: const Duration(milliseconds: 2000),
+    vsync: this,
+  );
 
-    _fadeAnimation = Tween<double>(begin: 0, end: 1).animate(_fadeController);
-    _fadeController.forward();
+  _fadeAnimation = Tween<double>(begin: 0, end: 1).animate(_fadeController);
+  _fadeController.forward();
+
   }
 
   @override

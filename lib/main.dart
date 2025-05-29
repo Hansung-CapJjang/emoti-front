@@ -14,7 +14,7 @@ void main() async {
   try {
     await dotenv.load(fileName: ".env");
   } catch (e) {
-    rethrow;
+    throw Exception(".env 파일 로드를 실패했습니다.");
   }
 
   runApp(

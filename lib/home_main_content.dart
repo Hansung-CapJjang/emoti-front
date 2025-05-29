@@ -84,7 +84,7 @@ class _MainContentState extends State<MainContent> {
       if (response.statusCode != 200) {
       }
     } catch (e) {
-      rethrow;
+      throw Exception("레벨 서버 전송에 실패했습니다.");
     }
   }
 
@@ -375,7 +375,7 @@ class _MainContentState extends State<MainContent> {
         _showSaveSuccessSnackbar(context);
       }
     } catch (e) {
-      rethrow;
+      throw Exception("이미지 저장에 실패했습니다.");
     }
   }
 

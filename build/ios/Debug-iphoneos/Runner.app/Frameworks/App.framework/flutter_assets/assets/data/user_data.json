@@ -1,0 +1,47 @@
+[
+  {
+    "email": "alice123@example.com",
+    "nickname": "해피앨리스",
+    "gender": "여성",
+    "concerns": ["이유 불명 우울함", "연인 관계", "미래에 대한 불안"],
+    "pet": "뱁새",
+    "level": 2,
+    "stamp": ["희망", "회복"]
+  },
+  {
+    "email": "bob_the_builder@example.com",
+    "nickname": "건축가밥",
+    "gender": "남성",
+    "concerns": ["직장 내 인간 관계", "경제적 어려움"],
+    "pet": "뱁새",
+    "level": 3,
+    "stamp": ["결단", "희망", "성찰", "회복", "용기", "희망", "결단"]
+  },
+  {
+    "email": "charlie.chill@example.com",
+    "nickname": "차분한찰리",
+    "gender": "기타",
+    "concerns": ["딱히 없음"],
+    "pet": "펭귄",
+    "level": 1,
+    "stamp": []
+  },
+  {
+    "email": "daisy.dreamer@example.com",
+    "nickname": "데이지드리머",
+    "gender": "여성",
+    "concerns": ["자기개발에 대한 부담", "학교 성적", "빠지지 않는 살"],
+    "pet": "뱁새",
+    "level": 4,
+    "stamp": ["성찰", "희망", "용기", "회복", "결단", "희망", "용기", "성찰", "회복", "결단"]
+  },
+  {
+    "email": "eric.energy@example.com",
+    "nickname": "에너지에릭",
+    "gender": "남성",
+    "concerns": ["친구와의 다툼", "떠오르는 흑역사", "좁은 인간 관계"],
+    "pet": "펭귄",
+    "level": 2,
+    "stamp": ["희망", "성찰", "용기"]
+  }
+]
