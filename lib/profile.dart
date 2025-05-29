@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'login.dart';
 import 'setting_screen/concern_input.dart';
 import 'setting_screen/name_input.dart';
@@ -8,8 +9,9 @@ import 'dto/chat_dto.dart';
 import 'provider/user_provider.dart';
 import 'notification_service.dart';
 import 'dart:convert';
-import 'main.dart';
 import 'package:http/http.dart' as http;
+
+final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 
 void main() {
   runApp(const MyApp());
@@ -20,9 +22,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: ProfileScreen(),
+      navigatorObservers: [routeObserver],
+      home: const ProfileScreen(),
     );
   }
 }
@@ -34,7 +37,7 @@ class ProfileScreen extends StatefulWidget {
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _ProfileScreenState extends State<ProfileScreen> with RouteAware {
   bool isOn = false;
   bool isExpanded = false;
   late NotificationService notificationService;
@@ -51,35 +54,62 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     _loadChatData();
+    routeObserver.subscribe(this, ModalRoute.of(context)! as PageRoute);
+  }
+
+  @override
+  void didPush() {
+    _loadChatData();
+  }
+
+  @override
+  void didPopNext() {
+    _loadChatData();
+  }
+
+  @override
+  void dispose() {
+    routeObserver.unsubscribe(this);
+    super.dispose();
   }
 
   Future<void> _loadChatData() async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     final userId = userProvider.id;
 
+
     final response = await http.get(
-      Uri.parse('https://www.emoti.kr/chats/get/user?userId=$userId'),
+      Uri.parse('https://www.emoti.kr/chats/get/chats?userId=$userId'),
     );
 
     if (response.statusCode == 200) {
-      final List<dynamic> data = jsonDecode(response.body);
+      final List<dynamic> data = json.decode(utf8.decode(response.bodyBytes));
       chatRecords = data.map((e) => ChatDTO.fromJson(e)).toList();
       setState(() {});
     } else {
-      print("채팅 기록 로딩 실패: ${response.statusCode}");
+      throw '데이터를 불러올 수 없습니다.';
+    }
+  }
+
+  Future<void> logoutViaBrowser() async {
+    final logoutUrl = Uri.parse(
+      'https://kauth.kakao.com/logout?client_id=YOUR_CLIENT_ID&logout_redirect_uri=https://www.emoti.kr/logout-done',
+    );
+
+    if (await canLaunchUrl(logoutUrl)) {
+      await launchUrl(logoutUrl, mode: LaunchMode.externalApplication);
+    } else {
+      throw '브라우저를 열 수 없습니다.';
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context);
-
     final List<int> stampCounts = [1, 3, 5, 8];
     final int level = user.level;
-    final userProvider = Provider.of<UserProvider>(context, listen: false);
     final int totalStamps = user.stamp.length;
-
-    final int maxStampsThisLevel = stampCounts[level - 1];
+    final int maxStampsThisLevel = level > 0 ? stampCounts[level - 1] : 0;
 
     final int filledStampsThisLevel = () {
       if (level == 1) return totalStamps;
@@ -204,7 +234,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: SizedBox(
-                    width: 300,
+                    width: MediaQuery.of(context).size.width - 80,
                     child: LinearProgressIndicator(
                       value: progressPercent,
                       minHeight: 15,
@@ -221,7 +251,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 40),
             child: SizedBox(
               height: 80,
-              child: Stack(
+              child: chatRecords.isEmpty
+                ? Center(
+                    child: Text(
+                      "채팅 기록이 아직 없습니다",
+                      style: TextStyle(
+                        fontFamily: "DungGeunMo",
+                        fontSize: 14,
+                        color: Colors.grey[600],
+                      ),
+                    ),
+                  )
+                :Stack(
                 children: [
                   ListView.builder(
                     scrollDirection: Axis.horizontal,
@@ -330,11 +371,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ],
         ],
       ),
-onTap: () {
-  setState(() {
-    isExpanded = !isExpanded; // 고민 리스트 열고 닫기만 처리
-  });
-},
+      onTap: () {
+        setState(() {
+          isExpanded = !isExpanded;
+        });
+      },
     );
   }
 
@@ -367,27 +408,24 @@ onTap: () {
     );
   }
 
-Widget _buildLogoutItem(IconData icon, String title) {
-  return ListTile(
-    contentPadding: const EdgeInsets.only(left: 40, right: 20),
-    leading: Icon(icon, color: Colors.black54),
-    title: Text(title, style: const TextStyle(fontFamily: 'DungGeunMo', fontSize: 16)),
-onTap: () async {
-  final userProvider = Provider.of<UserProvider>(context, listen: false);
+  Widget _buildLogoutItem(IconData icon, String title) {
+    return ListTile(
+      contentPadding: const EdgeInsets.only(left: 40, right: 20),
+      leading: Icon(icon, color: Colors.black54),
+      title: Text(title, style: const TextStyle(fontFamily: 'DungGeunMo', fontSize: 16)),
+      onTap: () async {
+        final userProvider = Provider.of<UserProvider>(context, listen: false);
+        userProvider.clear();
+        shouldHandleInitialLink = true;
 
-  shouldHandleInitialLink = false; // 🚫 초기 딥링크 무시
-  userProvider.clear();
-
-  await Navigator.pushAndRemoveUntil(
-    context,
-    MaterialPageRoute(builder: (_) => const LoginScreen()),
-    (route) => false,
-  );
-},
-
-  );
-}
-
+        await Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (_) => const LoginScreen()),
+          (route) => false,
+        );
+      },
+    );
+  }
 
   Widget _buildToggleMenuItem(String title, IconData icon) {
     return ListTile(
@@ -415,23 +453,22 @@ onTap: () async {
     );
   }
 
-Widget _buildDeleteItem(String title) {
-  return ListTile(
-    contentPadding: const EdgeInsets.only(left: 40, right: 20),
-    title: Text(
-      title,
-      style: const TextStyle(
-        fontFamily: 'DungGeunMo',
-        fontSize: 16,
-        color: Colors.grey,
+  Widget _buildDeleteItem(String title) {
+    return ListTile(
+      contentPadding: const EdgeInsets.only(left: 40, right: 20),
+      title: Text(
+        title,
+        style: const TextStyle(
+          fontFamily: 'DungGeunMo',
+          fontSize: 16,
+          color: Colors.grey,
+        ),
       ),
-    ),
-    onTap: () {
-      _showConfirmDialog(context); // 다이얼로그만 열기
-    },
-  );
-}
-
+      onTap: () {
+        _showConfirmDialog(context);
+      },
+    );
+  }
 
   void _showConfirmDialog(BuildContext context) {
     showDialog(
@@ -489,11 +526,12 @@ Widget _buildDeleteItem(String title) {
                         final userId = userProvider.id;
 
                         try {
-                          final response = await http.delete(
-                            Uri.parse('https://www.emoti.kr/users?id=$userId'),
-                          );
+                          final responses = await Future.wait([
+                            http.delete(Uri.parse('https://www.emoti.kr/chats?userId=$userId')),
+                            http.delete(Uri.parse('https://www.emoti.kr/users?id=$userId')),
+                          ]);
 
-                          if (response.statusCode == 204) {
+                          if (responses.every((res) => res.statusCode == 204)) {
                             userProvider.clear();
                             shouldHandleInitialLink = false;
                             Navigator.pushAndRemoveUntil(

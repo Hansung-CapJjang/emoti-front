@@ -8,7 +8,8 @@ import 'setting_screen/first_intro.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
-import 'package:flutter_application_1/provider/user_provider.dart'; 
+import '/provider/user_provider.dart';
+
 bool shouldHandleInitialLink = true; 
 
 void main() {
@@ -23,19 +24,17 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-
   late final WebViewController _controller;
-  late UserProvider userProvider; // 여기는 선언만
+  late UserProvider userProvider;
 
   @override
   void initState() {
     super.initState();
     shouldHandleInitialLink = true;
 
-    // 여기에만 초기화
     WidgetsBinding.instance.addPostFrameCallback((_) {
       userProvider = Provider.of<UserProvider>(context, listen: false);
-      userProvider.clear(); // 여기서 안전하게 clear
+      userProvider.clear();
     });
 
     _controller = WebViewController()
@@ -45,7 +44,6 @@ class _LoginScreenState extends State<LoginScreen> {
     _listenToLinkStream();
     _checkInitialLink();
   }
-
 
   Future<bool> isExistingUser(String userId) async {
     try {
@@ -65,32 +63,30 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-Future<void> _checkInitialLink() async {
-  if (!shouldHandleInitialLink) {
-    print("딥링크 무시됨");
-    return;
-  }
+  Future<void> _checkInitialLink() async {
+    if (!shouldHandleInitialLink) {
+      return;
+    }
 
-  final initialLink = await getInitialLink();
-  if (initialLink != null && initialLink.startsWith("emoti://login")) {
-    final uri = Uri.parse(initialLink);
-    final String userId = uri.queryParameters['userId'].toString();
+    final initialLink = await getInitialLink();
+    if (initialLink != null && initialLink.startsWith("emoti://login")) {
+      final uri = Uri.parse(initialLink);
+      final String userId = uri.queryParameters['userId'].toString();
 
-    final isExisting = await isExistingUser(userId);
+      final isExisting = await isExistingUser(userId);
 
-    if (isExisting) {
-      navigatorKey.currentState?.pushReplacement(
-        MaterialPageRoute(builder: (_) => MainScreen()),
-      );
-    } else {
-      userProvider.setId(userId);
-      navigatorKey.currentState?.pushReplacement(
-        MaterialPageRoute(builder: (_) => const FirstScreen()),
-      );
+      if (isExisting) {
+        navigatorKey.currentState?.pushReplacement(
+          MaterialPageRoute(builder: (_) => MainScreen()),
+        );
+      } else {
+        userProvider.setId(userId);
+        navigatorKey.currentState?.pushReplacement(
+          MaterialPageRoute(builder: (_) => const FirstScreen()),
+        );
+      }
     }
   }
-}
-
 
   void _listenToLinkStream() {
     linkStream.listen((String? link) async {
@@ -179,7 +175,7 @@ Future<void> _checkInitialLink() async {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 248, 255, 237), // const Color(0xFFE9EBD9),
+      backgroundColor: const Color.fromARGB(255, 248, 255, 237),
       body: Center(
         child: Column(
           children: [
@@ -254,7 +250,7 @@ Future<void> _checkInitialLink() async {
                     labelColor: Colors.black,
                   ),
                   const SizedBox(height: 10),
-                  const Text('본 어플은 별도의 회원 가입이 필요없어요!', style: TextStyle(color: Color.fromARGB(221, 65, 65, 65),)), // fontFamily: 'DungGeunMo'),)
+                  const Text('본 어플은 별도의 회원 가입이 필요없어요!', style: TextStyle(color: Color.fromARGB(221, 65, 65, 65),)),
                 ],
               ),
             ),

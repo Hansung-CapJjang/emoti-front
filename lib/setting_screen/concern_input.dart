@@ -1,17 +1,14 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/login.dart';
 import 'first_intro.dart';
-import 'package:flutter_application_1/main_screen.dart';
+import '/main_screen.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_application_1/provider/user_provider.dart';
+import '/provider/user_provider.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter_application_1/main.dart';
-
+import '/main.dart';
 
 class ConcernInputScreen extends StatefulWidget {
   final bool isEdit;
-  //final context = navigatorKey.currentContext;
 
   ConcernInputScreen({super.key, required this.isEdit});
 
@@ -90,7 +87,6 @@ class _ConcernInputScreenState extends State<ConcernInputScreen> with SingleTick
             }),
         );
         if (response.statusCode != 200) {
-          print("고민 사항 변경 실패: ${response.body}");
         }
 
         Navigator.pop(context);
@@ -107,11 +103,9 @@ class _ConcernInputScreenState extends State<ConcernInputScreen> with SingleTick
           'stamp': userProvider.stamp,
           'level': userProvider.level,
         };
-        print(userDto); // 저장 요청 전에 콘솔에 찍기
-
 
         await http.post(
-          Uri.parse('https://www.emoti.kr/users'), // 추후 주소 수정
+          Uri.parse('https://www.emoti.kr/users'),
           headers: {'Content-Type': 'application/json'},
           body: jsonEncode(userDto),
         );

@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:flutter_application_1/provider/user_provider.dart';
-import 'package:flutter_application_1/notification_service.dart';
-import 'package:flutter_application_1/setting_screen/name_input.dart';
-
+import '/notification_service.dart';
+import '/setting_screen/name_input.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

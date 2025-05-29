@@ -1,14 +1,14 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/dto/message_dto.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'dto/user_dto.dart';
 import 'provider/user_provider.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/services.dart'; 
 
-final apiKey = dotenv.env['OPENAI_API_KEY'] ?? '';
-const llamaApiUrl = 'https://ce75-113-198-83-196.ngrok-free.app/generate';
+const llamaApiUrl = 'https://emoti.ngrok.app/generate';
 
 class TextChatScreen extends StatefulWidget {
   final String counselorType;
@@ -20,7 +20,7 @@ class TextChatScreen extends StatefulWidget {
 }
 
 class _TextChatScreenState extends State<TextChatScreen> {
-  final List<Map<String, dynamic>> _messages = [];
+  final List<MessageDTO> _messages = [];
   final TextEditingController _controller = TextEditingController();
   final ScrollController _scrollController = ScrollController();
   bool _isBotTyping = false;
@@ -28,7 +28,7 @@ class _TextChatScreenState extends State<TextChatScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 1), _fetchInitialBotMessage); // 2초 뒤에 실행
+    Future.delayed(const Duration(seconds: 1), _fetchInitialBotMessage);
   }
 
   void _showEndDialog(BuildContext context) {
@@ -82,8 +82,8 @@ class _TextChatScreenState extends State<TextChatScreen> {
                       const SizedBox(width: 12),
                       ElevatedButton(
                         onPressed: () {
-                          Navigator.pop(dialogContext);        // 첫 번째 팝업 닫기
-                          _showFinalStampDialog();             // 도장 결과 팝업 띄우기!
+                          Navigator.pop(dialogContext);
+                          _showFinalStampDialog();
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFF798063),
@@ -113,33 +113,27 @@ class _TextChatScreenState extends State<TextChatScreen> {
   String _generateInitialMessage(String counselorType, String name, String concern) {
     switch (counselorType) {
       case '공감형':
-        return '''
-          '$name'님, 만나서 반가워요~
-          기존에 말씀해주신 고민은 '$concern' 인데요, 그 이야기부터 나눠볼까요?
-          아니면 요즘 더 마음 쓰이는 일이 생기셨을까요? 
-          편하게 얘기해주세요.
-        ''';
-
+        return 
+'''$name님, 만나서 반가워요~
+기존에 말씀해주신 고민은 '$concern' 인데요, 그 이야기부터 나눠볼까요?
+아니면 요즘 더 마음 쓰이는 일이 생기셨을까요?
+편하게 얘기해주세요.''';
       case '조언형':
-        return '''
-          '$name'님, 안녕하세요.
-          말씀해주신 고민은 '$concern'이네요. 그 문제를 해결하려면 우선 정확히 짚고 넘어가야 합니다.
-          지금 그 이야기를 해볼까요? 
-          아니면 최근 더 중요한 고민이 있으신가요?
-        ''';
-
+        return
+'''$name님, 안녕하세요.
+말씀해주신 고민은 '$concern'이네요. 그 문제를 해결하려면 우선 정확히 짚고 넘어가야 합니다.
+지금 그 이야기를 해볼까요? 
+아니면 최근 더 중요한 고민이 있으신가요?''';
       case '유머러스형':
-        return '''
-          $name님 왔다!
-          '$concern'? ㄱㄱ 바로 얘기 ㄱㄱ
-          아니면 요즘 인생 뭐... 하드모드임? 다 쏟아내요 😤
-        ''';
-
+        return
+'''$name님 왔다!
+'$concern'? 
+ㄱㄱ 바로 얘기 ㄱㄱ
+아니면 요즘 인생 뭐... 하드모드임? 다 쏟아내요 😤''';
       default:
-        return '''
-          '$name'님, 안녕하세요. 기존에 말씀해주신 고민은 '$concern'입니다.
-          그 이야기를 이어가도 좋고, 최근에 생긴 새로운 고민이 있다면 그것부터 말씀해주셔도 좋아요.
-        ''';
+        return
+'''$name님, 안녕하세요. 기존에 말씀해주신 고민은 '$concern'입니다.
+그 이야기를 이어가도 좋고, 최근에 생긴 새로운 고민이 있다면 그것부터 말씀해주셔도 좋아요.''';
     }
   }
 
@@ -161,10 +155,6 @@ class _TextChatScreenState extends State<TextChatScreen> {
     // 기존 프롬프트 대신 상담사 스타일 prompt 생성
     final tonePrompt = _generateSystemPrompt(tone, userName, userGender, userConcern);
 
-    print("\n\n>> 🔻 서버에서 받은 전체 응답:\n$llamaReply\n\n");
-    print("\n\n>> ✂️ GPT에 넘길 응답 (최대 3문장):\n$truncatedReply\n\n");
-    print("\n\n>> 🗣️ 사용자 메시지:\n$userMessage\n\n");
-
     final systemPrompt = '''
       $tonePrompt
 
@@ -172,12 +162,18 @@ class _TextChatScreenState extends State<TextChatScreen> {
 
       이 문장이 어색하거나 맥락에 맞지 않으면 반드시 그대로 말할 필요는 없고,
       자연스럽고 진심 어린 상담사처럼 말투를 다듬어줘. 맞춤법이 틀렸다면 무조건 올바르게 수정해서 말해줘.
+      대답은 무조건 100자를 넘지 않게 대답해야 해.
 
       내담자가 긍정적으로 반응하면 그 고민을 이어서 상담하고,
       새로운 고민이 등장하면 그에 맞게 전환해서 대화를 이어가.
 
       질문을 자주 던지고, 상대방의 감정과 처해진 상황에 관심을 가지며 대화를 계속 이어가줘.
     ''';
+
+    final apiKey = dotenv.env['OPENAI_API_KEY'];
+    if (apiKey == null || apiKey.isEmpty) {
+      throw Exception("API 키가 .env 파일에 설정되지 않았습니다.");
+    }
 
     final headers = {
       'Content-Type': 'application/json',
@@ -210,7 +206,7 @@ class _TextChatScreenState extends State<TextChatScreen> {
       
     setState(() {
       _isBotTyping = true;
-      _messages.add({'text': '작성 중...', 'isUser': false});
+      _messages.add(MessageDTO(text: '작성 중...', isUser: false));
     });
       
     _scrollToBottom();
@@ -227,16 +223,16 @@ class _TextChatScreenState extends State<TextChatScreen> {
       );
 
       setState(() {
-        _messages.removeWhere((m) => m['text'] == '작성 중...');
-        _messages.add({'text': initialMessage, 'isUser': false});
+        _messages.removeWhere((m) => m.text == '작성 중...');
+        _messages.add(MessageDTO(text: initialMessage, isUser: false));
         _isBotTyping = false;
       });
 
       _scrollToBottom();
     } catch (e) {
       setState(() {
-        _messages.removeWhere((m) => m['text'] == '작성 중...');
-        _messages.add({'text': '⚠️ 오류 발생: $e', 'isUser': false});
+        _messages.removeWhere((m) => m.text == '작성 중...');
+        _messages.add(MessageDTO(text: '⚠️ 오류 발생: $e', isUser: false));
         _isBotTyping = false;
       });
       _scrollToBottom();
@@ -297,8 +293,8 @@ class _TextChatScreenState extends State<TextChatScreen> {
     final headers = {'Content-Type': 'application/json'};
 
     final history = _messages
-        .where((m) => m['text'] != '작성 중...')
-        .map((m) => (m['isUser'] ? "내담자: ${m['text']}" : "상담사: ${m['text']}"))
+        .where((m) => m.text != '작성 중...')
+        .map((m) => (m.isUser ? "내담자: ${m.text}" : "상담사: ${m.text}"))
         .toList();
 
     final body = jsonEncode({
@@ -320,54 +316,17 @@ class _TextChatScreenState extends State<TextChatScreen> {
     }
   }
 
-  Future<String> _fetchGPTResponse(String userMessage) async {
-
-    final userProvider = Provider.of<UserProvider>(context, listen: false);
-    final userName = userProvider.nickname;
-    final userGender = userProvider.gender;
-    final userConcern = userProvider.concerns.join(', ');
-
-    // FastAPI 서버 주소 - 외부 접속용 IP -> llamaApiUrl
-    // const apiUrl = ''; // http://113.198.83.195:8000/generate
-
-    final headers = {
-      'Content-Type': 'application/json',
-      'ngrok-skip-browser-warning': 'true',
-    };
-
-    // history를 서버에 맞는 포맷으로 변환
-    final history = _messages
-        .where((m) => m['text'] != '작성 중...')
-        .map((m) => (m['isUser'] ? "내담자: ${m['text']}" : "상담사: ${m['text']}"))
-        .toList();
-
-    final body = jsonEncode({
-      'name': userName,
-      'gender': userGender,
-      'issue': userConcern,
-      'counselor_type': widget.counselorType,
-      'history': history,
-      'user_message': userMessage,
-    });
-
-    final response = await http.post(Uri.parse(llamaApiUrl), headers: headers, body: body);
-
-    if (response.statusCode == 200) {
-      final decoded = utf8.decode(response.bodyBytes);
-      final data = jsonDecode(decoded);
-      return data['output'].trim();
-    } else {
-      throw Exception('FastAPI 호출 실패: ${response.statusCode}');
-    }
-  }
-
   Future<String> _evaluateFinalStampWithGPT() async {
 
     const apiUrl = 'https://api.openai.com/v1/chat/completions';
 
+    final apiKey = dotenv.env['OPENAI_API_KEY'];
+    if (apiKey == null || apiKey.isEmpty) {
+      throw Exception("API 키가 누락되었습니다.");
+    }
+
     final headers = {
       'Content-Type': 'application/json',
-      // 'Authorization': 'Bearer ${dotenv.env['OPENAI_API_KEY']}', 수정필요
       'Authorization': 'Bearer $apiKey',
     };
 
@@ -378,9 +337,9 @@ class _TextChatScreenState extends State<TextChatScreen> {
       'model': 'gpt-3.5-turbo',
       'messages': [
         {'role': 'system', 'content': analysisPrompt},
-        ..._messages.where((m) => m['text'] != '작성 중...').map((m) => {
-          'role': m['isUser'] ? 'user' : 'assistant',
-          'content': m['text'],
+        ..._messages.where((m) => m.text != '작성 중...').map((m) => {
+          'role': m.isUser ? 'user' : 'assistant',
+          'content': m.text,
         }),
         {'role': 'user', 'content': '이 대화에서 사용자에게 부여할 감정 도장은 무엇입니까? "희망", "용기", "결단", "성찰", "회복" 중 하나로만 답해.'},
       ],
@@ -403,9 +362,9 @@ class _TextChatScreenState extends State<TextChatScreen> {
     if (text.trim().isEmpty) return;
 
     setState(() {
-      _messages.add({'text': text, 'isUser': true});
+      _messages.add(MessageDTO(text: text, isUser: true));
       _isBotTyping = true;
-      _messages.add({'text': '작성 중...', 'isUser': false});
+      _messages.add(MessageDTO(text: '작성 중...', isUser: false));
       _controller.clear();
     });
     _scrollToBottom();
@@ -415,15 +374,15 @@ class _TextChatScreenState extends State<TextChatScreen> {
       final refinedReply = await _refineWithGPT(llamaReply, text);
 
       setState(() {
-        _messages.removeWhere((m) => m['text'] == '작성 중...');
-        _messages.add({'text': refinedReply, 'isUser': false});
+        _messages.removeWhere((m) => m.text == '작성 중...');
+        _messages.add(MessageDTO(text: refinedReply, isUser: false));
         _isBotTyping = false;
       });
       _scrollToBottom();
     } catch (e) {
       setState(() {
-        _messages.removeWhere((m) => m['text'] == '작성 중...');
-        _messages.add({'text': '⚠️ 오류 발생: $e', 'isUser': false});
+        _messages.removeWhere((m) => m.text == '작성 중...');
+        _messages.add(MessageDTO(text: '⚠️ 오류 발생: $e', isUser: false));
         _isBotTyping = false;
       });
       _scrollToBottom();
@@ -471,14 +430,12 @@ class _TextChatScreenState extends State<TextChatScreen> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                // 버튼 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // 취소 
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.pop(dialogContext); // 팝업만 닫기 - 상담 계속 진행 가능
+                        Navigator.pop(dialogContext);
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.grey[400],
@@ -494,11 +451,10 @@ class _TextChatScreenState extends State<TextChatScreen> {
                       ),
                     ),
                     const SizedBox(width: 12),
-                    // 확인 
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.pop(dialogContext); // 팝업 닫기
-                        Navigator.pop(context);       // 이전 화면으로
+                        Navigator.pop(dialogContext);
+                        Navigator.pop(context);
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF798063),
@@ -531,7 +487,6 @@ class _TextChatScreenState extends State<TextChatScreen> {
     if (response.statusCode == 200) {
       return json.decode(response.body) == true;
     } else {
-      print("도장 중복 확인 실패: ${response.statusCode}");
       return false;
     }
   }
@@ -542,22 +497,19 @@ class _TextChatScreenState extends State<TextChatScreen> {
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
         'userId': userId,
-        'counselorType': '도장', // 식별용
+        'counselorType': widget.counselorType,
         'stamp': stamp,
-        'timestamp': DateTime.now().toIso8601String(),
-        'messages': [],
+        'timestamp': DateTime.now().toUtc().add(const Duration(hours: 9)).toIso8601String(),
+        'messages': _messages,
       }),
     );
 
     if (response.statusCode != 200) {
-      print("도장 전용 Chat 저장 실패: ${response.statusCode}");
-    } else {
-      print("도장 전용 Chat 저장 완료");
-    }
+    } 
   }
 
   Future<void> _updateUserStampToServer(UserDTO dto) async {
-    final url = Uri.parse('https://www.emoti.kr/users/update/stamp'); // 추후 주소 수정
+    final url = Uri.parse('https://www.emoti.kr/users/update/stamp');
 
     final response = await http.put(
       url,
@@ -569,7 +521,6 @@ class _TextChatScreenState extends State<TextChatScreen> {
     );
 
     if (response.statusCode != 200) {
-      print('도장 업데이트 실패: ${response.body}');
     }
   }
 
@@ -583,7 +534,7 @@ class _TextChatScreenState extends State<TextChatScreen> {
     }
 
     // 조건 2: meaningful한 대화가 이루어졌는지 확인 (최소 6개 이상)
-    final messageCount = _messages.where((m) => m['text'] != '작성 중...').length;
+    final messageCount = _messages.where((m) => m.text != '작성 중...').length;
     if (messageCount < 6) {
       _showAlert("상담 내용이 너무 짧아서\n도장을 받을 수 없어요.\n그래도 종료하실 건가요?");
       return;
@@ -600,7 +551,6 @@ class _TextChatScreenState extends State<TextChatScreen> {
       await _saveStampOnlyChatToServer(resultStamp, userProvider.id);
       await _updateUserStampToServer(dto);
 
-      // 도장 결과 팝업
       showDialog(
         context: context,
         barrierDismissible: true,
@@ -660,7 +610,7 @@ class _TextChatScreenState extends State<TextChatScreen> {
   }
 
   String _getCurrentTime() {
-    final now = DateTime.now();
+    final now = DateTime.now().toUtc().add(const Duration(hours: 9));
     return "${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}";
   }
 
@@ -717,7 +667,7 @@ class _TextChatScreenState extends State<TextChatScreen> {
                 padding: const EdgeInsets.all(12),
                 physics: const BouncingScrollPhysics(),
                 children: _messages
-                    .map((m) => _buildMessageBubble(m['text'], m['isUser']))
+                    .map((m) => _buildMessageBubble(m.text, m.isUser))
                     .toList(),
               ),
             ),
@@ -758,10 +708,10 @@ class _TextChatScreenState extends State<TextChatScreen> {
                 fontFamily: 'DungGeunMo',
                 fontSize: 15,
                 color: isUser
-    ? Colors.white
-    : (message == '작성 중...'
-        ? Colors.grey
-        : Colors.black),
+                  ? Colors.white
+                  : (message == '작성 중...'
+                      ? Colors.grey
+                      : Colors.black),
               ),
             ),
             const SizedBox(height: 4),

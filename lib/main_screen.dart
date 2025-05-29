@@ -35,41 +35,41 @@ class MainScreenState extends State<MainScreen> {
           highlightColor: Colors.transparent,
         ),
         child:  BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: const Color(0xFFC8CDB4),
-        selectedItemColor: Colors.white,
-        unselectedItemColor: const Color(0xFF474C34),
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        currentIndex: _currentIndex,
-        onTap: onItemTapped,
-        items: [
-          BottomNavigationBarItem(
-            icon: ImageIcon(
-              const AssetImage('assets/images/homeicon.png'),
-              size: 40,
-              color: _currentIndex == 0 ? const Color(0xFF474C34) : Colors.grey,
+          type: BottomNavigationBarType.fixed,
+          backgroundColor: const Color(0xFFC8CDB4),
+          selectedItemColor: Colors.white,
+          unselectedItemColor: const Color(0xFF474C34),
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+          currentIndex: _currentIndex,
+          onTap: onItemTapped,
+          items: [
+            BottomNavigationBarItem(
+              icon: ImageIcon(
+                const AssetImage('assets/images/homeicon.png'),
+                size: 40,
+                color: _currentIndex == 0 ? const Color(0xFF474C34) : Colors.grey,
+              ),
+              label: '홈',
             ),
-            label: '홈',
-          ),
-          BottomNavigationBarItem(
-            icon: ImageIcon(
-              const AssetImage('assets/images/messageicon.png'),
-              size: 40,
-              color: _currentIndex == 1 ? const Color(0xFF474C34) : Colors.grey,
+            BottomNavigationBarItem(
+              icon: ImageIcon(
+                const AssetImage('assets/images/messageicon.png'),
+                size: 40,
+                color: _currentIndex == 1 ? const Color(0xFF474C34) : Colors.grey,
+              ),
+              label: '상담',
             ),
-            label: '상담',
-          ),
-          BottomNavigationBarItem(
-            icon: ImageIcon(
-              const AssetImage('assets/images/usericon.png'),
-              size: 40,
-              color: _currentIndex == 2 ? const Color(0xFF474C34) : Colors.grey,
+            BottomNavigationBarItem(
+              icon: ImageIcon(
+                const AssetImage('assets/images/usericon.png'),
+                size: 40,
+                color: _currentIndex == 2 ? const Color(0xFF474C34) : Colors.grey,
+              ),
+              label: '프로필',
             ),
-            label: '프로필',
-          ),
-        ],
-      ),
+          ],
+        ),
       ),
     );
   }

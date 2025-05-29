@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import '../login.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_application_1/provider/user_provider.dart'; 
+import '/provider/user_provider.dart'; 
 import 'package:provider/provider.dart'; 
-import '../main_screen.dart'; 
 
 void main() {
   runApp(
@@ -49,41 +46,13 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
     super.initState();
 
     _fadeController = AnimationController(
-    duration: const Duration(milliseconds: 2000),
-    vsync: this,
-  );
-
-  _fadeAnimation = Tween<double>(begin: 0, end: 1).animate(_fadeController);
-  _fadeController.forward();
-
-  // 로그인 여부
-Future.delayed(const Duration(seconds: 2), () async {
-  final prefs = await SharedPreferences.getInstance();
-  final isLoggedIn = prefs.getBool('isLoggedIn') ?? false; // 기본값: false
-  final userId = prefs.getString('userId') ?? ""; // email → userId
-
-  if (mounted && isLoggedIn && userId.isNotEmpty) {
-    final userProvider = Provider.of<UserProvider>(context, listen: false);
-    userProvider.setId(userId); // setEmail → setId
-    await userProvider.loadUserData(); // userId 기반 데이터 불러오기
-  }
-
-  Widget nextScreen = (isLoggedIn && userId.isNotEmpty)
-      ? MainScreen()
-      : const LoginScreen();
-
-  Navigator.pushReplacement(
-    context,
-      PageRouteBuilder(
-        transitionDuration: const Duration(milliseconds: 800),
-        pageBuilder: (_, __, ___) => nextScreen,
-        transitionsBuilder: (_, animation, __, child) {
-          return FadeTransition(opacity: animation, child: child);
-        },
-      ),
+      duration: const Duration(milliseconds: 2000),
+      vsync: this,
     );
-  });
-}
+
+    _fadeAnimation = Tween<double>(begin: 0, end: 1).animate(_fadeController);
+    _fadeController.forward();
+  }
 
   @override
   void dispose() {

@@ -181,7 +181,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       GestureDetector(
                         onTap: () => _onTabTapped(1),
                         child: Container(
-                          color: Colors.transparent, // 터치 감지 가능하도록 배경 추가
+                          color: Colors.transparent,
                           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                           child: Column(
                             children: [
@@ -224,7 +224,7 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 8),
               Container(
                 height: 2,
-                width: MediaQuery.of(context).size.width * 0.85,
+                width: MediaQuery.of(context).size.width * 0.9,
                 color: const Color.fromRGBO(78, 87, 44, 0.35),
               ),
             ],

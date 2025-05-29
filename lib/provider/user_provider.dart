@@ -42,31 +42,12 @@ class UserProvider with ChangeNotifier {
     _concerns = concerns;
 
     // 초기화
-    _pet = Random().nextBool() ? "baebse" : "penguim";
+    _pet = Random().nextBool() ? "baebse" : "penguin";
     _level = 1;
     _stamp = [];
 
     notifyListeners();
   }
-
-  // void loadExistingUser({
-  //   required String id,
-  //   required String nickname,
-  //   required String gender,
-  //   required List<String> concerns,
-  //   required String pet,
-  //   required int level,
-  //   required List<String> stamp,
-  // }) {
-  //   _id = id;
-  //   _nickname = nickname;
-  //   _gender = gender;
-  //   _concerns = concerns;
-  //   _pet = pet;
-  //   _level = level;
-  //   _stamp = stamp;
-  //   notifyListeners();
-  // }
 
   void clear() {
     _id = "";

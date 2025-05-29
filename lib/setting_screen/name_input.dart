@@ -1,10 +1,12 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/setting_screen/first_intro.dart';
-import 'package:flutter_application_1/setting_screen/gender_input.dart';
-import 'package:flutter_application_1/provider/user_provider.dart';
+import '/setting_screen/first_intro.dart';
+import '/setting_screen/gender_input.dart';
+import '/provider/user_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
+import '/main.dart';
 
 class NameInputScreen extends StatefulWidget {
   final bool isEdit;
@@ -21,27 +23,6 @@ class _NameInputScreenState extends State<NameInputScreen> with SingleTickerProv
   bool _showWarning = false;
   late AnimationController _animationController;
   late Animation<double> _shakeAnimation;
-
-  // 이름 서버 전송
-  Future<void> _sendNameToServer(String name) async {
-    const String apiUrl = ''; // TODO: 서버 주소 입력
-
-    try {
-      final response = await http.post(
-        Uri.parse(apiUrl),
-        headers: {"Content-Type": "application/json"},
-        body: jsonEncode({"name": name}),
-      );
-
-      if (response.statusCode == 200) {
-        print("✅ 이름 저장 성공");
-      } else {
-        print("❗ 서버 오류: ${response.body}");
-      }
-    } catch (e) {
-      print("❗ 네트워크 오류: $e");
-    }
-  }
 
   @override
   void initState() {
@@ -189,34 +170,39 @@ class _NameInputScreenState extends State<NameInputScreen> with SingleTickerProv
                   ),
                 ),
               ),
-
               const SizedBox(height: 50),
-
               Center(
                 child: SizedBox(
                   width: 180,
                   height: 50,
                   child: ElevatedButton(
                     onPressed: _isButtonEnabled
-                        ? () {
-                            final name = _controller.text.trim();
-                            final userProvider = Provider.of<UserProvider>(context, listen: false);
+                    ? () async {
+                      String name = _controller.text.trim();
+                      if (widget.isEdit) {
+                        Provider.of<UserProvider>(navigatorKey.currentContext!, listen: false).updateNickname(name);
 
-                            userProvider.updateNickname(name);
-                            _sendNameToServer(name);
-
-                            if (widget.isEdit) {
-                              Navigator.pop(context);
-                            } else {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const GenderInputScreen(),
-                                ),
-                              );
-                            }
-                          }
-                        : null,
+                        final response = await http.put(
+                          Uri.parse('https://www.emoti.kr/users/update/nickname'),
+                          headers: {"Content-Type": "application/json"},
+                          body: jsonEncode({
+                            "id": Provider.of<UserProvider>(navigatorKey.currentContext!, listen: false).id,
+                            "nickname": name
+                            }),
+                        );
+                        if (response.statusCode != 200) {
+                        }
+                        Navigator.pop(context);
+                      }
+                      else {
+                        Provider.of<UserProvider>(navigatorKey.currentContext!, listen: false).setNickname(name);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => GenderInputScreen()),
+                        );
+                      }
+                    }
+                    : null,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF5A5F3C),
                       foregroundColor: Colors.white,
@@ -231,7 +217,6 @@ class _NameInputScreenState extends State<NameInputScreen> with SingleTickerProv
                   ),
                 ),
               ),
-
               const SizedBox(height: 20),
             ],
           ),
