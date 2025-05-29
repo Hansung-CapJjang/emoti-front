@@ -53,6 +53,7 @@ dependencies:
   timezone: ^0.10.0
   shared_preferences: ^2.3.3
   flutter_native_timezone:
+  flutter_screenutil:
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -123,6 +124,7 @@ flutter:
     - assets/images/advisory_counselor.png
     - assets/images/empathetic _counselor.png
     - assets/images/humorous_counselor.png
+    - .env
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
