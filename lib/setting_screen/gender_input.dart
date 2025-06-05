@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'first_intro.dart';
 import 'concern_input.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_application_1/user_provider.dart';
+import '/provider/user_provider.dart';
 
 class GenderInputScreen extends StatefulWidget {
   const GenderInputScreen({super.key});
@@ -14,41 +12,22 @@ class GenderInputScreen extends StatefulWidget {
 }
 
 class _GenderInputScreenState extends State<GenderInputScreen> {
+  Future<void> _selectGenderAndProceed(String gender) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    userProvider.updateGender(gender);
 
-void _selectGenderAndProceed(String gender) {
-    Provider.of<UserProvider>(navigatorKey.currentContext!, listen: false).updateGender(gender);
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const ConcernInputScreen(isEdit: false),
+        builder: (context) => ConcernInputScreen(isEdit: false),
       ),
     );
-  }
-
-  Future<void> _sendDataToServer(String name, String gender) async {
-    const String apiUrl = '';  
-
-    try {
-      final response = await http.post(
-        Uri.parse(apiUrl),
-        headers: {"Content-Type": "application/json"},
-        body: jsonEncode({"name": name, "gender": gender}), 
-      );
-
-      if (response.statusCode == 200) {
-        print("사용자 정보 저장 완료!");
-      } else {
-        print("서버 오류: ${response.statusCode}, ${response.body}");
-      }
-    } catch (e) {
-      print("네트워크 오류: $e");
-    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFE9EBD9), 
+      backgroundColor: const Color(0xFFE9EBD9),
       appBar: AppBar(
         title: const Text(
           '세부 정보',
@@ -106,12 +85,12 @@ class GenderButton extends StatelessWidget {
   final String label;
   final VoidCallback onTap;
 
-  const GenderButton({super.key, required this.label, required this.onTap}); 
+  const GenderButton({super.key, required this.label, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: onTap, 
+      onPressed: onTap,
       style: ElevatedButton.styleFrom(
         backgroundColor: const Color.fromARGB(255, 167, 177, 115),
         foregroundColor: Colors.white,
@@ -122,7 +101,7 @@ class GenderButton extends StatelessWidget {
         ),
         minimumSize: const Size(double.infinity, 50),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12), 
+          borderRadius: BorderRadius.circular(12),
         ),
       ),
       child: Text(label),

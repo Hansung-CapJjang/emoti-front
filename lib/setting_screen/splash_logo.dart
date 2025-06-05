@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import '../login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_application_1/user_provider.dart'; 
+import '/login.dart';
+import '/main_screen.dart';
+import '/provider/user_provider.dart'; 
 import 'package:provider/provider.dart'; 
-import '../main_screen.dart'; 
 
 void main() {
   runApp(
@@ -56,32 +56,35 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   _fadeAnimation = Tween<double>(begin: 0, end: 1).animate(_fadeController);
   _fadeController.forward();
 
-  // 로그인 여부
+    // 로그인 여부
   Future.delayed(const Duration(seconds: 2), () async {
     final prefs = await SharedPreferences.getInstance();
-    final isLoggedIn = prefs.getBool('isLoggedIn') ?? true; // 가정 - 수정
-    final email = prefs.getString('email') ?? "emoti.com"; // 가정 - 수정
+    final isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+    final userId = prefs.getString('userId') ?? "";
 
-    if (mounted && isLoggedIn && email.isNotEmpty) {
+    if (mounted && isLoggedIn && userId.isNotEmpty) {
       final userProvider = Provider.of<UserProvider>(context, listen: false);
-      userProvider.updateEmail(email);
+      userProvider.setId(userId);
       await userProvider.loadUserData();
     }
 
-    Widget nextScreen = isLoggedIn ? MainScreen() : const LoginScreen();
+    Widget nextScreen = (isLoggedIn && userId.isNotEmpty)
+        ? MainScreen()
+        : const LoginScreen();
 
     Navigator.pushReplacement(
       context,
-      PageRouteBuilder(
-        transitionDuration: const Duration(milliseconds: 800),
-        pageBuilder: (_, __, ___) => nextScreen,
-        transitionsBuilder: (_, animation, __, child) {
-          return FadeTransition(opacity: animation, child: child);
-        },
-      ),
-    );
-  });
-}
+        PageRouteBuilder(
+          transitionDuration: const Duration(milliseconds: 800),
+          pageBuilder: (_, __, ___) => nextScreen,
+          transitionsBuilder: (_, animation, __, child) {
+            return FadeTransition(opacity: animation, child: child);
+          },
+        ),
+      );
+    });
+
+  }
 
   @override
   void dispose() {

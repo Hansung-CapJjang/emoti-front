@@ -1,10 +1,12 @@
-import 'package:flutter/material.dart';
 import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'first_intro.dart';
-import 'gender_input.dart';
+
+import 'package:flutter/material.dart';
+import '/setting_screen/first_intro.dart';
+import '/setting_screen/gender_input.dart';
+import '/provider/user_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_application_1/user_provider.dart';
+import 'package:http/http.dart' as http;
+import '/main.dart';
 
 class NameInputScreen extends StatefulWidget {
   final bool isEdit;
@@ -15,35 +17,12 @@ class NameInputScreen extends StatefulWidget {
   _NameInputScreenState createState() => _NameInputScreenState();
 }
 
-class _NameInputScreenState extends State<NameInputScreen>
-    with SingleTickerProviderStateMixin {
-
+class _NameInputScreenState extends State<NameInputScreen> with SingleTickerProviderStateMixin {
   final TextEditingController _controller = TextEditingController();
   bool _isButtonEnabled = false;
   bool _showWarning = false;
   late AnimationController _animationController;
   late Animation<double> _shakeAnimation;
-
-  // 서버로 이름 전송
-  Future<void> _sendNameToServer(String name) async {
-    const String apiUrl = ''; // Spring Boot 서버 주소
-
-    try {
-      final response = await http.post(
-        Uri.parse(apiUrl),
-        headers: {"Content-Type": "application/json"},
-        body: jsonEncode({"name": name}), // JSON 변환
-      );
-
-      if (response.statusCode == 200) {
-        print("이름이 성공적으로 저장되었습니다!");
-      } else {
-        print("서버 오류 발생: ${response.body}");
-      }
-    } catch (e) {
-      print("네트워크 오류: $e");
-    }
-  }
 
   @override
   void initState() {
@@ -134,7 +113,6 @@ class _NameInputScreenState extends State<NameInputScreen>
               ),
               const SizedBox(height: 20),
 
-              // 이름 입력 필드
               AnimatedBuilder(
                 animation: _shakeAnimation,
                 builder: (context, child) {
@@ -174,7 +152,6 @@ class _NameInputScreenState extends State<NameInputScreen>
                 },
               ),
 
-              // 경고 메시지
               AnimatedOpacity(
                 opacity: _showWarning ? 1.0 : 0.0,
                 duration: const Duration(milliseconds: 300),
@@ -193,26 +170,36 @@ class _NameInputScreenState extends State<NameInputScreen>
                   ),
                 ),
               ),
-              const SizedBox(height: 50), // 키보드로 가려지는 것 방지
-              // 다음 버튼
-                Center(
+              const SizedBox(height: 50),
+              Center(
                 child: SizedBox(
                   width: 180,
                   height: 50,
                   child: ElevatedButton(
                     onPressed: _isButtonEnabled
-                    ? () {
+                    ? () async {
                       String name = _controller.text.trim();
-                      Provider.of<UserProvider>(navigatorKey.currentContext!, listen: false).updateNickname(name);
-                      _sendNameToServer(name);
                       if (widget.isEdit) {
+                        Provider.of<UserProvider>(navigatorKey.currentContext!, listen: false).updateNickname(name);
+
+                        final response = await http.put(
+                          Uri.parse('https://www.emoti.kr/users/update/nickname'),
+                          headers: {"Content-Type": "application/json"},
+                          body: jsonEncode({
+                            "id": Provider.of<UserProvider>(navigatorKey.currentContext!, listen: false).id,
+                            "nickname": name
+                            }),
+                        );
+                        if (response.statusCode != 200) {
+                        }
                         Navigator.pop(context);
                       }
                       else {
+                        Provider.of<UserProvider>(navigatorKey.currentContext!, listen: false).setNickname(name);
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                            builder: (context) => const GenderInputScreen()));
+                          MaterialPageRoute(builder: (context) => GenderInputScreen()),
+                        );
                       }
                     }
                     : null,

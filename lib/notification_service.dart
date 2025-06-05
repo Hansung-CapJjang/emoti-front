@@ -56,7 +56,6 @@ class NotificationService {
   NotificationService() : flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
   Future<void> initialize() async {
-    // 타임존 데이터 초기화
     tz_data.initializeTimeZones();
 
     // Android용 초기화 설정
@@ -78,11 +77,10 @@ class NotificationService {
     );
 
     await flutterLocalNotificationsPlugin.initialize(initializationSettings);
-    await _configureLocalTimeZone(); // 타임존 설정
+    await _configureLocalTimeZone(); 
 
   }
 
-  // 타임존 설정 함수
   Future<void> _configureLocalTimeZone() async {
     final String timeZoneName = await FlutterNativeTimezone.getLocalTimezone();
     tz.setLocalLocation(tz.getLocation(timeZoneName));
@@ -116,8 +114,8 @@ class NotificationService {
         iOS: iosPlatformChannelSpecifics,
       );
 
-      await _configureLocalTimeZone(); // 타임존 다시 확인
-
+      await _configureLocalTimeZone();
+      
       // 매일 22시(KST)에 알림 설정
       final now = tz.TZDateTime.now(tz.local);
       tz.TZDateTime scheduledDate = tz.TZDateTime(

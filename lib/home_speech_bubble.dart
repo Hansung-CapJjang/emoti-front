@@ -39,7 +39,6 @@ class SpeechBubblePainter extends CustomPainter {
     path.quadraticBezierTo(0, 0, radius, 0);
 
     canvas.drawPath(path, paint);
-
     canvas.drawPath(path, borderPaint);
   }
 

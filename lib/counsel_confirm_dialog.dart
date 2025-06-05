@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class ConfirmDialog extends StatelessWidget {
-  
   final String counselorType;
   final String method;
   final VoidCallback onConfirm;
@@ -63,7 +62,7 @@ class ConfirmDialog extends StatelessWidget {
               ElevatedButton(
                 onPressed: onCancel,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.grey[400],
+                  backgroundColor: Colors.grey,
                   foregroundColor: Colors.black,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),

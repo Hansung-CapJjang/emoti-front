@@ -1,7 +1,5 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_application_1/user_provider.dart';
+import 'provider/user_provider.dart';
 import 'package:provider/provider.dart';
 
 class StampBoard extends StatefulWidget {
@@ -30,6 +28,12 @@ class _StampBoardState extends State<StampBoard> {
     super.dispose();
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _loadUserData();
+  }
+
   void _nextLevel() {
     if (currentShowLevel < stampCounts.length - 1) {
       _pageController?.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
@@ -42,34 +46,14 @@ class _StampBoardState extends State<StampBoard> {
     }
   }
 
-  void _loadUserData() async {
-    final userEmail = Provider.of<UserProvider>(context, listen: false).email;
-    final String jsonString = await rootBundle.loadString('assets/data/user_data.json');
-    final List<dynamic> jsonData = json.decode(jsonString);
-
-    final user = jsonData.cast<Map<String, dynamic>>().firstWhere(
-      (u) => u['email'] == userEmail,
-      orElse: () => {},
-    );
-
-    if (user.isNotEmpty) {
-  final userProvider = Provider.of<UserProvider>(context, listen: false);
-
-  setState(() {
-    currentLevel = user['level'];
-    userStamps = List<String>.from(user['stamp']);
-    currentShowLevel = currentLevel;
-    _pageController = PageController(initialPage: currentShowLevel - 1);
-
-    // 이 안에 있어도 되고 밖으로 빼도 됨 (setState는 UI만 바꿈)
-    userProvider.updateLevel(currentLevel);
-    userProvider.updateStamp(userStamps);
-  });
-} else {
-  setState(() {
-    _pageController = PageController(initialPage: currentShowLevel - 1);
-  });
-}
+  void _loadUserData() {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    setState(() {
+      currentLevel = userProvider.level;
+      currentShowLevel = userProvider.level;
+      userStamps = userProvider.stamp;
+      _pageController = PageController(initialPage: currentShowLevel - 1);
+    });
   }
 
   @override
@@ -206,13 +190,13 @@ class _StampBoardState extends State<StampBoard> {
           const SizedBox(height: 0),
           // 도장 도감 버튼
           Padding(
-            padding: const EdgeInsets.only(top: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Transform.translate(
-                  offset: const Offset(95, 5),
-                  child: const Text(
+            padding: const EdgeInsets.only(top: 10, right: 70),
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text(
                     "도장 도감",
                     style: TextStyle(
                       fontSize: 15,
@@ -220,11 +204,8 @@ class _StampBoardState extends State<StampBoard> {
                       color: Color(0xFF414728),
                     ),
                   ),
-                ),
-                const SizedBox(width: 1.5),
-                Transform.translate(
-                  offset: const Offset(100, 5),
-                  child: GestureDetector(
+                  const SizedBox(width: 5),
+                  GestureDetector(
                     onTap: () {
                       _showPopupDialog(context);
                     },
@@ -237,8 +218,8 @@ class _StampBoardState extends State<StampBoard> {
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
           // 구분선
@@ -261,33 +242,32 @@ class _StampBoardState extends State<StampBoard> {
           Padding(
             padding: const EdgeInsets.only(bottom: 10),
             child: Align(
-              alignment: Alignment.center,
-              child: Transform.translate(
-                offset: const Offset(-115, 17),
-                child: const Text(
-                  "내 도장",
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'DungGeunMo',
-                    color: Color(0xFF414728),
-                  ),
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.075),
+                child: const Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 20),
+                    Text(
+                      "내 도장",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'DungGeunMo',
+                        color: Color(0xFF414728),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 10),
           // 내 도장 리스트
           FutureBuilder<Map<String, int>>(
             future: (() async {
-              final userEmail = Provider.of<UserProvider>(context, listen: false).email;
-              final String jsonString = await rootBundle.loadString('assets/data/user_data.json');
-              final List<dynamic> jsonData = json.decode(jsonString);
-              final user = jsonData.cast<Map<String, dynamic>>().firstWhere(
-                (u) => u['email'] == userEmail,
-                orElse: () => {},
-              );
-              final List<dynamic> stamps = user['stamp'] ?? [];
+              final List<String> stamps = Provider.of<UserProvider>(context, listen: false).stamp;
               final Map<String, int> stampCounts = {
                 '희망': 0,
                 '회복': 0,
@@ -381,7 +361,7 @@ class _StampBoardState extends State<StampBoard> {
 void _showPopupDialog(BuildContext context) {
   showDialog(
     context: context,
-    barrierDismissible: true, // 팝업 바깥 클릭 시 닫기
+    barrierDismissible: true,
     builder: (BuildContext dialogContext) {
       return AlertDialog(
         backgroundColor: Colors.transparent, 
@@ -390,7 +370,7 @@ void _showPopupDialog(BuildContext context) {
           width: MediaQuery.of(context).size.width * 0.8, 
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: Colors.white, // 팝업 배경색
+            color: Colors.white,
             borderRadius: BorderRadius.circular(10), 
             border: Border.all(color: Colors.black, width: 2), 
           ),
