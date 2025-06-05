@@ -128,89 +128,113 @@ class _ConcernInputScreenState extends State<ConcernInputScreen> with SingleTick
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const ProgressBar(progress: 0.8),
-            const SizedBox(height: 30),
-            const Text(
-              '최근 고민되는 일이 있나요?',
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold,
-              fontFamily: 'DungGeunMo',
-              color: Colors.black87),
-            ),
-            const SizedBox(height: 15),
-            const Text(
-              '※ 사용자에 관한 데이터가 많을수록\n  AI의 상담 수준이 높아져요!\n※ 3개까지 선택할 수 있어요.',
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.normal,
-              fontFamily: 'DungGeunMo',
-              color: Colors.black87),
-            ),
-            const SizedBox(height: 20),
-            Wrap(
-              spacing: 10,
-              runSpacing: 10,
-              children: _concerns.map((concern) {
-                final isSelected = _selectedConcerns.contains(concern);
-                return GestureDetector(
-                  onTap: () => _toggleConcern(concern),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-                    decoration: BoxDecoration(
-                      color: isSelected ? const Color.fromARGB(214, 255, 255, 255) : const Color(0xFFD6D9AC),
-                      borderRadius: BorderRadius.circular(10),
-                      border: isSelected ? Border.all(color: const Color(0xFFD6D9AC), width: 2) : null,
-                    ),
-                    child: Text(
-                      concern,
-                      style: TextStyle(
-                        fontFamily: 'DungGeunMo',
-                        fontSize: 16,
-                        fontWeight: FontWeight.normal,
-                        color: isSelected ? Colors.black : Colors.black,
-                      ),
-                    ),
-                  ),
-                );
-              }).toList(),
-            ),
-            const SizedBox(height: 10,),
-            if (_isOverLimit)
-              Transform.translate(
-                offset: Offset(_shakeAnimation.value - 4, 0),
-                child: const Text(
-                  '※ 3개만 선택 가능해요!',
-                  style: TextStyle(fontFamily: 'DungGeunMo', fontSize: 15, fontWeight: FontWeight.bold, color: Colors.red),
-                ),
-              ),
-            const Spacer(flex: 10),
-            Align(
-              alignment: Alignment.center, 
-              child: SizedBox(
-                width: 180,
-                height: 50,
-                child: ElevatedButton(
-                  onPressed: _selectedConcerns.isNotEmpty ? _onNextPressed : null,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF5A5F3C),
-                    foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  child: Text(
-                    widget.isEdit ? '완료' : '다음',
-                    style: const TextStyle(fontSize: 16, fontFamily: 'DungGeunMo'),
-                  ),
-                ),
-              ),
-            ),
-            const Spacer(flex: 6),
-          ],
+body: Padding(
+  padding: const EdgeInsets.all(20),
+  child: Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      const ProgressBar(progress: 0.8),
+      const SizedBox(height: 30),
+      const Text(
+        '최근 고민되는 일이 있나요?',
+        style: TextStyle(
+          fontSize: 22,
+          fontWeight: FontWeight.bold,
+          fontFamily: 'DungGeunMo',
+          color: Colors.black87,
         ),
       ),
+      const SizedBox(height: 15),
+      const Text(
+        '※ 사용자에 관한 데이터가 많을수록\n  AI의 상담 수준이 높아져요!\n※ 3개까지 선택할 수 있어요.',
+        style: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.normal,
+          fontFamily: 'DungGeunMo',
+          color: Colors.black87,
+        ),
+      ),
+      const SizedBox(height: 20),
+      Expanded(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Wrap(
+                spacing: 10,
+                runSpacing: 10,
+                children: _concerns.map((concern) {
+                  final isSelected = _selectedConcerns.contains(concern);
+                  return GestureDetector(
+                    onTap: () => _toggleConcern(concern),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                      decoration: BoxDecoration(
+                        color: isSelected
+                            ? const Color.fromARGB(214, 255, 255, 255)
+                            : const Color(0xFFD6D9AC),
+                        borderRadius: BorderRadius.circular(10),
+                        border: isSelected
+                            ? Border.all(color: const Color(0xFFD6D9AC), width: 2)
+                            : null,
+                      ),
+                      child: Text(
+                        concern,
+                        style: TextStyle(
+                          fontFamily: 'DungGeunMo',
+                          fontSize: 16,
+                          fontWeight: FontWeight.normal,
+                          color: isSelected ? Colors.black : Colors.black,
+                        ),
+                      ),
+                    ),
+                  );
+                }).toList(),
+              ),
+              const SizedBox(height: 10),
+              if (_isOverLimit)
+                Transform.translate(
+                  offset: Offset(_shakeAnimation.value - 4, 0),
+                  child: const Text(
+                    '※ 3개만 선택 가능해요!',
+                    style: TextStyle(
+                      fontFamily: 'DungGeunMo',
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.red,
+                    ),
+                  ),
+                ),
+              const SizedBox(height: 40),
+            ],
+          ),
+        ),
+      ),
+      Align(
+        alignment: Alignment.center,
+        child: SizedBox(
+          width: 180,
+          height: 50,
+          child: ElevatedButton(
+            onPressed: _selectedConcerns.isNotEmpty ? _onNextPressed : null,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFF5A5F3C),
+              foregroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ),
+            child: Text(
+              widget.isEdit ? '완료' : '다음',
+              style: const TextStyle(fontSize: 16, fontFamily: 'DungGeunMo'),
+            ),
+          ),
+        ),
+      ),
+      const SizedBox(height: 30),
+    ],
+  ),
+),
+
     );
   }
 }
