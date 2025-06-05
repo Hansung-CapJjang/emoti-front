@@ -1,0 +1,23 @@
+{
+  'version': 0,
+  'use-external-names': 'false',
+  'case-sensitive': 'false',
+  'roots': [{
+    'type': 'directory',
+    'name': "/Users/jeongseyeon/Downloads/emoti-front-counsel-options/ios/build/Release-iphoneos/image_gallery_saver/image_gallery_saver.framework/Modules"
+    'contents': [{
+      'type': 'file',
+      'name': "module.modulemap",
+      'external-contents': "/Users/jeongseyeon/Downloads/emoti-front-counsel-options/ios/build/Pods.build/Release-iphoneos/image_gallery_saver.build/unextended-module.modulemap",
+    }]
+    },
+    {
+    'type': 'directory',
+    'name': "/Users/jeongseyeon/Downloads/emoti-front-counsel-options/ios/build/Release-iphoneos/image_gallery_saver/image_gallery_saver.framework/Headers"
+    'contents': [{
+      'type': 'file',
+      'name': "image_gallery_saver-Swift.h",
+      'external-contents': "/Users/jeongseyeon/Downloads/emoti-front-counsel-options/ios/build/Pods.build/Release-iphoneos/image_gallery_saver.build/unextended-interface-header.h",
+    }]
+    }]
+}

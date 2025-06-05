@@ -1,0 +1,23 @@
+{
+  'version': 0,
+  'use-external-names': 'false',
+  'case-sensitive': 'false',
+  'roots': [{
+    'type': 'directory',
+    'name': "/Users/jeongseyeon/Downloads/emoti-front-counsel-options/ios/build/Release-iphoneos/webview_flutter_wkwebview/webview_flutter_wkwebview.framework/Modules"
+    'contents': [{
+      'type': 'file',
+      'name': "module.modulemap",
+      'external-contents': "/Users/jeongseyeon/Downloads/emoti-front-counsel-options/ios/build/Pods.build/Release-iphoneos/webview_flutter_wkwebview.build/unextended-module.modulemap",
+    }]
+    },
+    {
+    'type': 'directory',
+    'name': "/Users/jeongseyeon/Downloads/emoti-front-counsel-options/ios/build/Release-iphoneos/webview_flutter_wkwebview/webview_flutter_wkwebview.framework/Headers"
+    'contents': [{
+      'type': 'file',
+      'name': "webview_flutter_wkwebview-Swift.h",
+      'external-contents': "/Users/jeongseyeon/Downloads/emoti-front-counsel-options/ios/build/Pods.build/Release-iphoneos/webview_flutter_wkwebview.build/unextended-interface-header.h",
+    }]
+    }]
+}
